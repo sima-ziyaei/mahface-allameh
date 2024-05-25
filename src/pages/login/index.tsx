@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
-  password: z.string().min(6, "Password must be at leaset 6 characters long").regex(new RegExp('\b[A-Z]{2}\b'),"password-contain-two-captal-english-letter"),
+  password: z.string().min(6, "Password must be at leaset 6 characters long").regex(/[A-Z]{1}/, "password-must-contain-english-word"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
