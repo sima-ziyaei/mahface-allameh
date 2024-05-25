@@ -1,7 +1,9 @@
+import Layout from "@/components/Layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import t from "../../../locales/en/translation.json";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
@@ -31,33 +33,34 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Layout>
 
-      <div>
+      <div className="h-screen flex items-center justify-center">
 
-        <form onSubmit={handleSubmit(onSubmitLogin)}>
+        <form onSubmit={handleSubmit(onSubmitLogin)} className="flex flex-col gap-4">
 
-          <div>
-            <input type="email" placeholder="email" {...register("email")} />
-            <span>{errors.email?.message}</span>
+          <div className="flex flex-col gap-4">
+            <input type="email" placeholder={t.email} {...register("email")} className="px-4 py-3 border border-solid border-gray-600 rounded-2xl" />
+            <span className="text-red-800 text-sm">{errors.email?.message}</span>
           </div>
 
-          <div>
+          <div className="flex flex-col gap-4">
             <input
               type={showPassword ? "string" : "password"}
-              placeholder="password"
+              placeholder={t.password}
               {...register("password")}
+              className="px-4 py-3 border border-solid border-gray-600 rounded-2xl" 
             />
-            <span>{errors.password?.message}</span>
+            <span className="text-red-800 text-sm">{errors.password?.message}</span>
           </div>
 
-          <button type="submit">{"login-submit"}</button>
+          <button type="submit" className="border border-solid border-blue-600 rounded-2xl py-3 bg-blue-600 text-white hover:bg-blue-800">{t.login}</button>
 
         </form>
 
       </div>
 
-    </div>
+    </Layout>
   );
 };
 

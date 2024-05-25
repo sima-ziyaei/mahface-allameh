@@ -13,8 +13,8 @@ const Categories = () => {
   }, []);
 
   return (
-    <div>
-      {categories.map((el) => {
+    <div className="flex gap-6 mt-6">
+      {categories?.map((el) => {
         return <p key={el.id}>{el.title}</p>;
       })}
     </div>
