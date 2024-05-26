@@ -54,7 +54,7 @@ const Login = () => {
             <span className="text-red-800 text-sm">{errors.password?.message}</span>
           </div>
 
-          <button type="submit" className="border border-solid border-blue-600 rounded-2xl py-3 bg-blue-600 text-white hover:bg-blue-800">{t.login}</button>
+          <button type="submit" className="border border-solid border-cyan-700 rounded-2xl py-3 bg-cyan-700 text-white hover:bg-blue-800">{t.login}</button>
 
         </form>
 
