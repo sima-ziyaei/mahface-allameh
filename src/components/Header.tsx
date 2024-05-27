@@ -2,14 +2,16 @@
 import Link from "next/link";
 import { FC, useState } from "react";
 import t from "../../locales/en/translation.json";
+import { useRouter } from "next/router";
 
 const Header: FC = () => {
   const [value, setValue] = useState<string>();
+  const router = useRouter();
 
   return (
     <div className="flex w-full justify-between border-b border-solid border-gray-400 p-4 ">
-      <div className="flex gap-4">
-        <img src="/assets/ATU.svg.png" width={32} height={32} alt="logo" />
+      <div onClick={()=>router.push('/')} className="flex gap-4">
+        <img src="/assets/logo.jpeg" height={32} width={52} alt="logo" />
         <p className="w-max">{t.educational_system_of_allameh_tabatabaei_university}</p>
       </div>
       <div style={{direction: "rtl"}} className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[-webkit-fill-available] mx-8 justify-between focus:[&_input]:border-cyan-700">
