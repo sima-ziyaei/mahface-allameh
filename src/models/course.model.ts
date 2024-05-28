@@ -6,7 +6,7 @@ import { Teacher } from "./teacher.model";
 export interface Course {
   id: string;
   code: number;
-  description?: string;
+  courseDescription?: string;
   createdUserID: string;
   createdDate: string;
   deletedUserID?: string;

@@ -1,4 +1,7 @@
 {
-    "login": "ورود",
-    "educational_system_of_allameh_tabatabai_university": "سامانه آموزشی دانشگاه علامه طباطبایی"
+    "login": "ورود / ثبت نام",
+    "educational_system_of_allameh_tabatabaei_university": "سامانه آموزشی دانشگاه علامه طباطبایی",
+    "what-do-you-want-to-learn": "چه چیزی میخواهید یاد بگیرید؟",
+    "email": "ایمیل",
+    "password": "رمز عبور"
 }
