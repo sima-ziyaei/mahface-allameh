@@ -13,7 +13,9 @@ const CourseView = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/Courses/GetById?id=${id}`)
-      .then((res) => setCourse(res.data));
+      .then((res) =>{ setCourse(res.data)
+        console.log(res.data);
+      });
   }, [id]);
 
   return (
