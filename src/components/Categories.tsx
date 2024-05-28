@@ -14,7 +14,7 @@ const Categories = () => {
 
   return (
     <div>
-      {categories.map((el) => {
+      {categories?.map((el) => {
         return <p key={el.id}>{el.title}</p>;
       })}
     </div>
