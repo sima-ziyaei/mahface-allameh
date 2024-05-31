@@ -45,6 +45,7 @@ const Categories = () => {
         </div>
       ) : null}
     </>
+
   );
 };
 
