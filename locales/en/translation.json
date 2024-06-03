@@ -1,7 +1,17 @@
 {
-    "login": "ورود / ثبت نام",
+    "login": "ورود",
     "educational_system_of_allameh_tabatabaei_university": "سامانه آموزشی دانشگاه علامه طباطبایی",
     "what-do-you-want-to-learn": "چه چیزی میخواهید یاد بگیرید؟",
     "email": "ایمیل",
-    "password": "رمز عبور"
+    "password": "رمز عبور",
+    "signup":"ثبت نام",
+    "password-confirm-not-match":"تکرار رمز عبور مطابقت ندارد",
+    "confirm-password-required":"وارد کردن تکرار رمز عبور الزامی است.",
+    "password-must-contain-english-word":" رمز عبور وارد شده باید شامل یک حرف لاتین باشد.",
+    "Password-must-be-at-leaset-6-characters-long":"رمز عبور حداقل  شامل ۶ کاراکتر می باشد.",
+    "email-required":"وارد کردن ایمیل الزامی است.",
+    "invalid-email":"ایمیل وارد شده معتبر نمی باشد.",
+    "username-required":"وارد کردن نام کاربری الزامی است.",
+    "has-account":"آیا حساب دارید؟",
+    "forgot-password":"آیا رمز عبور خود را فراموش کرده اید؟"
 }

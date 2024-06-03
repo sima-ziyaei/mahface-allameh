@@ -9,12 +9,17 @@ const Header: FC = () => {
   const router = useRouter();
 
   return (
-    <div className="flex w-full justify-between border-b border-solid border-gray-400 p-4 ">
-      <div onClick={()=>router.push('/')} className="flex gap-4">
+    <div className="flex w-full justify-between border-b border-solid border-gray-400 p-4  gap-4">
+      <div onClick={() => router.push("/")} className="flex gap-4">
         <img src="/assets/logo.jpeg" height={32} width={52} alt="logo" />
-        <p className="w-max">{t.educational_system_of_allameh_tabatabaei_university}</p>
+        <p className="w-max">
+          {t.educational_system_of_allameh_tabatabaei_university}
+        </p>
       </div>
-      <div style={{direction: "rtl"}} className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[-webkit-fill-available] mx-8 justify-between focus:[&_input]:border-cyan-700">
+      <div
+        style={{ direction: "rtl" }}
+        className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[-webkit-fill-available] mx-8 justify-between focus:[&_input]:border-cyan-700"
+      >
         <input
           value={value ?? ""}
           onChange={(e) => setValue(e.target.value)}
@@ -28,12 +33,21 @@ const Header: FC = () => {
           src="/assets/search-normal.svg"
           alt="search"
         />
-
       </div>
-      <div className="py-3 px-2 border border-solid border-cyan-700 rounded-2xl w-[200px] text-cyan-700 flex items-center justify-center hover:bg-cyan-700 hover:text-white">
-
-      <Link href="/login"> {t.login} </Link>
-      </div>
+      {router.pathname !== "/login" && (
+          <Link href="/login"> 
+        <div className="py-3 w-[120px] cursor-pointer border border-solid border-cyan-700 rounded-2xl  text-cyan-700 flex items-center justify-center hover:bg-cyan-700 hover:text-white">
+          {t.login}
+        </div>
+           </Link>
+      )}
+      {router.pathname !== "/signup" && (
+        <Link href="/signup">
+          <div className="py-3 w-[120px] cursor-pointer border border-solid border-cyan-700 rounded-2xl  text-cyan-700 flex items-center justify-center hover:bg-cyan-700 hover:text-white">
+            {t.signup}
+          </div>
+        </Link>
+      )}
     </div>
   );
 };
