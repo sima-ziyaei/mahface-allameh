@@ -6,15 +6,20 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import t from "../../../locales/en/translation.json";
 import axios from "axios";
+import { useRouter } from "next/router";
+import toast  from "react-hot-toast";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const signupSchema = z.object({
     username: z.string().min(3, "username-required"),
-    email: z.string().email("invalid-email").min(1, "email-required"),
+    email: z.string().min(1, "email-required").email("invalid-email"),
     password: z
       .string()
+      .min(1, "password-required")
       .min(6, "Password-must-be-at-leaset-6-characters-long")
       .regex(/[A-Z]{1}/, "password-must-contain-english-word"),
     confirmPassword: z
@@ -43,14 +48,23 @@ const Signup = () => {
   });
 
   const onSubmitSignup = (data: z.infer<typeof signupSchema>) => {
-    console.log(data);
+    setLoading(true);
     axios
       .post(process.env.BASE_URL + "/register", {
         email: data.email,
         password: data.password,
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setLoading(false);
+        toast.success(t["successfully-signed-up"]);
+        console.log(res);
+        router.push("/");
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+        console.error(err);
+      });
   };
 
   return (

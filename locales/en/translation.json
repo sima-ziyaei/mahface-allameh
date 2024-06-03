@@ -13,5 +13,10 @@
     "invalid-email":"ایمیل وارد شده معتبر نمی باشد.",
     "username-required":"وارد کردن نام کاربری الزامی است.",
     "has-account":"آیا حساب دارید؟",
-    "forgot-password":"آیا رمز عبور خود را فراموش کرده اید؟"
+    "forgot-password":"آیا رمز عبور خود را فراموش کرده اید؟",
+    "password-required":"وارد کردن رمز عبور الزامی است.",
+    "successfully-loggin":"با موفقیت به سامانه وارد شدید.",
+    "username-or-pass-not-correct":"نام کاربری یا رمزعبور نادرست می باشد.",
+    "successfully-signed-up":"حساب کاربری شما باموفقیت ساخته شد.",
+    "loged-out":"از حساب کاربری  خود خارج شدید."
 }
