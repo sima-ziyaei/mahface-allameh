@@ -21,5 +21,6 @@ export interface Course {
   students: Student[],
   teacher: Teacher,
   seasons: Season[],
-  category: Category
+  category: Category,
+  cost: number
 }

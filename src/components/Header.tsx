@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { FC, useState } from "react";
-import t from "../../locales/en/translation.json";
+import t from "../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 
 const Header: FC = () => {

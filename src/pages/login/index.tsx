@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import t from "../../../locales/en/translation.json";
+import t from "../../../../locales/en/translation.json";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
