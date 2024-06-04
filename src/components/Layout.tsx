@@ -9,8 +9,7 @@ const Layout = ({ children }) => {
   
     if (router.pathname !== "/login" && router.pathname !== "/signup") {
       if (
-        localStorage.getItem("accessToken") == "" &&
-        localStorage.getItem("refreshToken") === ""
+        [null,"",undefined].includes(localStorage.getItem("accessToken")) && [null,"",undefined].includes(localStorage.getItem("refreshToken"))
       ) {
         console.log("first")
         toast.error(t["account-expired"])
