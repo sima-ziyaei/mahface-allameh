@@ -84,7 +84,7 @@ const Signup = () => {
               ></input>
 
               <span className="text-xs text-red-700 h-1">
-                {t[errors.username?.message]}
+                {t[errors.username?.message as string]}
               </span>
             </div>
 
@@ -96,7 +96,7 @@ const Signup = () => {
                 className="px-4 py-3 border border-solid border-gray-600 rounded-2xl w-[250px]"
               />
               <span className="text-xs text-red-700 h-1">
-                {t[errors.email?.message]}
+                {t[errors.email?.message as string]}
               </span>
             </div>
 
@@ -108,7 +108,7 @@ const Signup = () => {
                 className="px-4 py-3 border border-solid border-gray-600 rounded-2xl w-[250px]"
               />
               <span className="text-xs text-red-700 h-1">
-                {t[errors.password?.message]}
+                {t[errors.password?.message as string]}
               </span>
             </div>
 
@@ -120,7 +120,7 @@ const Signup = () => {
                 className="px-4 py-3 border border-solid border-gray-600 rounded-2xl w-[250px]"
               />
               <span className="text-xs text-red-700 h-1">
-                {t[errors.confirmPassword?.message]}
+                {t[errors.confirmPassword?.message as string]}
               </span>
             </div>
 
