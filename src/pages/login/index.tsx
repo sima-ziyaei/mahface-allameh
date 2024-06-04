@@ -46,6 +46,8 @@ const Login = () => {
       .then((res) => res.data)
       .then((res) => {
         setLoading(false);
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         toast.success(t["successfully-loggin"]);
         console.log(res);
         router.push("/");
