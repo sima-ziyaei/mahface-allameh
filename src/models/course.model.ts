@@ -22,5 +22,6 @@ export interface Course {
   teacher: Teacher,
   seasons: Season[],
   category: Category,
-  cost: number
+  cost: number,
+  imageBase64: string
 }

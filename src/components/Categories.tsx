@@ -10,25 +10,21 @@ const Categories = () => {
   const [courses, setCourses] = useState<Course[]>();
   const [allCourses, setAllCourses] = useState<Course[]>();
   const router = useRouter();
-  const [base64Image, setbase64Image] = useState<string>();
   const [categories, setCategories] = useState<Category[]>();
 
   useEffect(() => {
     axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
       setCategories(res.data);
     });
-    axios.get(`${BASE_URL}/api/Courses/GetAllCourses`).then((res) => {
+    axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
       setAllCourses(res.data);
     });
   }, []);
 
   const getCourses = (id) => {
-    axios.get(`${BASE_URL}/api/Courses/GetAllCourses`).then((res) => {
+    axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
       const course = res.data.filter((el) => el.categoryId === id);
       setCourses(course);
-      // axios
-      //       .get(`${BASE_URL}/api/Courses/ImageBase64/${res.data.id}`)
-      //       .then((res) =>setbase64Image(res.data.base64Image));
     });
   };
 
@@ -38,7 +34,8 @@ const Categories = () => {
         {categories?.map((el) => {
           return (
             <p
-              onClick={() => getCourses(el.id)}
+              onMouseEnter={() => getCourses(el.id)}
+              onClick={()=> router.push(`/category/${el.id}`)}
               key={el.id}
               className="cursor-pointer hover:text-cyan-700"
             >
@@ -73,7 +70,7 @@ const Categories = () => {
               key={course.id}
             >
               <img
-                src={`data:image/png;base64,${base64Image}`}
+                src={`data:image/png;base64,${course.imageBase64}`}
                 alt="course"
                 className="w-[200px] h-[200px]"
               />
