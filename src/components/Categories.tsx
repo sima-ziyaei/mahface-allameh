@@ -65,7 +65,7 @@ const Categories = () => {
       <div className="container border border-solid border-gray-500 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-6 ">
         {allCourses?.map((course) => {
           return (
-            <div
+            <a href={`/course/${course.id}`}
               className="  border border-solid border-gray-400 rounded-2xl p-4"
               key={course.id}
             >
@@ -82,7 +82,7 @@ const Categories = () => {
               <p className=" mt-4">
                 {t["course-cost"]} : {course?.cost} تومان
               </p>
-            </div>
+            </a>
           );
         })}
       </div>

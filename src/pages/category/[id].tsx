@@ -49,7 +49,7 @@ const CourseView = ({ params }) => {
         <img />
       {courses?.map((course) => {
           return (
-            <div
+            <a  href={`/course/${course.id}`}
               className=" border border-solid border-gray-400 flex gap-4 rounded-2xl p-4 mb-4"
               key={course.id}
             >
@@ -68,7 +68,7 @@ const CourseView = ({ params }) => {
               </p>
 </div>
               
-            </div>
+            </a>
           );
         })}
       </div>
