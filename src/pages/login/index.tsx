@@ -3,10 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import t from "../../../locales/en/translation.json";
+import t from "../../../i18next/locales/fa/translation.json";
 import axios from "axios";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+
 
 const loginSchema = z.object({
   email: z.string().min(1, "email-required").email("invalid-email"),

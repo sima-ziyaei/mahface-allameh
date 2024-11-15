@@ -2,7 +2,8 @@ import { Toaster, toast } from "react-hot-toast";
 import Header from "./Header";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import t from "../../locales/en/translation.json"
+import t from "../../i18next/locales/fa/translation.json";
+
 const Layout = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
