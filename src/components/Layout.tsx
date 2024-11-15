@@ -8,15 +8,15 @@ const Layout = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
   
-    if (router.pathname !== "/login" && router.pathname !== "/signup") {
-      if (
-        [null,"",undefined].includes(localStorage.getItem("accessToken")) && [null,"",undefined].includes(localStorage.getItem("refreshToken"))
-      ) {
-        console.log("first")
-        toast.error(t["account-expired"])
-        router.push("/login");
-      }
-    }
+    // if (router.pathname !== "/login" && router.pathname !== "/signup") {
+    //   if (
+    //     [null,"",undefined].includes(localStorage.getItem("accessToken")) && [null,"",undefined].includes(localStorage.getItem("refreshToken"))
+    //   ) {
+    //     console.log("first")
+    //     toast.error(t["account-expired"])
+    //     router.push("/login");
+    //   }
+    // }
   }, []);
   return (
     <>

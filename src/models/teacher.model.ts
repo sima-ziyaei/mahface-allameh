@@ -11,5 +11,19 @@ export interface Teacher {
   isActive: boolean;
   isDeleted: boolean;
   userId: string;
-  user: User
+  user: User;
 }
+
+type Email = string;
+type Links = string;
+type Fields = "AI" | "Front" | "React";
+export interface CreateTecherBody {
+  teacherUserName: string;
+  teachingFields: Fields[];
+  experiences: string;
+  certifications?: Links[];
+  professionalEmail?: Email;
+  requestDate:Date;
+}
+
+export type CreateTeacher = (body: CreateTecherBody) => void;
