@@ -19,9 +19,9 @@ const Header: FC = () => {
 
   return (
     <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
-      <div onClick={() => router.push("/")} className="flex gap-4 cursor-pointer">
-        <img src="/assets/logo.jpeg" height={32} width={52} alt="logo" />
-        <p className="w-max">
+      <div onClick={() => router.push("/")} className="flex gap-4 cursor-pointer items-center">
+        <img src="/assets/allameh.png" height={32} width={52} alt="logo" />
+        <p className="w-32 text-xl">
           {t.educational_system_of_allameh_tabatabaei_university}
         </p>
       </div>

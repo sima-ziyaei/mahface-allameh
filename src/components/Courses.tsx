@@ -7,7 +7,7 @@ const Courses = () => {
   const [courses, setCourses] = useState<Course[]>();
 
     useEffect(()=>{
-        axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
+        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
             setCourses(res.data);
           });
     },[])

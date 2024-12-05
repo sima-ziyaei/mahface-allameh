@@ -33,7 +33,7 @@ const CourseView = ({ params }) => {
           console.log(res.data);
         });
 
-        axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
+        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
             const course = res.data.filter((el) => el.categoryId === params?.id);
             setCourses(course);
             // axios

@@ -16,13 +16,13 @@ const Categories = () => {
     axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
       setCategories(res.data);
     });
-    axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
+    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
       setAllCourses(res.data);
     });
   }, []);
 
   const getCourses = (id) => {
-    axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
+    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
       const course = res.data.filter((el) => el.categoryId === id);
       setCourses(course);
     });
@@ -76,7 +76,7 @@ const Categories = () => {
               />
 
               <h1 className=" font-bold text-2xl"> {course?.title}</h1>
-              <p className=" mt-6"> {course?.courseDescription} </p>
+              <p className=" mt-6 overflow-hidden text-ellipsis  line-clamp-3"> {course?.courseDescription} </p>
 
               <p className=" mt-4">{t["course-teacher"]} :</p>
               <p className=" mt-4">
