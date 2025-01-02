@@ -24,5 +24,7 @@ export interface Course {
   category: Category,
   cost: number,
   imageBase64: string,
-  view: number
+  view: number,
+  teacherName: string,
+  starsNumber: number
 }

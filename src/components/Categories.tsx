@@ -27,15 +27,15 @@ const Categories = () => {
       setCourses(course);
     });
   };
-
+console.log(allCourses)
   return (
     <>
-      <div className="flex gap-6 mt-6">
+      <div className="flex gap-6 mt-6 mx-4">
         {categories?.map((el) => {
           return (
             <p
               onMouseEnter={() => getCourses(el.id)}
-              onClick={()=> router.push(`/category/${el.id}`)}
+              onClick={() => router.push(`/category/${el.id}`)}
               key={el.id}
               className="cursor-pointer hover:text-cyan-700"
             >
@@ -46,8 +46,7 @@ const Categories = () => {
       </div>
 
       {courses?.length ? (
-        <div className="flex gap-8 mt-6 bg-cyan-700 text-white p-4 justify-center">
-          {" "}
+        <div className="flex gap-8 mt-6 bg-cyan-700 text-white p-4 justify-center mx-4">
           {courses?.map((el) => {
             return (
               <p
@@ -62,10 +61,11 @@ const Categories = () => {
         </div>
       ) : null}
 
-      <div className="container border border-solid border-gray-500 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-6 ">
+      <div className="container border border-solid mx-4 border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
         {allCourses?.map((course) => {
           return (
-            <a href={`/course/${course.id}`}
+            <a
+              href={`/course/${course.id}`}
               className="  border border-solid border-gray-400 rounded-2xl p-4"
               key={course.id}
             >
@@ -75,13 +75,18 @@ const Categories = () => {
                 className="w-[200px] h-[200px]"
               />
 
-              <h1 className=" font-bold text-2xl"> {course?.title}</h1>
-              <p className=" mt-6 overflow-hidden text-ellipsis  line-clamp-3"> {course?.courseDescription} </p>
-
-              <p className=" mt-4">{t["course-teacher"]} :</p>
-              <p className=" mt-4">
-                {t["course-cost"]} : {course?.cost} تومان
+              <h1 className=" text-xl"> {course?.title}</h1>
+              <p className=" mt-6 text-sm text-slate-700 overflow-hidden text-ellipsis line-clamp-3">
+                {course?.courseDescription}{" "}
               </p>
+
+              <p className=" mt-4 text-sm text-zinc-600">{t["course-teacher"]} : {course.teacherName}</p>
+              {/* <p className=" mt-4">
+                {t["course-cost"]} : {course?.cost} تومان
+              </p> */}
+              <div className="bg-[#F7E7F1] p-3 rounded-md mt-3 ">
+                <p>{course?.cost} <span className="text-xs text-gray-500">  تومان </span></p>
+              </div>
             </a>
           );
         })}
