@@ -22,7 +22,7 @@ const Header: FC = () => {
       <div onClick={() => router.push("/")} className="flex gap-4 cursor-pointer items-center">
         <img src="/assets/allameh.png" height={32} width={52} alt="logo" />
         <p className="w-32 text-xl">
-          {t.educational_system_of_allameh_tabatabaei_university}
+          {t['allame-kade']}
         </p>
       </div>
       <div

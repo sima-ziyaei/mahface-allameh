@@ -27,7 +27,7 @@ const Categories = () => {
       setCourses(course);
     });
   };
-console.log(allCourses)
+  console.log(allCourses)
   return (
     <>
       <div className="flex gap-6 mt-6 mx-4">
@@ -72,18 +72,28 @@ console.log(allCourses)
               <img
                 src={`data:image/png;base64,${course.imageBase64}`}
                 alt="course"
-                className="w-[200px] h-[200px]"
+                className=" h-[200px]"
               />
 
-              <h1 className=" text-xl"> {course?.title}</h1>
-              <p className=" mt-6 text-sm text-slate-700 overflow-hidden text-ellipsis line-clamp-3">
-                {course?.courseDescription}{" "}
-              </p>
+              <h1 className=" text-xl mt-4"> {course?.title}</h1>
+              <p className=" mt-3 text-sm text-zinc-600">{t["course-teacher"]} : {course.teacherName}</p>
 
-              <p className=" mt-4 text-sm text-zinc-600">{t["course-teacher"]} : {course.teacherName}</p>
-              {/* <p className=" mt-4">
-                {t["course-cost"]} : {course?.cost} تومان
-              </p> */}
+              <p className=" mt-6 text-sm text-slate-700 overflow-hidden text-ellipsis line-clamp-2">
+                {course?.courseDescription}
+              </p>
+              <div className="flex gap-4 mt-6">
+                <div className="flex">
+                  <img src="/assets/icons/teacher.svg" width={16} />
+                  {/* <p> {course?.students} {t['student']} </p>  */}
+                </div>
+
+                <div className="flex">
+                  <img src="/assets/icons/star.svg" width={16} />
+                  <p className="text-sm"> {course?.starsNumber} </p>
+                </div>
+              </div>
+
+
               <div className="bg-[#F7E7F1] p-3 rounded-md mt-3 ">
                 <p>{course?.cost} <span className="text-xs text-gray-500">  تومان </span></p>
               </div>

@@ -2,7 +2,7 @@
   "course-teacher": "مدرس ",
   "course-cost": "هزینه دوره",
   "login": "ورود",
-  "educational_system_of_allameh_tabatabaei_university": "علامه کده",
+  "allame-kade": "علامه کده",
   "what-do-you-want-to-learn": "چه چیزی میخواهید یاد بگیرید؟",
   "email": "ایمیل",
   "password": "رمز عبور",
@@ -43,5 +43,13 @@
   "follow-us": "ما را در شبکه های اجتماعی دنبال کنید",
   "from-you": "از زبان شما",
   "course-content": "محتوای دوره",
-  "score": "امتیاز"
+  "score": "امتیاز",
+  "about-course": "درباره دوره",
+  "course-comments": "نظرات",
+  "section": "جلسه",
+  "season": "فصل",
+  "course-duration": "ساعت ویدیو",
+  "hour": "ساعت",
+  "min": "دقیقه",
+  "student": "دانشجو"
 }
