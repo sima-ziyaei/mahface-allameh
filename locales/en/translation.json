@@ -19,5 +19,9 @@
   "username-or-pass-not-correct": "نام کاربری یا رمزعبور نادرست می باشد.",
   "successfully-signed-up": "حساب کاربری شما باموفقیت ساخته شد.",
   "loged-out": "از حساب کاربری  خود خارج شدید.",
-  "account-expired": "حساب کاربری شما منقضی شده است لطفا دوباره وارد شوید."
+  "account-expired": "حساب کاربری شما منقضی شده است لطفا دوباره وارد شوید.",
+  "email-or-username-or-phone-number-required": "نام کاربری یا ایمیل یا شماره تلفن همراه ضروری است",
+  "email-username-number": " ایمیل یا نام‌کاربری یا تلفن همراه",
+  "birth-date":"تاریخ تولد",
+  "birth-date-required":"وارد کردن تاریخ تولد الزامی است."
 }
