@@ -17,7 +17,7 @@ export class TeacherServices {
   
   static deleteUsers(id: number | string) {
     return axios
-      .delete(`${process.env.BASE_URL}/api/Users/delete?id=${id}`)
+      .delete(`${process.env.BASE_URL}/api/Users/delete/${id}`)
       .then((res) => {
         return res ? res : [];
       });

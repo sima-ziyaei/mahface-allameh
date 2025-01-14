@@ -11,7 +11,7 @@ export class ImageServices {
 
   static getImageByImageId(id: string) {
     return axios
-      .get(`${process.env.BASE_URL}/api/Image/getByImageId?id=${id}`)
+      .get(`${process.env.BASE_URL}/api/Image/getByImageId/${id}`)
       .then((res) => {
         return res ? res : [];
       });
@@ -19,7 +19,7 @@ export class ImageServices {
 
   static deleteImage() {
     return axios
-      .delete(`${process.env.BASE_URL}/api/Image/DeleteImage?id=${id}`)
+      .delete(`${process.env.BASE_URL}/api/Image/DeleteImage/${id}`)
       .then((res) => {
         return res ? res : [];
       });
@@ -28,7 +28,7 @@ export class ImageServices {
   static uploadByChoosingFile(formData, id) {
     return axios({
       method: "post",
-      url: `${process.env.BASE_URL}/api/Image/DeleteImage?id=${id}`,
+      url: `${process.env.BASE_URL}/api/Image/DeleteImage/{id}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
