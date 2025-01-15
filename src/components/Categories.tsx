@@ -61,12 +61,12 @@ const Categories = () => {
         </div>
       ) : null}
 
-      <div className="container border border-solid mx-4 border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
+      <div className="container border border-solid mx-auto border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
         {allCourses?.map((course) => {
           return (
             <a
               href={`/course/${course.id}`}
-              className="  border border-solid border-gray-400 rounded-2xl p-4"
+              className="  border border-solid rounded-2xl p-4"
               key={course.id}
             >
               <img
@@ -82,20 +82,22 @@ const Categories = () => {
                 {course?.courseDescription}
               </p>
               <div className="flex gap-4 mt-6">
-                <div className="flex">
+                <div className="flex gap-1">
                   <img src="/assets/icons/teacher.svg" width={16} />
-                  {/* <p> {course?.students} {t['student']} </p>  */}
+                  <p className="text-sm text-zinc-600"> {course?.totalView} {t['student']} </p> 
                 </div>
 
-                <div className="flex">
+                <div className="flex gap-1">
                   <img src="/assets/icons/star.svg" width={16} />
-                  <p className="text-sm"> {course?.starsNumber} </p>
+                  <p className="text-sm text-zinc-600"> {course?.starsNumber} </p>
                 </div>
               </div>
 
 
-              <div className="bg-[#F7E7F1] p-3 rounded-md mt-3 ">
-                <p>{course?.cost} <span className="text-xs text-gray-500">  تومان </span></p>
+              <div className="bg-[#F7E7F1] p-3 rounded-lg mt-3 flex justify-between items-center ">
+                <p>{course?.cost} <span className="text-xs text-zinc-600">  تومان </span></p>
+            <button className="bg-[#B41474] py-2 px-6 rounded-lg text-white self-center"> {t['add-to-card']}  </button>
+              
               </div>
             </a>
           );

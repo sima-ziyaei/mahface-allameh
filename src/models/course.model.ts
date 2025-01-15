@@ -8,7 +8,7 @@ export interface Course {
   code: number;
   courseDescription?: string;
   createdUserID: string;
-  createdDate: string;
+  createdDate: Date;
   deletedUserID?: string;
   deletedDate?: string;
   isActive: boolean;
@@ -26,5 +26,6 @@ export interface Course {
   imageBase64: string,
   view: number,
   teacherName: string,
-  starsNumber: number
+  starsNumber: number,
+  totalView: number
 }

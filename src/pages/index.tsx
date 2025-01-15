@@ -6,6 +6,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import t from "../../i18next/locales/fa/translation.json";
+import MostRecentCourses from "@/components/MostRecentCourses";
+import MostPopularCourses from "@/components/MostPopularCourses";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +55,10 @@ export default function Home() {
         </Swiper>
         
         <Categories />
+
+        <MostRecentCourses />
+
+        <MostPopularCourses />
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>

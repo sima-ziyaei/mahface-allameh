@@ -24,7 +24,7 @@ const CourseHeader = ({ course }) => {
                 <div className="flex gap-8">
                     <div className="flex gap-2">
                         <IconEye className="stroke-white" />
-                        <p className="text-white"> {course?.view} </p>
+                        <p className=" text-white"> {course?.totalView} {t['student']} </p> 
                     </div>
                     <div className="flex gap-8">
                         <div className="flex gap-1">
