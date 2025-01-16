@@ -20,7 +20,7 @@ export class CategoriesServices {
 
   static getById(id: number | string) {
     return axios
-      .get(`${process.env.BASE_URL}/api/categories/getById?id=${id}`)
+      .get(`${process.env.BASE_URL}/api/categories/getById/${id}`)
       .then((res) => {
         return res ? res : [];
       });
@@ -28,7 +28,7 @@ export class CategoriesServices {
 
   static deleteCategory(id: number | string) {
     return axios
-      .delete(`${process.env.BASE_URL}/api/categories/isDeleted?id=${id}`)
+      .delete(`${process.env.BASE_URL}/api/categories/isDeleted/${id}`)
       .then((res) => {
         return res ? res : [];
       });
