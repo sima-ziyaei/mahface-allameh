@@ -1,6 +1,7 @@
 import Categories from "@/components/Categories";
 import Layout from "@/components/Layout";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
