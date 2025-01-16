@@ -59,5 +59,6 @@
   "course": "دوره",
   "tooman": "تومان ",
   "courses-cost": "قیمت دوره ها",
-  "amount-payable":"مبلغ قابل پرداخت"
+  "amount-payable":"مبلغ قابل پرداخت",
+  "pay": "پرداخت"
 }
