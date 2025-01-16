@@ -4,8 +4,11 @@ import { useCartContext } from "@/contexts/CartContext";
 
 const cart = () => {
     const { cartItems, setCartItems } = useCartContext();
-    const costs = 
-    console.log(cartItems)
+    const costs = cartItems.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.cost
+    }, 0);
+
+    console.log(costs)
     return (
         <Layout>
             <div className="container mx-auto mb-64 flex justify-between">
@@ -27,18 +30,22 @@ const cart = () => {
                                     <img onClick={() => {
                                         setCartItems((prev) => prev.filter((el) => el.id !== course.id));
                                         localStorage.setItem('cart', JSON.stringify(cartItems.filter((el) => el.id !== course.id)))
-                                    }} src="/assets/icons/close-circle.svg" />
+                                    }} src="/assets/icons/close-circle.svg" className="cursor-pointer" />
                                     <p className="text-[#B41474]"> {course.cost} {t['tooman']}</p>
                                 </div>
                             </div>)
                         })}
                     </div>
                 </div>
-                <div className="bg-white shadow-lg p-4 rounded-2xl flex flex-col gap-6">
-                        <div>
-                            <p></p>
-                            <p></p>
-                        </div>
+                <div className="bg-white min-w-[400px] shadow-lg p-4 rounded-2xl flex flex-col gap-6">
+                    <div className="flex justify-between">
+                        <p> {t['courses-cost']} </p>
+                        <p> {costs} </p>
+                    </div>
+                    <div>
+                        <p> {t['amount-payable']} </p>
+                        <p> {costs} </p>
+                    </div>
                 </div>
 
             </div>
