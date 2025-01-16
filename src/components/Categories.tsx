@@ -4,6 +4,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import t from "../../i18next/locales/fa/translation.json";
+import { useCartContext } from "@/contexts/CartContext";
+import AddToCartButton from "./AddToCartButton";
 
 const Categories = () => {
   const BASE_URL = process.env.BASE_URL;
@@ -11,6 +13,7 @@ const Categories = () => {
   const [allCourses, setAllCourses] = useState<Course[]>();
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>();
+  const { setCartItems } = useCartContext();
 
   useEffect(() => {
     axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
@@ -84,7 +87,7 @@ const Categories = () => {
               <div className="flex gap-4 mt-6">
                 <div className="flex gap-1">
                   <img src="/assets/icons/teacher.svg" width={16} />
-                  <p className="text-sm text-zinc-600"> {course?.totalView} {t['student']} </p> 
+                  <p className="text-sm text-zinc-600"> {course?.totalView} {t['student']} </p>
                 </div>
 
                 <div className="flex gap-1">
@@ -93,11 +96,9 @@ const Categories = () => {
                 </div>
               </div>
 
-
               <div className="bg-[#F7E7F1] p-3 rounded-lg mt-3 flex justify-between items-center ">
                 <p>{course?.cost} <span className="text-xs text-zinc-600">  تومان </span></p>
-            <button className="bg-[#B41474] py-2 px-6 rounded-lg text-white self-center"> {t['add-to-card']}  </button>
-              
+                <AddToCartButton course={course} />
               </div>
             </a>
           );

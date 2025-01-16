@@ -54,7 +54,7 @@ console.log(course)
           {navbarState === NavbarState.Content 
           ? <CourseContent course={course} />
         : navbarState === NavbarState.About
-        ? <p> {course.courseDescription} </p> 
+        ? <p> {course.description} </p> 
       : <CourseComments />}
          
         </div>

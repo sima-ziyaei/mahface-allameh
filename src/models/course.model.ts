@@ -27,5 +27,6 @@ export interface Course {
   view: number,
   teacherName: string,
   starsNumber: number,
-  totalView: number
+  totalView: number,
+  description: string
 }

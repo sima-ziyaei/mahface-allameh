@@ -22,7 +22,7 @@
   "successfully-signed-up": "حساب کاربری شما باموفقیت ساخته شد.",
   "loged-out": "از حساب کاربری  خود خارج شدید.",
   "account-expired": "حساب کاربری شما منقضی شده است لطفا دوباره وارد شوید.",
-  "add-to-card": "افزودن به سبد خرید",
+  "add-to-cart": "افزودن به سبد خرید",
   "time-of-video": " ساعت ویدیو ",
   "infinite-access": " دسترسی همیشگی به ویدیوها ",
   "ability-to-download-videos": "امکان دانلود ویدیو ها",
@@ -53,5 +53,11 @@
   "min": "دقیقه",
   "student": "دانشجو",
   "most-popular": "محبوب ترین ها",
-  "most-recent": "جدید ترین ها"
+  "most-recent": "جدید ترین ها",
+  "view-cart": "مشاهده سبد خرید",
+  "cart": "سبد خرید",
+  "course": "دوره",
+  "tooman": "تومان ",
+  "courses-cost": "قیمت دوره ها",
+  "amount-payable":"مبلغ قابل پرداخت"
 }

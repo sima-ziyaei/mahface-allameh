@@ -29,75 +29,75 @@ export default function Home() {
   ]
 
   return (
-    <main>
-      <Layout>
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination
-          centeredSlides
-          autoplay={{
-            delay: 1000,
-            disableOnInteraction: false,
-          }}
-          loop
-          speed={800}
-          slidesPerView={1}
-        >
-          <SwiperSlide>
-            <img src="/assets/Banner_Slider_Dsk3.webp" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="/assets/Dsk_1.webp" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="/assets/Dsk_4.webp" />
-          </SwiperSlide>
-        </Swiper>
-        
-        <Categories />
+      <main>
+        <Layout>
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            pagination
+            centeredSlides
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+            }}
+            loop
+            speed={800}
+            slidesPerView={1}
+          >
+            <SwiperSlide>
+              <img src="/assets/Banner_Slider_Dsk3.webp" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/assets/Dsk_1.webp" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/assets/Dsk_4.webp" />
+            </SwiperSlide>
+          </Swiper>
 
-        <MostRecentCourses />
+          <Categories />
 
-        <MostPopularCourses />
+          <MostRecentCourses />
 
-        <div>
-          <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>
-          <div className="flex gap-6 mb-10 mx-auto w-fit ">
-            <img width={100} height={100} src="/assets/esfahan.png" />
-            <img width={100} height={100} src="/assets/Frame_1491.png" />
-            <img width={100} height={100} src="/assets/Frame_1494_2.png" />
-            <img width={100} height={100} src="/assets/Frame_1492_2.png" />
-            <img width={100} height={100} src="/assets/Frame_1492.png" />
-            <img width={100} height={100} src="/assets/Frame_1493_2.png" />
-            <img width={100} height={100} src="/assets/Frame_1493.png" />
-            <img width={100} height={100} src="/assets/Frame_1494.png" />
-            <img width={100} height={100} src="/assets/Frame_1496.png" />
+          <MostPopularCourses />
 
+          <div>
+            <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>
+            <div className="flex gap-6 mb-10 mx-auto w-fit ">
+              <img width={100} height={100} src="/assets/esfahan.png" />
+              <img width={100} height={100} src="/assets/Frame_1491.png" />
+              <img width={100} height={100} src="/assets/Frame_1494_2.png" />
+              <img width={100} height={100} src="/assets/Frame_1492_2.png" />
+              <img width={100} height={100} src="/assets/Frame_1492.png" />
+              <img width={100} height={100} src="/assets/Frame_1493_2.png" />
+              <img width={100} height={100} src="/assets/Frame_1493.png" />
+              <img width={100} height={100} src="/assets/Frame_1494.png" />
+              <img width={100} height={100} src="/assets/Frame_1496.png" />
+
+            </div>
           </div>
-        </div>
 
-        <div className="mx-4 my-24">
-          <p className="mx-auto w-fit text-2xl my-6"> {t['from-you']} </p>
-          <Swiper modules={[Pagination, Autoplay]}
-          pagination
-          centeredSlides
-          autoplay={{
-            delay: 1000,
-            disableOnInteraction: false,
-          }}
-          loop
-          speed={800}
-          spaceBetween={16}
-          slidesPerView={1}>
+          <div className="mx-4 my-24">
+            <p className="mx-auto w-fit text-2xl my-6"> {t['from-you']} </p>
+            <Swiper modules={[Pagination, Autoplay]}
+              pagination
+              centeredSlides
+              autoplay={{
+                delay: 1000,
+                disableOnInteraction: false,
+              }}
+              loop
+              speed={800}
+              spaceBetween={16}
+              slidesPerView={1}>
             {comments.map((el)=> {
               return(<SwiperSlide className="bg-white border border-solid border-gray-200 rounded-2xl  p-6">
-                <p className="mb-4 text-lg"> {el.name} </p>
-                <p className="mr-4 text-zinc-800"> {el.comment} </p>
-              </SwiperSlide>)
-            })}
-          </Swiper>
-        </div>
-      </Layout>
-    </main>
+                  <p className="mb-4 text-lg"> {el.name} </p>
+                  <p className="mr-4 text-zinc-800"> {el.comment} </p>
+                </SwiperSlide>)
+              })}
+            </Swiper>
+          </div>
+        </Layout>
+      </main>
   );
 }

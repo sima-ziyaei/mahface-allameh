@@ -10,7 +10,7 @@ const CourseSideBar = ({course}) => {
         <p className=" mt-4 ">{course?.cost} تومان</p>
 
         <button className="bg-[#B41474] py-3 px-6 rounded-xl text-white self-center">
-          {t["add-to-card"]}{" "}
+          {t["add-to-cart"]}{" "}
         </button>
 
         <p className="self-start flex gap-2">
