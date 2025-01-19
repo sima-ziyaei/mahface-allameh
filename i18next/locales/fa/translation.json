@@ -73,6 +73,8 @@
   "email-required": "وارد کردن ایمیل الزامی است.",
   "invalid-email": "ایمیل وارد شده معتبر نمی باشد.",
   "username-required": "وارد کردن نام کاربری الزامی است.",
+  "firstname-required": "وارد کردن نام الزامی است.",
+  "lastname-required": "وارد کردن نام‌خانوادگی الزامی است.",
   "has-account": "آیا حساب دارید؟",
   "forgot-password": "آیا رمز عبور خود را فراموش کرده اید؟",
   "password-required": "وارد کردن رمز عبور الزامی است.",
@@ -84,5 +86,6 @@
   "email-or-username-or-phone-number-required": "نام کاربری یا ایمیل یا شماره تلفن همراه ضروری است",
   "email-username-number": " ایمیل یا نام‌کاربری یا تلفن همراه",
   "birth-date": "تاریخ تولد",
-  "birth-date-required": "وارد کردن تاریخ تولد الزامی است."
+  "birth-date-required": "وارد کردن تاریخ تولد الزامی است.",
+  "teach":"تدریس کنید!"
 }
