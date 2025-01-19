@@ -1,5 +1,5 @@
 import Categories from "@/components/Categories";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Inter } from "next/font/google";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,10 +8,15 @@ import 'swiper/css/pagination';
 import t from "../../i18next/locales/fa/translation.json";
 import MostRecentCourses from "@/components/MostRecentCourses";
 import MostPopularCourses from "@/components/MostPopularCourses";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Course } from "@/models/course.model";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [allCourses, setAllCourses] = useState<Course[]>();
+  const BASE_URL = process.env.BASE_URL;
 
   const comments = [
     {
@@ -27,6 +32,12 @@ export default function Home() {
       comment: 'Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘'
     }
   ]
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
+        setAllCourses(res.data);
+    });
+}, []);
 
   return (
       <main>
@@ -54,11 +65,11 @@ export default function Home() {
             </SwiperSlide>
           </Swiper>
 
-          <Categories />
+          <Categories allCourses={allCourses} />
 
-          <MostRecentCourses />
+          <MostRecentCourses allCourses={allCourses} />
 
-          <MostPopularCourses />
+          <MostPopularCourses allCourses={allCourses} />
 
           <div>
             <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>

@@ -8,7 +8,7 @@ const CourseCard = ({ course }) => {
     return (
         <a
             href={`/course/${course.id}`}
-            className=""
+            className="h-auto"
             key={course.id}
         >
             <img
@@ -35,7 +35,7 @@ const CourseCard = ({ course }) => {
                 </div>
             </div>
 
-            <div className="bg-[#F7E7F1] p-3 rounded-lg mt-3 flex justify-between items-center ">
+            <div className="bg-[#F7E7F1] p-3 rounded-lg mt-auto flex justify-between items-center ">
                 <p>{course?.cost} <span className="text-xs text-zinc-600">  {t['tooman']} </span></p>
                 <AddToCartButton course={course} />
             </div>

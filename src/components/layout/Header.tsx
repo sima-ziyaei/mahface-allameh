@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { FC, useState } from "react";
-import t from "../../i18next/locales/fa/translation.json";
+import t from "../../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import userImage from "../../public/assets/user.svg";
+import userImage from "../../../public/assets/user.svg";
 import toast from "react-hot-toast";
 import { FaPowerOff } from "react-icons/fa6";
 
@@ -16,6 +16,10 @@ const Header: FC = () => {
     toast(t["loged-out"]);
     router.push("/login");
   };
+
+  const handleSearch = () => {
+    
+  }
 
   return (
     <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
@@ -39,6 +43,7 @@ const Header: FC = () => {
         />
 
         <img
+        onClick={()=> handleSearch()}
           className="mr-4 cursor-pointer"
           src="/assets/search-normal.svg"
           alt="search"

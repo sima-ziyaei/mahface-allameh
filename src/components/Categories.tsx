@@ -4,23 +4,18 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import t from "../../i18next/locales/fa/translation.json";
-import { useCartContext } from "@/contexts/CartContext";
 import AddToCartButton from "./AddToCartButton";
+import { Swiper } from "swiper/react";
 
-const Categories = () => {
+const Categories = ({allCourses}) => {
   const BASE_URL = process.env.BASE_URL;
   const [courses, setCourses] = useState<Course[]>();
-  const [allCourses, setAllCourses] = useState<Course[]>();
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>();
-  const { setCartItems } = useCartContext();
 
   useEffect(() => {
     axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
       setCategories(res.data);
-    });
-    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
-      setAllCourses(res.data);
     });
   }, []);
 
@@ -31,6 +26,7 @@ const Categories = () => {
     });
   };
   console.log(allCourses)
+  
   return (
     <>
       <div className="flex gap-6 mt-6 mx-4">
@@ -65,7 +61,11 @@ const Categories = () => {
       ) : null}
 
       <div className="container border border-solid mx-auto border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
-        {allCourses?.map((course) => {
+
+        <Swiper >
+          
+        </Swiper>
+        {/* {allCourses?.map((course) => {
           return (
             <a
               href={`/course/${course.id}`}
@@ -102,7 +102,7 @@ const Categories = () => {
               </div>
             </a>
           );
-        })}
+        })} */}
       </div>
     </>
   );

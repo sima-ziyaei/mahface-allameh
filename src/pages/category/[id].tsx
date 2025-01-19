@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Course } from "@/models/course.model";
 import axios from "axios";
 import { useEffect, useState } from "react";

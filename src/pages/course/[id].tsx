@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Course } from "@/models/course.model";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ export async function getStaticProps({ params }) {
 }
 
 export enum NavbarState {
-  Content= 'content',
+  Content = 'content',
   Comment = 'comment',
   About = 'about'
 }
@@ -32,7 +32,7 @@ const CourseView = ({ params }) => {
   const BASE_URL = process.env.BASE_URL;
   const [navbarState, setNavbarState] = useState<NavbarState>(NavbarState.Content)
 
-console.log(course)
+  console.log(course)
 
   useEffect(() => {
     if (params) {
@@ -42,21 +42,21 @@ console.log(course)
     }
   }, [params]);
 
-  if(!course)
+  if (!course)
     return null;
 
   return (
     <Layout>
       <div className="flex">
-        <div>
+        <div className="w-[-webkit-fill-available]">
           <CourseHeader course={course} />
           <CourseNavbar setNavbarState={setNavbarState} navbarState={navbarState} />
-          {navbarState === NavbarState.Content 
-          ? <CourseContent course={course} />
-        : navbarState === NavbarState.About
-        ? <p> {course.description} </p> 
-      : <CourseComments />}
-         
+          {navbarState === NavbarState.Content
+            ? <CourseContent course={course} />
+            : navbarState === NavbarState.About
+              ? <p> {course.description} </p>
+              : <CourseComments />}
+
         </div>
         <CourseSideBar course={course} />
       </div>

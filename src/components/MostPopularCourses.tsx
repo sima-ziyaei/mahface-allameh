@@ -1,20 +1,9 @@
-import { Course } from "@/models/course.model";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import t from "../../i18next/locales/fa/translation.json";
 import CourseCard from "./course/CourseCard";
 
-const MostPopularCourses = () => {
-    const [allCourses, setAllCourses] = useState<Course[]>();
-    const BASE_URL = process.env.BASE_URL;
-
-    useEffect(() => {
-        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
-            setAllCourses(res.data);
-        });
-    }, []);
+const MostPopularCourses = ({allCourses}) => {
 
    const courses = allCourses?.sort((a, b) => b.totalView - a.totalView).slice(0, 10);
 
@@ -29,7 +18,7 @@ const MostPopularCourses = () => {
             <h3 className="text-xl"> {t['most-popular']} </h3>
             {courses?.map((course) => {
                 return (
-                    <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl h-fit">
+                    <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
                        <CourseCard course={course} />
                     </SwiperSlide>
                 )
