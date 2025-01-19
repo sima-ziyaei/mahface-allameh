@@ -33,7 +33,7 @@ const CourseView = ({ params }) => {
           console.log(res.data);
         });
 
-        axios.get(`${BASE_URL}/api/Course/GetAllCourses`).then((res) => {
+        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
             const course = res.data.filter((el) => el.categoryId === params?.id);
             setCourses(course);
             // axios
@@ -49,7 +49,7 @@ const CourseView = ({ params }) => {
         <img />
       {courses?.map((course) => {
           return (
-            <div
+            <a  href={`/course/${course.id}`}
               className=" border border-solid border-gray-400 flex gap-4 rounded-2xl p-4 mb-4"
               key={course.id}
             >
@@ -68,7 +68,7 @@ const CourseView = ({ params }) => {
               </p>
 </div>
               
-            </div>
+            </a>
           );
         })}
       </div>
