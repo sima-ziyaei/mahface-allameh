@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
-import t from "../../../i18next/locales/fa";
+import t from "../../../i18next/locales/fa/translation.json";
 import axios from "axios";
 import {useRouter} from "next/router";
 import toast, {Toaster} from "react-hot-toast";
