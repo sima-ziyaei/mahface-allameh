@@ -19,7 +19,9 @@ const Header: FC = () => {
   };
 
   return (
+
     <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
+      
       <div
         onClick={() => router.push("/")}
         className="flex gap-4 cursor-pointer items-center"
@@ -48,8 +50,13 @@ const Header: FC = () => {
       </div>
 
       <div className="flex items-center justify-center gap-8">
-        
-        <Button variant="contained" onClick={() => router.push("/teacher")}>
+
+        <Button
+          variant="contained"
+          onClick={() => router.push("/teacher")}
+          size="large"
+          sx={{ fontSize: 20, px: 4, backgroundColor: "#009CA7" }}
+        >
           {t["teach"]}
         </Button>
 

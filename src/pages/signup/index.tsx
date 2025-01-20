@@ -177,11 +177,13 @@ const Signup = () => {
         >
           {t.signup}
         </button>
+
         <Link href="/login">
           <span className="text-medium text-blue-600 cursor-pointer">
             {t["has-account"]}
           </span>
         </Link>
+        
       </form>
 
       <img src={"/assets/login.jpg"} className="w-[50%] h-30 h-full" />

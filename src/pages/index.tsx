@@ -67,12 +67,11 @@ export default function Home() {
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">
-            {" "}
             {
               t[
                 "cooperation-with-the-best-universities-and-educational-institutions"
               ]
-            }{" "}
+            }
           </h4>
           <div className="flex gap-6 mb-10 mx-auto w-fit ">
             <img width={100} height={100} src="/assets/esfahan.png" />
