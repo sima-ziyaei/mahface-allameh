@@ -1,14 +1,14 @@
 import Layout from "@/components/layout/Layout";
 import { Course } from "@/models/course.model";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import { Category } from "@/models/category.model";
+import { CourseServices } from "@/services/Course";
+import { CategoriesServices } from "@/services/Categories";
 
 export async function getStaticPaths() {
   let catgegories = [];
-  axios
-    .get(`${process.env.BASE_URL}/api/Categories/GetAll`)
+  CategoriesServices.getAll()
     .then((res) => res.data.map((el) => [catgegories.push(el.id)]));
 
   return { paths: catgegories, fallback: false };
@@ -20,20 +20,18 @@ export async function getStaticProps({ params }) {
 
 const CourseView = ({ params }) => {
   const [catgegory, setCategory] = useState<Category>();
-  const BASE_URL = process.env.BASE_URL;
-  const [base64Image, setbase64Image] = useState<string>();
+  // const [base64Image, setbase64Image] = useState<string>();
   const [courses, setCourses] = useState<Course[]>();
 
   useEffect(() => {
     if (params) {
-      axios
-        .get(`${BASE_URL}/api/Categories/GetById?id=${params?.id}`)
+        CategoriesServices.getById(params?.id)
         .then((res) => {
           setCategory(res.data);
           console.log(res.data);
         });
 
-        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
+        CourseServices.getAll().then((res) => {
             const course = res.data.filter((el) => el.categoryId === params?.id);
             setCourses(course);
             // axios

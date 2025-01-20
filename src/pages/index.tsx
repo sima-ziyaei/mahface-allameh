@@ -9,14 +9,14 @@ import t from "../../i18next/locales/fa/translation.json";
 import MostRecentCourses from "@/components/MostRecentCourses";
 import MostPopularCourses from "@/components/MostPopularCourses";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Course } from "@/models/course.model";
+import { CourseServices } from "@/services/Course";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [allCourses, setAllCourses] = useState<Course[]>();
-  const BASE_URL = process.env.BASE_URL;
+  const [loadingCourses, setLoadingCourses] = useState<boolean>()
 
   const comments = [
     {
@@ -34,8 +34,10 @@ export default function Home() {
   ]
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
+    setLoadingCourses(true);
+    CourseServices.getAll().then((res) => {
         setAllCourses(res.data);
+        setLoadingCourses(false)
     });
 }, []);
 
@@ -67,9 +69,9 @@ export default function Home() {
 
           <Categories allCourses={allCourses} />
 
-          <MostRecentCourses allCourses={allCourses} />
+          <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
 
-          <MostPopularCourses allCourses={allCourses} />
+          <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
 
           <div>
             <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>

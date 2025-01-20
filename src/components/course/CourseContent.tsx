@@ -2,7 +2,10 @@ import t from "../../../i18next/locales/fa/translation.json";
 
 const CourseContent = ({course}) => {
     const sectionLength = course.seasons.reduce((accumulator, currentValue)=>{
-        return accumulator + currentValue.sections?.length
+        if(currentValue.sections?.length){
+            return accumulator + currentValue.sections?.length;
+        }
+        return 0;
     }, 0);
 
     const numberToHourMin = (number) => {

@@ -1,17 +1,16 @@
 import Layout from "@/components/layout/Layout";
 import { Course } from "@/models/course.model";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import CourseContent from "@/components/course/CourseContent";
 import CourseHeader from "@/components/course/CourseHeader";
 import CourseSideBar from "@/components/course/CourseSideBar";
 import CourseNavbar from "@/components/course/CourseNavbar";
 import CourseComments from "@/components/course/CourseComments";
+import { CourseServices } from "@/services/Course";
 
 export async function getStaticPaths() {
   let courses = [];
-  axios
-    .get(`${process.env.BASE_URL}/api/Course/GetAllCourses`)
+  CourseServices.getAll()
     .then((res) => res.data.map((el) => [courses.push(el.id)]));
 
   return { paths: courses, fallback: false };
@@ -29,17 +28,17 @@ export enum NavbarState {
 
 const CourseView = ({ params }) => {
   const [course, setCourse] = useState<Course>();
-  const BASE_URL = process.env.BASE_URL;
   const [navbarState, setNavbarState] = useState<NavbarState>(NavbarState.Content)
 
   console.log(course)
 
   useEffect(() => {
     if (params) {
-      axios.get(`${BASE_URL}/GetById/${params?.id}`).then((res) => {
-        setCourse(res.data);
-      });
+      CourseServices.getById(params.id).then(res => {
+        setCourse(res.data)
+      })
     }
+    
   }, [params]);
 
   if (!course)

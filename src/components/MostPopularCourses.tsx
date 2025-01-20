@@ -2,8 +2,9 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import t from "../../i18next/locales/fa/translation.json";
 import CourseCard from "./course/CourseCard";
+import CourseCardSkeleton from "./course/CourseCardSkeleton";
 
-const MostPopularCourses = ({allCourses}) => {
+const MostPopularCourses = ({allCourses, loading}) => {
 
    const courses = allCourses?.sort((a, b) => b.totalView - a.totalView).slice(0, 10);
 
@@ -13,10 +14,18 @@ const MostPopularCourses = ({allCourses}) => {
             modules={[Pagination]}
             pagination
             slidesPerView={'auto'}
-            className="container !flex flex-col-reverse gap-4 border border-solid mx-4 border-gray-200 rounded-2xl !p-6 mt-16 ">
+            className="container !flex flex-col-reverse gap-4 border border-solid mx-4 !pb-10 border-gray-200 rounded-2xl !p-6 mt-16 ">
 
             <h3 className="text-xl"> {t['most-popular']} </h3>
-            {courses?.map((course) => {
+            {loading
+            ? Array.from(Array(10)).map((el) => {
+                return (
+                    <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                        <CourseCardSkeleton />
+                    </SwiperSlide>
+                )
+            })
+            :courses?.map((course) => {
                 return (
                     <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
                        <CourseCard course={course} />
