@@ -12,6 +12,7 @@ import MostPopularCourses from "@/components/MostPopularCourses";
 import { useEffect, useState } from "react";
 import { Course } from "@/models/course.model";
 import { CourseServices } from "@/services/Course";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,6 +48,9 @@ export default function Home() {
 
   return (
     <main>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
       <Layout>
         <Swiper
           modules={[Pagination, Autoplay]}
@@ -72,13 +76,10 @@ export default function Home() {
         </Swiper>
 
         <Categories allCourses={allCourses} />
-  
 
         <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
-  
 
         <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
-  
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">

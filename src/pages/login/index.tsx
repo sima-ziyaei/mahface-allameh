@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import t from "../../../i18next/locales/fa/translation.json";
@@ -8,16 +8,14 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import { AccountServices } from "@/services/Account";
-
+import ConfirmationCodeDialog from "@/components/ConfirmationCodeDialog";
 
 const loginSchema = z.object({
   userNameOrEmailORPhoneNumber: z
     .string()
     .min(1, "email-or-username-or-phone-number-required"),
-  password: z
-    .string()
-    .min(6, "Password-must-be-at-leaset-6-characters-long")
-    .regex(/[A-Z]{1}/, "password-must-contain-english-word"),
+  password: z.string().min(6, "Password-must-be-at-leaset-6-characters-long"),
+  // .regex(/[A-Z]{1}/, "password-must-contain-english-word"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -25,6 +23,12 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+    value: "",
+  });
+
   const router = useRouter();
 
   const {
@@ -44,20 +48,60 @@ const Login = () => {
     setLoading(true);
     AccountServices.login(data)
       .then((res) => {
-        console.log(res);
-        setLoading(false);
-        localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
-        toast.success(t["successfully-loggin"]);
-        console.log(res);
-        router.push("/");
+        if (res.data.isValid) {
+          setLoading(false);
+          localStorage.setItem("userInfo", res.data);
+          setUserId(res.data.userId);
+
+          if (res.data.emailConFirm) {
+            router.push("/");
+            toast.success(res.data.statusMessage);
+            return;
+          } else {
+            setConfirmDialog({ open: true, value: "" });
+            return;
+          }
+        } else if (!res.data.isValid) {
+          toast.error(res.data.statusMessage);
+          return;
+        }
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(err.response.data.statusMessage);
-        console.error(err.response.data.statusMessage);
+        toast.error(err?.response?.data?.statusMessage);
+        console.error(err?.response?.data?.statusMessage);
       });
   };
+
+  function handleCoinfirmationCode() {
+    if (confirmDialog.value.trim().length !== 4) {
+      toast.error("کد تایید چهار رقم می‌باشد.");
+      return;
+    }
+    if (userId.trim() === "") {
+      toast.error("ابتدا نیاز است دوباره لاگین کنید");
+      return;
+    }
+    AccountServices.checkOtp(userId, confirmDialog.value)
+      .then((res) => {
+        if (res.data.isValid) {
+          setConfirmDialog({ open: false, value: "" });
+          router.push("/");
+          toast.success(res.data.statusMessage);
+          return;
+        } else {
+          toast.error(res.data.statusMessage);
+          return;
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
+
+  function setter(value) {
+    setConfirmDialog((prev) => ({ ...prev, value: value }));
+  }
 
   return (
     <div className="h-screen w-screen flex  items-center justify-center">
@@ -108,6 +152,13 @@ const Login = () => {
       </form>
       <img src={"/assets/login.jpg"} className="w-[50%] h-full" />
       <Toaster position="bottom-left" toastOptions={{ duration: 2000 }} />
+      <ConfirmationCodeDialog
+        onSubmit={handleCoinfirmationCode}
+        handleClose={() => setConfirmDialog({ value: "", open: false })}
+        open={confirmDialog.open}
+        confirmationInput={confirmDialog.value}
+        setConfirmationCode={setter}
+      />
     </div>
   );
 };
