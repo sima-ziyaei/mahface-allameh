@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import {
   Accordion,
   AccordionDetails,
@@ -85,12 +85,12 @@ function Teacher() {
         </div>
 
         <div className="flex flex-col gap-8 w-60 items-center justify-center">
-          <span className="font-bold text-5xl text-white">+1 میلیون</span>
+          <span className="font-bold text-5xl text-white">+۱ میلیون</span>
           <span className="text-2xl text-white">دانشجو</span>
         </div>
 
         <div className="flex flex-col gap-8 w-60 items-center justify-center">
-          <span className="font-bold text-5xl text-white">+۲میلیون</span>
+          <span className="font-bold text-5xl text-white">+۲ میلیون</span>
           <span className="text-2xl text-white">ثبت نام</span>
         </div>
       </div>

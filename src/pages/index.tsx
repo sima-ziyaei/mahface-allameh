@@ -17,8 +17,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [allCourses, setAllCourses] = useState<Course[]>();
-  const [loadingCourses, setLoadingCourses] = useState<boolean>()
-
+  const [loadingCourses, setLoadingCourses] = useState<boolean>();
 
   const comments = [
     {
@@ -32,23 +31,19 @@ export default function Home() {
         "دوره کارشناسی همیشه دوست داشتم دروسی مثل مکانیک سیالات و ترمودینامیک و... رو با تدریس چندتا استاد بخونم تا اینکه یه روز بصورت اتفاقی با سایت مکتب خونه آشنا شدم که فیلم کلاسهای دانشگاه‌های درجه یک رو منتشر کرده بودن. اما قضیه وقتی برام جذاب‌تر شد که با دوره‌های مکتب پلاسشون آشنا شدم و برای پروژه پایانی کارشناسی‌ام که با نرم افزار انسیس فلوئنت کار میکردم از این دوره کمک گرفتم و حتی جذاب‌تر از اون هم این بود که با اینکه پروژه و سوالاتم خارج از درس بود ولی استاد دوره کاملا با حوصله بهم کمک کرد و مشاوره داد.",
     },
     {
-      name: 'اشکان رضوی زاده',
-      comment: 'Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘'
-    }
-  ]
-
-  useEffect(() => {
-    setLoadingCourses(true);
-    CourseServices.getAll().then((res) => {
-        setAllCourses(res.data);
-        setLoadingCourses(false)
-    });
-}, []);
       name: "اشکان رضوی زاده",
       comment:
         "Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘",
     },
   ];
+
+  useEffect(() => {
+    setLoadingCourses(true);
+    CourseServices.getAll().then((res) => {
+      setAllCourses(res.data);
+      setLoadingCourses(false);
+    });
+  }, []);
 
   return (
     <main>
@@ -76,14 +71,14 @@ export default function Home() {
           </SwiperSlide>
         </Swiper>
 
-          <Categories allCourses={allCourses} />
-        <Categories />
+        <Categories allCourses={allCourses} />
+  
 
-          <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
-        <MostRecentCourses />
+        <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
+  
 
-          <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
-        <MostPopularCourses />
+        <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
+  
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">
