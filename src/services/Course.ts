@@ -3,33 +3,33 @@ import axios from "axios";
 export class CourseServices {
   static getById(id: string) {
     return axios
-      .get(`${process.env.BASE_URL}/api/Course/getById/${id}`)
+      .get(`${process.env.BASE_URL}/GetById/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
   static getAll() {
     return axios
-      .get(`${process.env.BASE_URL}/api/Course/getAllCourses`)
+      .get(`${process.env.BASE_URL}/GetAllCourses`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
   static add(body) {
     return axios
-      .post(`${process.env.BASE_URL}/api/Course/addCourse`, body)
+      .post(`${process.env.BASE_URL}/AddCourse`, body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
   static delete(id:string) {
     return axios
-      .delete(`${process.env.BASE_URL}/api/Course/${id}`)
+      .delete(`${process.env.BASE_URL}/DeleteCourse/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 }

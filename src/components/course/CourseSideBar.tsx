@@ -1,4 +1,5 @@
 import t from "../../../i18next/locales/fa/translation.json";
+import AddToCartButton from "../AddToCartButton";
 
 const CourseSideBar = ({course}) => {
     return (
@@ -8,20 +9,18 @@ const CourseSideBar = ({course}) => {
           src={`data:image/png;base64,${course?.imageBase64}`}
         />
         <p className=" mt-4 ">{course?.cost} تومان</p>
-
-        <button className="bg-[#B41474] py-3 px-6 rounded-xl text-white self-center">
-          {t["add-to-cart"]}{" "}
-        </button>
+        
+        <AddToCartButton course={course} />
 
         <p className="self-start flex gap-2">
-          <img src="/assets/icons/play-circle.svg" /> {t["time-of-video"]}{" "}
+          <img src="/assets/icons/play-circle.svg" /> {t["time-of-video"]}
         </p>
         <p className="self-start flex gap-2">
-          <img src="/assets/icons/unlimited.svg" /> {t["infinite-access"]}{" "}
+          <img src="/assets/icons/unlimited.svg" /> {t["infinite-access"]}
         </p>
         <p className="self-start flex gap-2">
-          <img src="/assets/icons/download.svg" />{" "}
-          {t["ability-to-download-videos"]}{" "}
+          <img src="/assets/icons/download.svg" />
+          {t["ability-to-download-videos"]}
         </p>
       </div>
     )

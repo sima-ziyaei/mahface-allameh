@@ -1,5 +1,5 @@
 import Categories from "@/components/Categories";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -9,10 +9,15 @@ import "swiper/css/pagination";
 import t from "../../i18next/locales/fa/translation.json";
 import MostRecentCourses from "@/components/MostRecentCourses";
 import MostPopularCourses from "@/components/MostPopularCourses";
+import { useEffect, useState } from "react";
+import { Course } from "@/models/course.model";
+import { CourseServices } from "@/services/Course";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [allCourses, setAllCourses] = useState<Course[]>();
+  const [loadingCourses, setLoadingCourses] = useState<boolean>()
 
 
   const comments = [
@@ -27,6 +32,18 @@ export default function Home() {
         "دوره کارشناسی همیشه دوست داشتم دروسی مثل مکانیک سیالات و ترمودینامیک و... رو با تدریس چندتا استاد بخونم تا اینکه یه روز بصورت اتفاقی با سایت مکتب خونه آشنا شدم که فیلم کلاسهای دانشگاه‌های درجه یک رو منتشر کرده بودن. اما قضیه وقتی برام جذاب‌تر شد که با دوره‌های مکتب پلاسشون آشنا شدم و برای پروژه پایانی کارشناسی‌ام که با نرم افزار انسیس فلوئنت کار میکردم از این دوره کمک گرفتم و حتی جذاب‌تر از اون هم این بود که با اینکه پروژه و سوالاتم خارج از درس بود ولی استاد دوره کاملا با حوصله بهم کمک کرد و مشاوره داد.",
     },
     {
+      name: 'اشکان رضوی زاده',
+      comment: 'Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘'
+    }
+  ]
+
+  useEffect(() => {
+    setLoadingCourses(true);
+    CourseServices.getAll().then((res) => {
+        setAllCourses(res.data);
+        setLoadingCourses(false)
+    });
+}, []);
       name: "اشکان رضوی زاده",
       comment:
         "Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘",
@@ -59,10 +76,13 @@ export default function Home() {
           </SwiperSlide>
         </Swiper>
 
+          <Categories allCourses={allCourses} />
         <Categories />
 
+          <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
         <MostRecentCourses />
 
+          <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
         <MostPopularCourses />
 
         <div>
