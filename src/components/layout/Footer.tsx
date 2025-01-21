@@ -1,4 +1,4 @@
-import t from "../../i18next/locales/fa/translation.json";
+import t from "../../../i18next/locales/fa/translation.json";
 
 const Footer = () => {
   return (

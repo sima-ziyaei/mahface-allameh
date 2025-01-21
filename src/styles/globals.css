@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "NotoNaskh Medium";
+  src: url(/fonts/NotoNaskhArabic-Medium.ttf);
+}
+
 * {
   direction: rtl;
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: "NotoNaskh Medium" ;
+}
+body{
+  background-color: #F9F9FB;
 }
 
 .default-input{

@@ -1,5 +1,5 @@
 import Categories from "@/components/Categories";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -9,10 +9,15 @@ import 'swiper/css/pagination';
 import t from "../../i18next/locales/fa/translation.json";
 import MostRecentCourses from "@/components/MostRecentCourses";
 import MostPopularCourses from "@/components/MostPopularCourses";
+import { useEffect, useState } from "react";
+import { Course } from "@/models/course.model";
+import { CourseServices } from "@/services/Course";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [allCourses, setAllCourses] = useState<Course[]>();
+  const [loadingCourses, setLoadingCourses] = useState<boolean>()
 
   const comments = [
     {
@@ -28,6 +33,14 @@ export default function Home() {
       comment: 'Your training tutorials really helped me and I really appreciate Maktabkhooneh and his kind stuffs. Thank you Maktabkhooneh for helping and developing me. 😘😘'
     }
   ]
+
+  useEffect(() => {
+    setLoadingCourses(true);
+    CourseServices.getAll().then((res) => {
+        setAllCourses(res.data);
+        setLoadingCourses(false)
+    });
+}, []);
 
   return (
       <main>
@@ -55,11 +68,11 @@ export default function Home() {
             </SwiperSlide>
           </Swiper>
 
-          <Categories />
+          <Categories allCourses={allCourses} />
 
-          <MostRecentCourses />
+          <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
 
-          <MostPopularCourses />
+          <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
 
           <div>
             <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl"> {t["cooperation-with-the-best-universities-and-educational-institutions"]} </h4>

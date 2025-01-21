@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Course } from "@/models/course.model";
+import { CourseServices } from "@/services/Course";
 
 const Courses = () => {
-  const BASE_URL = process.env.BASE_URL;
   const [courses, setCourses] = useState<Course[]>();
 
     useEffect(()=>{
-        axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
+        CourseServices.getAll().then((res) => {
             setCourses(res.data);
           });
     },[])

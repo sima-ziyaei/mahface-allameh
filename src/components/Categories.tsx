@@ -1,40 +1,39 @@
 import { Category } from "@/models/category.model";
 import { Course } from "@/models/course.model";
-import axios from "axios";
+import { CategoriesServices } from "@/services/Categories";
+import { CourseServices } from "@/services/Course";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import t from "../../i18next/locales/fa/translation.json";
-import { useCartContext } from "@/contexts/CartContext";
-import AddToCartButton from "./AddToCartButton";
+import { Swiper } from "swiper/react";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 
-const Categories = () => {
-  const BASE_URL = process.env.BASE_URL;
+const Categories = ({allCourses}) => {
   const [courses, setCourses] = useState<Course[]>();
-  const [allCourses, setAllCourses] = useState<Course[]>();
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>();
-  const { setCartItems } = useCartContext();
+  const [loading, setLoading] = useState<boolean>()
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
+    setLoading(true);
+    CategoriesServices.getAll().then((res) => {
       setCategories(res.data);
-    });
-    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
-      setAllCourses(res.data);
+      setLoading(false)
     });
   }, []);
 
   const getCourses = (id) => {
-    axios.get(`${BASE_URL}/GetAllCourses`).then((res) => {
+    CourseServices.getAll().then((res) => {
       const course = res.data.filter((el) => el.categoryId === id);
       setCourses(course);
     });
   };
   console.log(allCourses)
+  
   return (
     <>
       <div className="flex gap-6 mt-6 mx-4">
-        {categories?.map((el) => {
+        {loading ? <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  : categories?.map((el) => {
           return (
             <p
               onMouseEnter={() => getCourses(el.id)}
@@ -65,7 +64,11 @@ const Categories = () => {
       ) : null}
 
       <div className="container border border-solid mx-auto border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
-        {allCourses?.map((course) => {
+
+        <Swiper >
+          
+        </Swiper>
+        {/* {allCourses?.map((course) => {
           return (
             <a
               href={`/course/${course.id}`}
@@ -102,7 +105,7 @@ const Categories = () => {
               </div>
             </a>
           );
-        })}
+        })} */}
       </div>
     </>
   );

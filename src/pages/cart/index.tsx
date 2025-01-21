@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout";
-import t from '../../i18next/locales/fa/translation.json';
+import Layout from "@/components/layout/Layout";
+import t from '../../../i18next/locales/fa/translation.json';
 import { useCartContext } from "@/contexts/CartContext";
 
 const cart = () => {
@@ -11,12 +11,13 @@ const cart = () => {
     console.log(costs)
     return (
         <Layout>
-            <div className="container mx-auto mb-64 flex justify-between">
+            <div className="container mx-auto mb-64 flex gap-6 justify-between">
                 <div className="w-[-webkit-fill-available]">
-                    <h1 className="p-4"> {t['cart']} ({cartItems.length}) {t['course']} </h1>
-                    <div className="flex flex-col gap-4 p-4">
-                        {cartItems?.map((course) => {
-                            return (<div key={course.id} className="p-4 gap-4 flex border border-solid border-slate-700 rounded-xl">
+                    <h1 className="my-6 text-2xl"> {t['cart']} ({cartItems.length}) {t['course']} </h1>
+                    <div className="flex flex-col gap-4">
+                        {cartItems.length
+                        ? cartItems?.map((course) => {
+                            return (<div key={course.id} className="p-4 bg-white gap-4 flex border border-solid border-slate-300 rounded-xl">
                                 <img
                                     src={`data:image/png;base64,${course.imageBase64}`}
                                     alt="course"
@@ -34,18 +35,29 @@ const cart = () => {
                                     <p className="text-[#B41474]"> {course.cost} {t['tooman']}</p>
                                 </div>
                             </div>)
-                        })}
+                        })
+                    : <img src="/assets/empty-cart.webp" />
+                    }
+                        
                     </div>
                 </div>
-                <div className="bg-white min-w-[400px] shadow-lg p-4 rounded-2xl flex flex-col gap-6">
+                <div className="bg-white min-w-[400px] max-h-[245px] mt-20 p-4 rounded-2xl flex flex-col gap-6">
                     <div className="flex justify-between">
                         <p> {t['courses-cost']} </p>
                         <p> {costs} </p>
                     </div>
-                    <div>
+                    <div className="flex justify-between">
                         <p> {t['amount-payable']} </p>
                         <p> {costs} </p>
                     </div>
+                    {costs === 0
+                        ? <div className="p-4 flex items-center justify-center mt-auto w-full rounded-md bg-[#B41474] text-white text-xl cursor-not-allowed">
+                            {t['pay']}
+                        </div>
+                        : <a href={'/cart/payment'} className="p-4 flex items-center justify-center mt-auto w-full rounded-md bg-[#B41474] text-white text-xl">
+                            {t['pay']}
+                        </a>}
+
                 </div>
 
             </div>

@@ -2,7 +2,7 @@ import { Toaster, toast } from "react-hot-toast";
 import Header from "./Header";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import t from "../../i18next/locales/fa/translation.json";
+import t from "../../../i18next/locales/fa/translation.json";
 import Footer from "./Footer";
 
 const Layout = ({ children }) => {

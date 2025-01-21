@@ -59,6 +59,11 @@
   "course": "دوره",
   "tooman": "تومان ",
   "courses-cost": "قیمت دوره ها",
+  "amount-payable":"مبلغ قابل پرداخت",
+  "pay": "پرداخت",
+  "cancel":"انصراف",
+  "failed-pay": " پرداخت شما موفقیت آمیز نبود، سفارش شما در انتظار پرداخت است.",
+  "success-pay": "باتشکر از پرداخت شما، سفارش شما ثبت شد"
   "amount-payable": "مبلغ قابل پرداخت",
   "login": "ورود",
   "educational_system_of_allameh_tabatabaei_university": "سامانه آموزشی دانشگاه علامه طباطبایی",

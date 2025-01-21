@@ -5,6 +5,7 @@ const CartContext = createContext(null);
 
 export const CartContextProvider = ({children}) => {
     const [cartItems, setCartItems] = useState<Course[]>([]);
+    const [solution, setSolution] = useState<boolean>();
 
     useEffect(() => {
         const cartItemsData = JSON.parse(localStorage.getItem('cart'))
@@ -14,7 +15,7 @@ export const CartContextProvider = ({children}) => {
     }, [])
 
     return (
-        <CartContext.Provider value={{cartItems, setCartItems}}>
+        <CartContext.Provider value={{cartItems, setCartItems, setSolution, solution}}>
             {children}
         </CartContext.Provider>
     )
