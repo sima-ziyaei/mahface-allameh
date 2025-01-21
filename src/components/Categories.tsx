@@ -2,37 +2,49 @@ import { Category } from "@/models/category.model";
 import { Course } from "@/models/course.model";
 import { CategoriesServices } from "@/services/Categories";
 import { CourseServices } from "@/services/Course";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Swiper } from "swiper/react";
-import Skeleton from 'react-loading-skeleton';
+import { Swiper, SwiperSlide } from "swiper/react";
 import 'react-loading-skeleton/dist/skeleton.css'
+import CourseCard from "./course/CourseCard";
+import { Pagination } from "swiper/modules";
+import CourseCardSkeleton from "./course/CourseCardSkeleton";
+import Skeleton from "react-loading-skeleton";
 
-const Categories = ({allCourses}) => {
-  const [courses, setCourses] = useState<Course[]>();
-  const router = useRouter();
+const Categories = ({ allCourses }) => {
   const [categories, setCategories] = useState<Category[]>();
-  const [loading, setLoading] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>();
+  const [categoryLoading, setCategoryLoading] = useState<boolean>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
+  const [selectedCategoryCourses, setSelectedCategoryCourses] = useState<Course[]>();
 
   useEffect(() => {
-    setLoading(true);
+    setCategoryLoading(true);
     CategoriesServices.getAll().then((res) => {
       setCategories(res.data);
-      setLoading(false)
+      setSelectedCategoryId(res.data[0].id);
+      setCategoryLoading(false);
     });
   }, []);
-
-  const getCourses = (id) => {
-    CourseServices.getAll().then((res) => {
-      const course = res.data.filter((el) => el.categoryId === id);
-      setCourses(course);
-    });
-  };
-  console.log(allCourses)
   
+  const getSelectedCategory = (id) => {
+    setLoading(true);
+    CourseServices.getWithCategoryId(id).then((res) => {
+      setSelectedCategoryCourses(res.data);
+      setLoading(false);
+    })
+  }
+
+
+  useEffect(()=>{
+    if(selectedCategoryId)
+      getSelectedCategory(selectedCategoryId);
+  }, [selectedCategoryId]);
+
+  console.log(allCourses)
+
   return (
     <>
-      <div className="flex gap-6 mt-6 mx-4">
+      {/* <div className="flex gap-6 mt-6 mx-4">
         {loading ? <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  : categories?.map((el) => {
           return (
             <p
@@ -61,51 +73,42 @@ const Categories = ({allCourses}) => {
             );
           })}
         </div>
-      ) : null}
+      ) : null} */}
 
-      <div className="container border border-solid mx-auto border-gray-200 rounded-2xl grid grid-cols-4 gap-6 p-6 mt-16 ">
+      <div className="container border border-solid flex flex-col mx-auto border-gray-200 rounded-2xl gap-6 p-6 mt-16 ">
+        <div className="flex w-max h-fit">
+          {categoryLoading
+          ?  <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  
+          : categories?.map((el) => {
+            return (
+              <p onClick={() => { setSelectedCategoryId(el.id); getSelectedCategory(el.id); }} className={` ${selectedCategoryId === el.id? 'border-[#009CA7]': ' border-gray-300'} cursor-pointer border-b-2 border-solid p-4`}> {el.title} </p>
+            )
+          })}
+        </div>
+        <Swiper spaceBetween={16}
+          modules={[Pagination]}
+          pagination
+          slidesPerView={'auto'}
+          className="w-full" >
+          {loading || categoryLoading
+            ? Array.from(Array(10)).map((el) => {
+                return (
+                    <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                        <CourseCardSkeleton />
+                    </SwiperSlide>
+                )
+            })
+            : !selectedCategoryCourses?.length && !categoryLoading  
+            ? <img src="/assets/Course-not-Found.jpg" className="mx-auto h-[400px]" /> 
+          : selectedCategoryCourses?.map((el) => {
+            return (
+              <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                <CourseCard course={el} />
+              </SwiperSlide>
+            )
+          })}
 
-        <Swiper >
-          
         </Swiper>
-        {/* {allCourses?.map((course) => {
-          return (
-            <a
-              href={`/course/${course.id}`}
-              className="  border border-solid rounded-2xl p-4"
-              key={course.id}
-            >
-              <img
-                src={`data:image/png;base64,${course.imageBase64}`}
-                alt="course"
-                className=" h-[200px]"
-              />
-
-              <h1 className=" text-xl mt-4"> {course?.title}</h1>
-              <p className=" mt-3 text-sm text-zinc-600">{t["course-teacher"]} : {course.teacherName}</p>
-
-              <p className=" mt-6 text-sm text-slate-700 overflow-hidden text-ellipsis line-clamp-2">
-                {course?.courseDescription}
-              </p>
-              <div className="flex gap-4 mt-6">
-                <div className="flex gap-1">
-                  <img src="/assets/icons/teacher.svg" width={16} />
-                  <p className="text-sm text-zinc-600"> {course?.totalView} {t['student']} </p>
-                </div>
-
-                <div className="flex gap-1">
-                  <img src="/assets/icons/star.svg" width={16} />
-                  <p className="text-sm text-zinc-600"> {course?.starsNumber} </p>
-                </div>
-              </div>
-
-              <div className="bg-[#F7E7F1] p-3 rounded-lg mt-3 flex justify-between items-center ">
-                <p>{course?.cost} <span className="text-xs text-zinc-600">  تومان </span></p>
-                <AddToCartButton course={course} />
-              </div>
-            </a>
-          );
-        })} */}
       </div>
     </>
   );

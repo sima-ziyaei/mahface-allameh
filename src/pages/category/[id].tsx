@@ -25,19 +25,19 @@ const CourseView = ({ params }) => {
 
   useEffect(() => {
     if (params) {
-        CategoriesServices.getById(params?.id)
+      CategoriesServices.getById(params?.id)
         .then((res) => {
           setCategory(res.data);
           console.log(res.data);
         });
 
-        CourseServices.getAll().then((res) => {
-            const course = res.data.filter((el) => el.categoryId === params?.id);
-            setCourses(course);
-            // axios
-            //       .get(`${BASE_URL}/api/Courses/ImageBase64/${res.data.id}`)
-            //       .then((res) =>setbase64Image(res.data.base64Image));
-          });
+      CourseServices.getAll().then((res) => {
+        const course = res.data.filter((el) => el.categoryId === params?.id);
+        setCourses(course);
+        // axios
+        //       .get(`${BASE_URL}/api/Courses/ImageBase64/${res.data.id}`)
+        //       .then((res) =>setbase64Image(res.data.base64Image));
+      });
     }
   }, [params]);
 
@@ -45,9 +45,9 @@ const CourseView = ({ params }) => {
     <Layout>
       <div className="p-4">
         <img />
-      {courses?.map((course) => {
+        {courses?.map((course) => {
           return (
-            <a  href={`/course/${course.id}`}
+            <a href={`/course/${course.id}`}
               className=" border border-solid border-gray-400 flex gap-4 rounded-2xl p-4 mb-4"
               key={course.id}
             >
@@ -56,16 +56,16 @@ const CourseView = ({ params }) => {
                 alt="course"
                 className="w-[200px] h-[200px]"
               />
-<div>
-    <h1 className=" font-bold text-2xl"> {course?.title}</h1>
-              <p className=" mt-6"> {course?.courseDescription} </p>
+              <div>
+                <h1 className=" font-bold text-2xl"> {course?.title}</h1>
+                <p className=" mt-6"> {course?.courseDescription} </p>
 
-              <p className=" mt-4">{t["course-teacher"]} :</p>
-              <p className=" mt-4">
-                {t["course-cost"]} : {course?.cost} تومان
-              </p>
-</div>
-              
+                <p className=" mt-4">{t["course-teacher"]} :</p>
+                <p className=" mt-4">
+                  {t["course-cost"]} : {course?.cost} تومان
+                </p>
+              </div>
+
             </a>
           );
         })}

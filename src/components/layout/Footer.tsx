@@ -27,8 +27,7 @@ const Footer = () => {
           </div>
           <div>
             <p className="text-sm text-gray-700 mb-2">
-              {" "}
-              {t["certificate-inquiry"]}{" "}
+              {t["certificate-inquiry"]}
             </p>
             <p className="text-sm text-gray-700 mb-2"> {t["weblog"]} </p>
             <p className="text-sm text-gray-700 mb-2"> {t["maktab-tak"]} </p>
@@ -36,17 +35,14 @@ const Footer = () => {
           </div>
           <div>
             <p className="text-sm text-gray-700 mb-2">
-              {" "}
-              {t["reserve-studio"]}{" "}
+              {t["reserve-studio"]}
             </p>
             <p className="text-sm text-gray-700 mb-2"> {t["become-mentor"]} </p>
             <p className="text-sm text-gray-700 mb-2">
-              {" "}
-              {t["job-opportunities"]}{" "}
+              {t["job-opportunities"]}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              {" "}
-              {t["organizational-training"]}{" "}
+              {t["organizational-training"]}
             </p>
             <p className="text-sm text-gray-700 mb-2"> {t["training"]} </p>
           </div>

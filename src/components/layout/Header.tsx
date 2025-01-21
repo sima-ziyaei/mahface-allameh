@@ -8,9 +8,13 @@ import userImage from "../../../public/assets/user.svg";
 import toast from "react-hot-toast";
 import { FaPowerOff } from "react-icons/fa6";
 import { Button } from "@mui/material";
+import { CourseServices } from "@/services/Course";
+import { Course } from "@/models/course.model";
 
 const Header: FC = () => {
   const [value, setValue] = useState<string>();
+  const [searchedCourses, setSearchedCourses] = useState<Course[]>();
+  const [showError, setShowError] = useState<boolean>();
   const router = useRouter();
   const handleLogOut = () => {
     localStorage.clear();
@@ -19,13 +23,23 @@ const Header: FC = () => {
   };
 
   const handleSearch = () => {
-    
+    if (value.length < 3) {
+      setShowError(true);
+      setSearchedCourses(null);
+    } else {
+      setShowError(false);
+      CourseServices.search(value).then((res) => {
+        setSearchedCourses(res.data);
+      })
+    }
   }
+
+  console.log(value, searchedCourses);
 
   return (
 
     <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
-      
+
       <div
         onClick={() => router.push("/")}
         className="flex gap-4 cursor-pointer items-center"
@@ -47,15 +61,26 @@ const Header: FC = () => {
         />
 
         <img
-        onClick={()=> handleSearch()}
+          onClick={() => handleSearch()}
           className="mr-4 cursor-pointer"
           src="/assets/search-normal.svg"
           alt="search"
         />
+        {showError
+          ? <p className="absolute right-0 top-[42px] text-red-700"> {t['search-field-error']} </p>
+          : null}
+        {searchedCourses?.length
+          ? <div className="absolute z-50 bg-white w-full rounded-2xl left-0 top-[42px] p-4 border border-solid border-gray-300">
+            {searchedCourses.map((el) => {
+              return (<p>
+                {el.title}
+              </p>)
+            })}
+
+          </div> : null}
       </div>
 
       <div className="flex items-center justify-center gap-8">
-
         <Button
           variant="contained"
           onClick={() => router.push("/teacher")}

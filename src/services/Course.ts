@@ -32,4 +32,19 @@ export class CourseServices {
         return res ?? null;
       });
   }
+
+  static getWithCategoryId(id: string) {
+    return axios
+      .get(`${process.env.BASE_URL}/GetAllCoursesWithCategoryId/${id}`)
+      .then((res) => {
+        return res ?? null;
+      });
+  }
+
+  static search(query: string) {
+    return axios.get(`${process.env.BASE_URL}/GetAllCoursesWithSearch/${query}`)
+    .then((res)=>{
+      return res ?? null;
+    })
+  }
 }

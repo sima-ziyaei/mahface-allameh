@@ -1,7 +1,6 @@
 import Categories from "@/components/Categories";
 import Layout from "@/components/layout/Layout";
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -101,7 +100,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-4 my-24">
+        <div className="mx-auto container my-24">
           <p className="mx-auto w-fit text-2xl my-6"> {t["from-you"]} </p>
           <Swiper
             modules={[Pagination, Autoplay]}
