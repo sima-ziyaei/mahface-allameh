@@ -34,7 +34,7 @@ const MegaMenu = () => {
                     <div className="min-w-[280px]">
                         {categories?.map((el) => {
                             return (
-                                <div onMouseMove={() => { setHoveredCategory(el.title) }} className="p-4 flex justify-between gap-6 hover:bg-[rgba(0,156,167,0.1)] hover:text-[#009CA7] border-l border-solid border-gray-100" key={el.id}> <p> {el.title} </p> <img src="/assets/icons/arrow-left.svg" /> </div>
+                                <a href={`/category/${el.id}`} onMouseMove={() => { setHoveredCategory(el.title) }} className="p-4 flex justify-between gap-6 hover:bg-[rgba(0,156,167,0.1)] hover:text-[#009CA7] border-l border-solid border-gray-100" key={el.id}> <p> {el.title} </p> <img src="/assets/icons/arrow-left.svg" /> </a>
                             )
                         })}
                     </div>
