@@ -10,7 +10,7 @@ import { Pagination } from "swiper/modules";
 import CourseCardSkeleton from "./course/CourseCardSkeleton";
 import Skeleton from "react-loading-skeleton";
 
-const Categories = ({ allCourses }) => {
+const Categories = () => {
   const [categories, setCategories] = useState<Category[]>();
   const [loading, setLoading] = useState<boolean>();
   const [categoryLoading, setCategoryLoading] = useState<boolean>();
@@ -40,48 +40,16 @@ const Categories = ({ allCourses }) => {
       getSelectedCategory(selectedCategoryId);
   }, [selectedCategoryId]);
 
-  console.log(allCourses)
 
   return (
     <>
-      {/* <div className="flex gap-6 mt-6 mx-4">
-        {loading ? <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  : categories?.map((el) => {
-          return (
-            <p
-              onMouseEnter={() => getCourses(el.id)}
-              onClick={() => router.push(`/category/${el.id}`)}
-              key={el.id}
-              className="cursor-pointer hover:text-cyan-700"
-            >
-              {el.title}
-            </p>
-          );
-        })}
-      </div>
-
-      {courses?.length ? (
-        <div className="flex gap-8 mt-6 bg-cyan-700 text-white p-4 justify-center mx-4">
-          {courses?.map((el) => {
-            return (
-              <p
-                onClick={() => router.push(`/course/${el.id}`)}
-                className="cursor-pointer"
-                key={el.id}
-              >
-                {el.title}
-              </p>
-            );
-          })}
-        </div>
-      ) : null} */}
-
-      <div className="container border border-solid flex flex-col mx-auto border-gray-200 rounded-2xl gap-6 p-6 mt-16 ">
+      <div className="container border border-solid flex flex-col mx-auto border-gray-200 bg-white rounded-2xl gap-6 p-6 mt-16 ">
         <div className="flex w-max h-fit">
           {categoryLoading
           ?  <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  
           : categories?.map((el) => {
             return (
-              <p onClick={() => { setSelectedCategoryId(el.id); getSelectedCategory(el.id); }} className={` ${selectedCategoryId === el.id? 'border-[#009CA7]': ' border-gray-300'} cursor-pointer border-b-2 border-solid p-4`}> {el.title} </p>
+              <p key={el.id} onClick={() => { setSelectedCategoryId(el.id); getSelectedCategory(el.id); }} className={` ${selectedCategoryId === el.id? 'border-[#009CA7]': ' border-gray-300'} cursor-pointer border-b-2 border-solid p-4`}> {el.title} </p>
             )
           })}
         </div>
@@ -89,11 +57,11 @@ const Categories = ({ allCourses }) => {
           modules={[Pagination]}
           pagination
           slidesPerView={'auto'}
-          className="w-full" >
+          className="w-full !pb-10" >
           {loading || categoryLoading
-            ? Array.from(Array(10)).map((el) => {
+            ? Array.from(Array(10)).map((el, i) => {
                 return (
-                    <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                    <SwiperSlide key={i} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
                         <CourseCardSkeleton />
                     </SwiperSlide>
                 )
@@ -102,7 +70,7 @@ const Categories = ({ allCourses }) => {
             ? <img src="/assets/Course-not-Found.jpg" className="mx-auto h-[400px]" /> 
           : selectedCategoryCourses?.map((el) => {
             return (
-              <SwiperSlide className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+              <SwiperSlide key={el.id} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
                 <CourseCard course={el} />
               </SwiperSlide>
             )

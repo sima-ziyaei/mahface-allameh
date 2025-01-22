@@ -70,7 +70,7 @@ export default function Home() {
           </SwiperSlide>
         </Swiper>
 
-        <Categories allCourses={allCourses} />
+        <Categories />
   
 
         <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -8,13 +8,10 @@ import userImage from "../../../public/assets/user.svg";
 import toast from "react-hot-toast";
 import { FaPowerOff } from "react-icons/fa6";
 import { Button } from "@mui/material";
-import { CourseServices } from "@/services/Course";
-import { Course } from "@/models/course.model";
+import SearchInput from "./SearchInput";
+import MegaMenu from "./MegaMenu";
 
 const Header: FC = () => {
-  const [value, setValue] = useState<string>();
-  const [searchedCourses, setSearchedCourses] = useState<Course[]>();
-  const [showError, setShowError] = useState<boolean>();
   const router = useRouter();
   const handleLogOut = () => {
     localStorage.clear();
@@ -22,23 +19,9 @@ const Header: FC = () => {
     router.push("/login");
   };
 
-  const handleSearch = () => {
-    if (value.length < 3) {
-      setShowError(true);
-      setSearchedCourses(null);
-    } else {
-      setShowError(false);
-      CourseServices.search(value).then((res) => {
-        setSearchedCourses(res.data);
-      })
-    }
-  }
-
-  console.log(value, searchedCourses);
-
   return (
 
-    <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
+    <div className="flex w-full justify-between items-center p-4  gap-4">
 
       <div
         onClick={() => router.push("/")}
@@ -48,37 +31,9 @@ const Header: FC = () => {
         <p className="w-32 text-xl">{t["allame-kade"]}</p>
       </div>
 
-      <div
-        style={{ direction: "rtl" }}
-        className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[50%] mx-8 justify-between focus:[&_input]:border-cyan-700"
-      >
-        <input
-          value={value ?? ""}
-          onChange={(e) => setValue(e.target.value)}
-          className="border-0 w-[calc(100%-52px)] focus:outline-none"
-          type="text"
-          placeholder={t["what-do-you-want-to-learn"]}
-        />
+      <MegaMenu />
 
-        <img
-          onClick={() => handleSearch()}
-          className="mr-4 cursor-pointer"
-          src="/assets/search-normal.svg"
-          alt="search"
-        />
-        {showError
-          ? <p className="absolute right-0 top-[42px] text-red-700"> {t['search-field-error']} </p>
-          : null}
-        {searchedCourses?.length
-          ? <div className="absolute z-50 bg-white w-full rounded-2xl left-0 top-[42px] p-4 border border-solid border-gray-300">
-            {searchedCourses.map((el) => {
-              return (<p>
-                {el.title}
-              </p>)
-            })}
-
-          </div> : null}
-      </div>
+      <SearchInput />
 
       <div className="flex items-center justify-center gap-8">
         <Button
