@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import { TeacherServices } from "@/services/Teacher";
 import toast from "react-hot-toast";
+import TeacherDialog from "./TeacherDialog";
 
 function Teacher() {
   const userInfo =
@@ -26,13 +27,13 @@ function Teacher() {
   const [teacherDialogState, setTeacherDialogState] = useState({ open: false });
 
   function handleTeaching() {
-    if (userInfo?.isTeacher) {
-      setTeacherDialogState((prev) => ({ ...prev, open: true }));
-    } else {
-      TeacherServices.getByUserId(userInfo?.userId)
-        .then((res) => {})
-        .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
-    }
+    // if (userInfo?.isTeacher) {
+    setTeacherDialogState((prev) => ({ ...prev, open: true }));
+    // } else {
+    //   TeacherServices.getByUserId(userInfo?.userId)
+    //     .then((res) => {})
+    //     .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
+    // }
   }
 
   return (
@@ -58,7 +59,7 @@ function Teacher() {
               fontWeight: "bold",
             }}
           >
-            {t["start-teaching"]}
+            {userInfo?.isTeacher?t["teacher-panel"]:t["start-teaching"]}
           </Button>
         </div>
       </div>
@@ -234,6 +235,12 @@ function Teacher() {
           </Accordion>
         </div>
       </div>
+
+      <TeacherDialog
+        teacherDialogState={teacherDialogState}
+        setTeacherDialogState={setTeacherDialogState}
+        userInfo={userInfo}
+      />
     </Layout>
   );
 }

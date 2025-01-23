@@ -80,5 +80,6 @@
   "send": "ارسال",
   "phone-number-must-be-11-chars": "شماره تلفن همراه باید ۱۱ رقم باشد!",
   "national-code-must-be-10chart": "کد ملی باید ۱۰ رقم باشد.",
-  "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست"
+  "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست",
+  "teacher-panel":"پنل استاد"
 }
