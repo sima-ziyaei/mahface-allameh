@@ -26,7 +26,17 @@ function TeacherDialog({
     {
       title: "برنامه نویسی",
       image: "",
-      seasons: [{ title: "", sections: [[{ title: "قسمت 1", video: "" }]] }],
+      seasons: [
+        {
+          title: "",
+          sections: [
+            {
+              title: "قسمت 1",
+              video: "https://tekeye.uk/html/images/Joren_Falls_Izu_Jap.mp4",
+            },
+          ],
+        },
+      ],
     },
   ]);
 
@@ -36,14 +46,6 @@ function TeacherDialog({
       open={teacherDialogState.open}
       onClose={() => setTeacherDialogState({ open: false })}
     >
-      <video
-        src="https://tekeye.uk/html/images/Joren_Falls_Izu_Jap.mp4"
-        width="200"
-        height="200"
-        controls
-        muted
-      />
-
       <DialogTitle
         sx={{ bgcolor: "#009CA7", color: "white", fontSize: "28px" }}
       >
@@ -58,8 +60,8 @@ function TeacherDialog({
                 <div className="flex gap-6">
                   <Avatar
                     src={
-                      userInfo.base64Profile
-                        ? `data:image/png;base64,${userInfo.base64Profile}`
+                      userInfo?.base64Profile
+                        ? `data:image/png;base64,${userInfo?.base64Profile}`
                         : "/assets/user.svg"
                     }
                   />
@@ -141,11 +143,47 @@ function TeacherDialog({
             <AccordionSummary className="">دوره ها</AccordionSummary>
             <Divider />
             <AccordionDetails>
-                {courses.map(course=>(
-                    <Accordion>
-                        <Accordion
-                    </Accordion>
-                ))}
+              {courses.map((course) => (
+                <Accordion>
+                  <AccordionSummary>
+                    <div>
+                      <p>{course?.title}</p>
+                      <img
+                        src={
+                          course?.image
+                            ? `data:image/png;base64,${course?.image}`
+                            : "https://faradars.org/_next/image?url=https%3A%2F%2…04%2F17%2F661fb59e9f446-fvpht9904.svg&w=1080&q=75"
+                        }
+                      />
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {course?.seasons?.map((season) => (
+                      <Accordion>
+                        <AccordionSummary></AccordionSummary>
+                        <AccordionDetails>
+                          {season?.sections.map((section) => (
+                            <Accordion>
+                              <AccordionSummary>
+                                {section.title}
+                              </AccordionSummary>
+                              <AccordionDetails>
+                                <video
+                                  src={section.video}
+                                  width="200"
+                                  height="200"
+                                  controls
+                                  muted
+                                />
+                              </AccordionDetails>
+                            </Accordion>
+                          ))}
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              ))}
             </AccordionDetails>
             <AccordionActions>
               <Button variant="contained">افزودن دوره</Button>

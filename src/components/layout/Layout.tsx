@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     if (router.pathname !== "/login" && router.pathname !== "/signup") {
-      if ([undefined, ""].includes(localStorage.getItem("userInfo"))) {
+      if ([undefined, "",null].includes(localStorage.getItem("userInfo"))) {
         toast.error("حساب کاربری شما منقضی شده است.");
         router.push("/login");
       }
