@@ -46,14 +46,14 @@ const CourseView = ({ params }) => {
 
   return (
     <Layout>
-      <div className="flex">
+      <div className="flex mb-16">
         <div className="w-[-webkit-fill-available]">
           <CourseHeader course={course} />
           <CourseNavbar setNavbarState={setNavbarState} navbarState={navbarState} />
           {navbarState === NavbarState.Content
             ? <CourseContent course={course} />
             : navbarState === NavbarState.About
-              ? <p> {course.description} </p>
+              ? <p className="leading-loose"> {course.description} </p>
               : <CourseComments />}
 
         </div>

@@ -64,7 +64,6 @@
   "cancel": "انصراف",
   "failed-pay": " پرداخت شما موفقیت آمیز نبود، سفارش شما در انتظار پرداخت است.",
   "success-pay": "باتشکر از پرداخت شما، سفارش شما ثبت شد",
-  "success-pay": "باتشکر از پرداخت شما، سفارش شما ثبت شد",
   "educational_system_of_allameh_tabatabaei_university": "سامانه آموزشی دانشگاه علامه طباطبایی",
   "firstname-required": "وارد کردن نام الزامی است.",
   "lastname-required": "وارد کردن نام‌خانوادگی الزامی است.",
@@ -76,6 +75,8 @@
   "time-to-teach": "دیگه وقتشه دوره خودت رو بسازی",
   "start-teaching": "شروع تدریس در علامه کده",
   "why-start-teaching": "چرا باید در سایت ما تدریس رو شروع کنید؟",
+  "search-field-error": "لطفا حداقل سه حرف وارد کنید",
+  "categories": "دسته بندی ها",
   "phone-number-must-be-11-chars": "شماره تلفن همراه باید ۱۱ رقم باشد!",
   "national-code-must-be-10chart": "کد ملی باید ۱۰ رقم باشد.",
   "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست"

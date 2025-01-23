@@ -23,7 +23,7 @@ const AddToCartButton = ({ course }) => {
     }
 
     return (
-        <button onClick={handleClick} className="bg-[#0E7490] hover:bg-[#1b667a] justify-between w-[200px] py-2 px-5 rounded-lg text-white self-center flex gap-3">{ hasCourse() ? t['view-cart']  : t['add-to-cart']}  <img className="brightness-0 invert" src="/assets/icons/shopping-cart.svg" /> </button>
+        <button onClick={handleClick} className="bg-[#009CA7] hover:bg-[#1f848b] justify-between w-[210px] py-2 px-5 rounded-lg text-white self-center flex gap-2">{ hasCourse() ? t['view-cart']  : t['add-to-cart']}  <img className="brightness-0 invert" src="/assets/icons/shopping-cart.svg" /> </button>
     )
 }
 

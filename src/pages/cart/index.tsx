@@ -8,7 +8,6 @@ const cart = () => {
         return accumulator + currentValue.cost
     }, 0);
 
-    console.log(costs)
     return (
         <Layout>
             <div className="container mx-auto mb-64 flex gap-6 justify-between">
@@ -16,29 +15,29 @@ const cart = () => {
                     <h1 className="my-6 text-2xl"> {t['cart']} ({cartItems.length}) {t['course']} </h1>
                     <div className="flex flex-col gap-4">
                         {cartItems.length
-                        ? cartItems?.map((course) => {
-                            return (<div key={course.id} className="p-4 bg-white gap-4 flex border border-solid border-slate-300 rounded-xl">
-                                <img
-                                    src={`data:image/png;base64,${course.imageBase64}`}
-                                    alt="course"
-                                    className=" h-[100px] rounded-lg"
-                                />
-                                <div className=" flex flex-col justify-between  my-1">
-                                    <h2 className="text-xl"> {course.title} </h2>
-                                    <p className="text-slate-500"> {t['course-teacher']}:  {course.teacherName} </p>
-                                </div>
-                                <div className="mr-auto flex flex-col items-end justify-between">
-                                    <img onClick={() => {
-                                        setCartItems((prev) => prev.filter((el) => el.id !== course.id));
-                                        localStorage.setItem('cart', JSON.stringify(cartItems.filter((el) => el.id !== course.id)))
-                                    }} src="/assets/icons/close-circle.svg" className="cursor-pointer" />
-                                    <p className="text-[#B41474]"> {course.cost} {t['tooman']}</p>
-                                </div>
-                            </div>)
-                        })
-                    : <img src="/assets/empty-cart.webp" />
-                    }
-                        
+                            ? cartItems?.map((course) => {
+                                return (<div key={course.id} className="p-4 bg-white gap-4 flex border border-solid border-slate-300 rounded-xl">
+                                    <img
+                                        src={`data:image/png;base64,${course.imageBase64}`}
+                                        alt="course"
+                                        className=" h-[100px] rounded-lg"
+                                    />
+                                    <div className=" flex flex-col justify-between  my-1">
+                                        <h2 className="text-xl"> {course.title} </h2>
+                                        <p className="text-slate-500"> {t['course-teacher']}:  {course.teacherName} </p>
+                                    </div>
+                                    <div className="mr-auto flex flex-col items-end justify-between">
+                                        <img onClick={() => {
+                                            setCartItems((prev) => prev.filter((el) => el.id !== course.id));
+                                            localStorage.setItem('cart', JSON.stringify(cartItems.filter((el) => el.id !== course.id)))
+                                        }} src="/assets/icons/close-circle.svg" className="cursor-pointer" />
+                                        <p className="text-[#B41474]"> {course.cost} {t['tooman']}</p>
+                                    </div>
+                                </div>)
+                            })
+                            : <img src="/assets/empty-cart.webp" />
+                        }
+
                     </div>
                 </div>
                 <div className="bg-white min-w-[400px] max-h-[245px] mt-20 p-4 rounded-2xl flex flex-col gap-6">
@@ -59,10 +58,7 @@ const cart = () => {
                         </a>}
 
                 </div>
-
             </div>
-
-
         </Layout>
     )
 };

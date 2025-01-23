@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -8,9 +8,10 @@ import userImage from "../../../public/assets/user.svg";
 import toast from "react-hot-toast";
 import { FaPowerOff } from "react-icons/fa6";
 import { Button } from "@mui/material";
+import SearchInput from "./SearchInput";
+import MegaMenu from "./MegaMenu";
 
 const Header: FC = () => {
-  const [value, setValue] = useState<string>();
   const router = useRouter();
   const handleLogOut = () => {
     localStorage.clear();
@@ -18,13 +19,9 @@ const Header: FC = () => {
     router.push("/login");
   };
 
-  const handleSearch = () => {
-    
-  }
-
   return (
 
-    <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4 sticky top-0 z-10 bg-white">
+    <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4  sticky top-0 z-10 bg-white">
       
       <div
         onClick={() => router.push("/")}
@@ -34,28 +31,11 @@ const Header: FC = () => {
         <p className="w-32 text-xl">{t["allame-kade"]}</p>
       </div>
 
-      <div
-        style={{ direction: "rtl" }}
-        className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[50%] mx-8 justify-between focus:[&_input]:border-cyan-700"
-      >
-        <input
-          value={value ?? ""}
-          onChange={(e) => setValue(e.target.value)}
-          className="border-0 w-[calc(100%-52px)] focus:outline-none"
-          type="text"
-          placeholder={t["what-do-you-want-to-learn"]}
-        />
+      <MegaMenu />
 
-        <img
-        onClick={()=> handleSearch()}
-          className="mr-4 cursor-pointer"
-          src="/assets/search-normal.svg"
-          alt="search"
-        />
-      </div>
+      <SearchInput />
 
       <div className="flex items-center justify-center gap-8">
-
         <Button
           variant="contained"
           onClick={() => router.push("/teacher")}
