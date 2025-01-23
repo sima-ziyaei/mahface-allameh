@@ -11,6 +11,7 @@ import MostPopularCourses from "@/components/MostPopularCourses";
 import { useEffect, useState } from "react";
 import { Course } from "@/models/course.model";
 import { CourseServices } from "@/services/Course";
+import { ImageServices } from "@/services/Image";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -20,7 +21,7 @@ export default function Home() {
 
   const [allCourses, setAllCourses] = useState<Course[]>();
   const [loadingCourses, setLoadingCourses] = useState<boolean>();
-
+  const [images, setImages] = useState(new Map());
   const comments = [
     {
       name: "سیما ضیایی",
@@ -42,8 +43,13 @@ export default function Home() {
   useEffect(() => {
     setLoadingCourses(true);
     CourseServices.getAll().then((res) => {
-      setAllCourses(res.data);
-      setLoadingCourses(false);
+      res.data.forEach((el) => {
+        ImageServices.getImageByImageId(el.imageId).then((result) => {
+          setImages((prev) => prev.set(el.id, result.data.base64File))
+          setAllCourses(res.data);
+          setLoadingCourses(false);
+        })
+      })
     });
   }, []);
 
@@ -77,17 +83,19 @@ export default function Home() {
         </Swiper>
 
         <Categories />
-  
 
-        <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
 
-        <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
+        <MostRecentCourses allCourses={allCourses} images={images} loading={loadingCourses} />
+
+
+        <MostPopularCourses allCourses={allCourses} images={images} loading={loadingCourses} />
+
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">
             {
               t[
-                "cooperation-with-the-best-universities-and-educational-institutions"
+              "cooperation-with-the-best-universities-and-educational-institutions"
               ]
             }
           </h4>

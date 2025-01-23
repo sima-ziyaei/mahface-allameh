@@ -47,4 +47,12 @@ export class CourseServices {
       return res ?? null;
     })
   }
+
+  static getTitleWithCategoryId(id: string){
+    return axios
+      .get(`${process.env.BASE_URL}/GetAllCoursesTitleWithCategoryId/${id}`)
+      .then((res) => {
+        return res ?? null;
+      });
+  }
 }

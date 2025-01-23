@@ -1,7 +1,7 @@
 import t from "../../../i18next/locales/fa/translation.json";
 import AddToCartButton from "../AddToCartButton";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, images }) => {
 
     const formattedPrice = new Intl.NumberFormat('fa-IR', {
             maximumFractionDigits: 2,
@@ -14,7 +14,7 @@ const CourseCard = ({ course }) => {
             key={course.id}
         >
             <img
-                src={`data:image/png;base64,${course.imageBase64}`}
+                src={`data:image/png;base64,${images?.get(course.id)}`}
                 alt="course"
                 className=" h-[200px]"
             />

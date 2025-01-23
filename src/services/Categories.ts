@@ -33,4 +33,12 @@ export class CategoriesServices {
         return res ?? null;
       });
   }
+
+  static getTitles(){
+    return axios
+      .get(process.env.BASE_URL + "/api/Categories/GetAllTitleCategoriesAsync")
+      .then((res) => {
+        return res ?? null;
+      });
+  }
 }

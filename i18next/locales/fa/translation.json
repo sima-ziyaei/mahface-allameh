@@ -76,7 +76,8 @@
   "start-teaching": "شروع تدریس در علامه کده",
   "why-start-teaching": "چرا باید در سایت ما تدریس رو شروع کنید؟",
   "search-field-error": "لطفا حداقل سه حرف وارد کنید",
-  "categories": "دسته بندی ها",
+    "categories": "دسته بندی ها",
+  "send": "ارسال",
   "phone-number-must-be-11-chars": "شماره تلفن همراه باید ۱۱ رقم باشد!",
   "national-code-must-be-10chart": "کد ملی باید ۱۰ رقم باشد.",
   "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست"

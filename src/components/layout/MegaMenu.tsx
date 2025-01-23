@@ -11,10 +11,10 @@ const MegaMenu = () => {
     const [hoveredCategory, setHoveredCategory] = useState<string>();
 
     useEffect(() => {
-        CategoriesServices.getAll().then((res) => {
+        CategoriesServices.getTitles().then((res) => {
             setCategories(res.data);
             res.data.forEach((el) => {
-                CourseServices.getWithCategoryId(el.id).then((result) => {
+                CourseServices.getTitleWithCategoryId(el.id).then((result) => {
                     CourseMap[el.title] = result.data;
                 })
             })
@@ -42,7 +42,7 @@ const MegaMenu = () => {
                         ? <div className="flex flex-col min-w-[280px]">
                             {CourseMap[hoveredCategory]?.map((el) => {
                                 return (
-                                    <a href={`/course/${el.id}`} className="p-4 hover:bg-[rgba(0,156,167,0.1)] hover:text-[#009CA7]"> {el.title} </a>
+                                    <a key={el.id} href={`/course/${el.id}`} className="p-4 hover:bg-[rgba(0,156,167,0.1)] hover:text-[#009CA7]"> {el.title} </a>
                                 )
                             })}
                         </div>

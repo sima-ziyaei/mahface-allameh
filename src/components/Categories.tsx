@@ -9,6 +9,7 @@ import CourseCard from "./course/CourseCard";
 import { Pagination } from "swiper/modules";
 import CourseCardSkeleton from "./course/CourseCardSkeleton";
 import Skeleton from "react-loading-skeleton";
+import { ImageServices } from "@/services/Image";
 
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -16,6 +17,7 @@ const Categories = () => {
   const [categoryLoading, setCategoryLoading] = useState<boolean>();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
   const [selectedCategoryCourses, setSelectedCategoryCourses] = useState<Course[]>();
+  const [images, setImages] = useState(new Map());
 
   useEffect(() => {
     setCategoryLoading(true);
@@ -29,11 +31,21 @@ const Categories = () => {
   const getSelectedCategory = (id) => {
     setLoading(true);
     CourseServices.getWithCategoryId(id).then((res) => {
-      setSelectedCategoryCourses(res.data);
-      setLoading(false);
+      if(res.data.length){
+        res.data.forEach((el)=>{
+        ImageServices.getImageByImageId(el.imageId).then((result)=>{
+          setImages((prev)=> prev.set(el.id, result.data.base64File))
+          setSelectedCategoryCourses(res.data);
+          setLoading(false);
+        })
+      })
+      } else{
+        setSelectedCategoryCourses(res.data);
+          setLoading(false);
+      }
+      
     })
   }
-
 
   useEffect(()=>{
     if(selectedCategoryId)
@@ -71,7 +83,7 @@ const Categories = () => {
           : selectedCategoryCourses?.map((el) => {
             return (
               <SwiperSlide key={el.id} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
-                <CourseCard course={el} />
+                <CourseCard course={el} images={images} />
               </SwiperSlide>
             )
           })}
