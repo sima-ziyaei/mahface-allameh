@@ -29,12 +29,12 @@ const CourseHeader = ({ course }) => {
                     <div className="flex gap-8">
                         <div className="flex gap-1">
 
-                            {Array.from(Array(course?.starsNumber)).map((x) => (
-                                <img key={x} src="/assets/icons/star.svg" />
+                            {Array.from(Array(course?.starsNumber)).map((x, i) => (
+                                <img key={i} src="/assets/icons/star.svg" />
                             ))}
                             {course?.starsNumber < 5
-                                && Array.from(Array(5 - course?.starsNumber)).map((x) => (
-                                    <img key={x} src="/assets/icons/star.svg" />
+                                && Array.from(Array(5 - course?.starsNumber)).map((x, i) => (
+                                    <img key={i} src="/assets/icons/star.svg" />
                                 ))}
                         </div>
                         <p className="text-white">
