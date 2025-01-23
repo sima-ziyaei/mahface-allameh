@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -13,10 +12,12 @@ import persian from "react-date-object/calendars/persian";
 import fa from "react-date-object/locales/persian_fa";
 import Image from "next/image";
 import { AccountServices } from "@/services/Account";
+import ConfirmationCodeDialog from "@/components/ConfirmationCodeDialog";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [birthDate, setBirthDate] = useState("");
+
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -26,9 +27,13 @@ const Signup = () => {
     username: z.string().min(3, "username-required"),
     email: z.string().min(1, "email-required").email("invalid-email"),
     nationalCode: z
-      .number()
-      .min(10, "national-code-must-be-10chart")
-      .max(10, "national-code-must-be-10chart"),
+      .string()
+      .length(10, { message: "national-code-must-be-10chart" })
+      .regex(/^\d+$/, { message: "input-must-be-a-valid-number" }),
+    phoneNumber: z
+      .string()
+      .length(11, { message: "phone-number-must-be-11-chars" })
+      .regex(/^\d+$/, { message: "input-must-be-a-valid-number" }),
     password: z
       .string()
       .min(1, "password-required")
@@ -52,6 +57,10 @@ const Signup = () => {
     mode: "onChange",
     resolver: zodResolver(signupSchema),
     defaultValues: {
+      firstname: "",
+      lastname: "",
+      nationalCode: "",
+      phoneNumber: "",
       username: "",
       email: "",
       password: "",
@@ -61,15 +70,20 @@ const Signup = () => {
 
   const onSubmitSignup = (data: z.infer<typeof signupSchema>) => {
     setLoading(true);
+    console.log(data);
     AccountServices.register({ ...data, birthDate })
       .then((res) => {
+        if (!res.data.isValid) {
+          toast.error(res.data.statusMessage);
+          return;
+        }
         setLoading(false);
         toast.success(t["successfully-signed-up"]);
-        router.push("/");
+        router.push("/login");
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(err.data.response.statusMessage);
+        toast.error(err?.data?.response?.statusMessage);
         console.error(err);
       });
   };
@@ -78,11 +92,11 @@ const Signup = () => {
     <div className=" w-full h-screen flex justify-center items-center ">
       <form
         onSubmit={handleSubmit(onSubmitSignup)}
-        className=" flex flex-col items-center justify-center h-full w-full gap-5"
+        className=" flex flex-col items-center justify-center h-full w-full"
       >
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
-            type="firstname"
+            type="string"
             placeholder="نام"
             {...register("firstname")}
             className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
@@ -93,9 +107,9 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
-            type="lastname"
+            type="string"
             placeholder="نام‌خانوادگی"
             {...register("lastname")}
             className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
@@ -106,7 +120,20 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
+          <input
+            type="text"
+            placeholder="کدملی"
+            {...register("nationalCode")}
+            className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
+          />
+
+          <span className="text-[12px] text-red-700 ">
+            {t[errors.nationalCode?.message]}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
             type="username"
             placeholder="نام کاربری"
@@ -119,7 +146,20 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px] ">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
+          <input
+            type="text"
+            placeholder="شماره تلفن همراه خود را با فرمت ...09 وارد نمایید"
+            {...register("phoneNumber")}
+            className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
+          />
+
+          <span className="text-[12px] text-red-700 ">
+            {t[errors.phoneNumber?.message]}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-1 w-[50%] h-[75px] ">
           <DatePicker
             placeholder={t["birth-date"]}
             inputClass="px-4 py-2 default-input border border-solid border-gray-600 rounded-lg w-full"
@@ -135,7 +175,7 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
             type="email"
             placeholder="ایمیل"
@@ -147,7 +187,7 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
             type={showPassword ? "string" : "password"}
             placeholder="رمز عبور"
@@ -159,7 +199,7 @@ const Signup = () => {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 w-[50%] h-[80px]">
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
           <input
             type={showPassword ? "string" : "password"}
             placeholder="تکرار رمز عبور"
@@ -178,12 +218,11 @@ const Signup = () => {
           {t.signup}
         </button>
 
-        <Link href="/login">
-          <span className="text-medium text-blue-600 cursor-pointer">
+        <Link href="/login" className="self-start mr-[25%] mt-4">
+          <span className="text-medium text-blue-600 cursor-pointer text-right">
             {t["has-account"]}
           </span>
         </Link>
-        
       </form>
 
       <img src={"/assets/login.jpg"} className="w-[50%] h-30 h-full" />

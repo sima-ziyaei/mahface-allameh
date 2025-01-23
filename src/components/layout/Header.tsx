@@ -24,7 +24,7 @@ const Header: FC = () => {
 
   return (
 
-    <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4">
+    <div className="flex w-full justify-between items-center border-b border-solid border-gray-400 p-4  gap-4 sticky top-0 z-10 bg-white">
       
       <div
         onClick={() => router.push("/")}

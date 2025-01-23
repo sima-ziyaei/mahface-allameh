@@ -1,7 +1,7 @@
 import Categories from "@/components/Categories";
 import Layout from "@/components/layout/Layout";
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,10 +12,13 @@ import MostPopularCourses from "@/components/MostPopularCourses";
 import { useEffect, useState } from "react";
 import { Course } from "@/models/course.model";
 import { CourseServices } from "@/services/Course";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+
   const [allCourses, setAllCourses] = useState<Course[]>();
   const [loadingCourses, setLoadingCourses] = useState<boolean>();
 
@@ -47,6 +50,9 @@ export default function Home() {
 
   return (
     <main>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
       <Layout>
         <Swiper
           modules={[Pagination, Autoplay]}
@@ -72,13 +78,10 @@ export default function Home() {
         </Swiper>
 
         <Categories allCourses={allCourses} />
-  
 
         <MostRecentCourses allCourses={allCourses} loading={loadingCourses} />
-  
 
         <MostPopularCourses allCourses={allCourses} loading={loadingCourses} />
-  
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">

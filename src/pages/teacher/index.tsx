@@ -4,14 +4,36 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useRouter } from "next/router";
+import { TeacherServices } from "@/services/Teacher";
+import toast from "react-hot-toast";
 
 function Teacher() {
-  function handleTeaching() {}
+  const userInfo =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : {};
+
+  const [teacherDialogState, setTeacherDialogState] = useState({ open: false });
+
+  function handleTeaching() {
+    if (userInfo?.isTeacher) {
+      setTeacherDialogState((prev) => ({ ...prev, open: true }));
+    } else {
+      TeacherServices.getByUserId(userInfo?.userId)
+        .then((res) => {})
+        .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
+    }
+  }
 
   return (
     <Layout>
@@ -24,9 +46,10 @@ function Teacher() {
 
         <div className="absolute right-[400px] top-[400px] flex flex-col gap-8">
           <p className=" text-bold text-3xl">{t["time-to-teach"]}</p>
+
           <Button
             variant="contained"
-            onClick={() => {}}
+            onClick={handleTeaching}
             size="large"
             sx={{
               fontSize: 20,
@@ -174,7 +197,16 @@ function Teacher() {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-            کارشناسان علامه‌کده همه روزه در تلاش هستند تا دانشجویان علامه‌کده را بیشتر بشناسند تا دوره مناسب را به دانشجوی مورد نظر ارائه دهند. دانش ما از بررسی رفتار و نیازمندی‌های میلیون‌ها دانشجو در طی سالیان فعالیت علامه‌کده در ارائه دوره‌های آموزشی آنلاین به شما کمک می‌کند تا به تعداد مخاطبان وسیع‌تری از آنچه تا کنون در اختیار داشتید، دسترسی پیدا کنید. علاوه‌براین، استراتژی‌های مختلف مارکتینگ علامه‌کده به شما کمک خواهد کرد تا پتانسیل فروش دوره آموزشی خود را افزایش دهید که از آن جمله می‌توان به کمپین‌های دوره‌ای، تبلیغات در وبسایت‌های مختلف، سئو در گوگل، ایمیل مارکتینگ، اس ام اس مارکتینگ، پوش نوتیفیکیشن و غیره اشاره کرد.
+              کارشناسان علامه‌کده همه روزه در تلاش هستند تا دانشجویان علامه‌کده
+              را بیشتر بشناسند تا دوره مناسب را به دانشجوی مورد نظر ارائه دهند.
+              دانش ما از بررسی رفتار و نیازمندی‌های میلیون‌ها دانشجو در طی
+              سالیان فعالیت علامه‌کده در ارائه دوره‌های آموزشی آنلاین به شما کمک
+              می‌کند تا به تعداد مخاطبان وسیع‌تری از آنچه تا کنون در اختیار
+              داشتید، دسترسی پیدا کنید. علاوه‌براین، استراتژی‌های مختلف مارکتینگ
+              علامه‌کده به شما کمک خواهد کرد تا پتانسیل فروش دوره آموزشی خود را
+              افزایش دهید که از آن جمله می‌توان به کمپین‌های دوره‌ای، تبلیغات در
+              وبسایت‌های مختلف، سئو در گوگل، ایمیل مارکتینگ، اس ام اس مارکتینگ،
+              پوش نوتیفیکیشن و غیره اشاره کرد.
             </AccordionDetails>
           </Accordion>
           <Accordion>
@@ -201,12 +233,6 @@ function Teacher() {
             </AccordionDetails>
           </Accordion>
         </div>
-      </div>
-
-      <div>
-        <p></p>
-        <p></p>
-        <Button></Button>
       </div>
     </Layout>
   );
