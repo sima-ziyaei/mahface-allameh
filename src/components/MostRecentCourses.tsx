@@ -4,7 +4,7 @@ import t from "../../i18next/locales/fa/translation.json";
 import CourseCard from "./course/CourseCard";
 import CourseCardSkeleton from "./course/CourseCardSkeleton";
 
-const MostRecentCourses = ({ allCourses, loading }) => {
+const MostRecentCourses = ({ allCourses, loading , images}) => {
 
     const courses = allCourses?.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate)).slice(0, 10);
 
@@ -27,7 +27,7 @@ const MostRecentCourses = ({ allCourses, loading }) => {
             : courses?.map((course) => {
                 return (
                     <SwiperSlide key={course.id} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
-                        <CourseCard course={course} />
+                        <CourseCard course={course} images={images} />
                     </SwiperSlide>
                 )
             })}

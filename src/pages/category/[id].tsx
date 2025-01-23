@@ -5,6 +5,7 @@ import t from "../../../i18next/locales/fa/translation.json";
 import { CourseServices } from "@/services/Course";
 import { CategoriesServices } from "@/services/Categories";
 import AddToCartButton from "@/components/AddToCartButton";
+import { ImageServices } from "@/services/Image";
 
 export async function getStaticPaths() {
   let catgegories = [];
@@ -19,16 +20,20 @@ export async function getStaticProps({ params }) {
 }
 
 const CourseView = ({ params }) => {
-  // const [base64Image, setbase64Image] = useState<string>();
   const [courses, setCourses] = useState<Course[]>();
+  const [images, setImages] = useState(new Map());
+  const [loading, setLoading] = useState<boolean>();
 
   useEffect(() => {
     if (params) {
       CourseServices.getWithCategoryId(params.id).then((res) => {
-        setCourses(res.data);
-        // axios
-        //       .get(`${BASE_URL}/api/Courses/ImageBase64/${res.data.id}`)
-        //       .then((res) =>setbase64Image(res.data.base64Image));
+        res.data.forEach((el)=> {
+          ImageServices.getImageByImageId(el.imageId).then((result)=>{
+            setImages((prev)=> prev.set(el.id, result.data.base64File))
+            setCourses(res.data);
+            setLoading(false);
+          })
+        })
       });
     }
   }, [params]);
@@ -44,7 +49,7 @@ const CourseView = ({ params }) => {
               key={course.id}
             >
               <img
-                src={`data:image/png;base64,${course?.imageBase64}`}
+                src={`data:image/png;base64,${images.get(course.id)}`}
                 alt="course"
                 className="w-[200px]"
               />
