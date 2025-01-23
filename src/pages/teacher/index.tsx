@@ -4,20 +4,39 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useRouter } from "next/router";
+import { TeacherServices } from "@/services/Teacher";
+import toast from "react-hot-toast";
 
 function Teacher() {
+  const userInfo =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : {};
+
+  const [teacherDialogState, setTeacherDialogState] = useState({ open: false });
+
   function handleTeaching() {
-    
+    if (userInfo?.isTeacher) {
+      setTeacherDialogState((prev) => ({ ...prev, open: true }));
+    } else {
+      TeacherServices.getByUserId(userInfo?.userId)
+        .then((res) => {})
+        .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
+    }
   }
 
   return (
     <Layout>
-
       <div className="w-full h-100 relative">
         <img
           alt="همین امروز تدریس رو شروع کن"
@@ -27,9 +46,10 @@ function Teacher() {
 
         <div className="absolute right-[400px] top-[400px] flex flex-col gap-8">
           <p className=" text-bold text-3xl">{t["time-to-teach"]}</p>
+
           <Button
             variant="contained"
-            onClick={() => {}}
+            onClick={handleTeaching}
             size="large"
             sx={{
               fontSize: 20,
@@ -214,7 +234,6 @@ function Teacher() {
           </Accordion>
         </div>
       </div>
-
     </Layout>
   );
 }

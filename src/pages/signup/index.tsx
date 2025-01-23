@@ -77,7 +77,6 @@ const Signup = () => {
           toast.error(res.data.statusMessage);
           return;
         }
-        localStorage.setItem("userInfo", JSON.stringify(res.data.userId));
         setLoading(false);
         toast.success(t["successfully-signed-up"]);
         router.push("/login");

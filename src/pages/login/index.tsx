@@ -50,7 +50,7 @@ const Login = () => {
       .then((res) => {
         if (res.data.isValid) {
           setLoading(false);
-          localStorage.setItem("userInfo", res.data);
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
           setUserId(res.data.userId);
 
           if (res.data.emailConFirm) {
@@ -161,6 +161,7 @@ const Login = () => {
       />
     </div>
   );
+  
 };
 
 export default Login;
