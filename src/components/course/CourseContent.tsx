@@ -5,7 +5,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Modal, Typography }
 import ReactPlayer from "react-player/file";
 
 const CourseContent = ({ course }) => {
-    const [open, setOpen] = useState<string>('');
+    const [open, setOpen] = useState<string>(''); 
     const [loading, setLoading] = useState<boolean>();
 
     const sectionLength = course.seasons.reduce((accumulator, currentValue) => {
@@ -26,10 +26,11 @@ const CourseContent = ({ course }) => {
             course.seasons = course.seasons.map(season => {
                 const sections = res.data.filter(item => item.seasionId === season.id);
                 return { ...season, sections };
-            });
+            }).sort((a,b)=> b.createdDate - a.createdDate );
             setLoading(false)
         })
     }, []);
+    console.log(course)
 
     const style = {
         position: 'absolute',
@@ -67,14 +68,14 @@ const CourseContent = ({ course }) => {
                                 <AccordionDetails>
                                     {el.sections?.map((section) => {
                                         return (
-                                            <div onClick={() => { setOpen(section.id) }} className="flex gap-2 py-4 cursor-pointer border-t border-solid border-gray-200 ">
+                                            <div onClick={() => {setOpen(section.id)}} className="flex gap-2 py-4 cursor-pointer border-t border-solid border-gray-200 ">
                                                 <img className=" invert-[46%] sepia-[9%] saturate-[620%] hue-rotate-[182deg] brightness-[94%] contrast-[88%]" width={16} src="/assets/icons/play-circle.svg" />
                                                 <p className="text-gray-500 text-sm"> {section.episodeTitle}</p>
-                                                <Modal open={open === section.id} onClose={() => { setOpen(null) }} sx={{ zIndex: 100 }}>
+                                                <Modal open={open === section.id} onClose={() => {setOpen(null)}} sx={{ zIndex: 100 }}>
                                                     <Box sx={style}>
                                                         <div className="flex justify-between mb-6">
                                                             <p className="text-white"> {section.episodeTitle} </p>
-                                                            <img onClick={() => { setOpen(null) }} className="cursor-pointer brightness-0 invert" src="/assets/icons/close-circle.svg" />
+                                                            <img onClick={(e) => {e.stopPropagation(); setOpen(null);}} className="cursor-pointer brightness-0 invert" src="/assets/icons/close-circle.svg" />
                                                         </div>
 
                                                         <ReactPlayer controls={true} height={300} width={600} url={section.url} />

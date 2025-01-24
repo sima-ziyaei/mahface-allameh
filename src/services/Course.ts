@@ -55,4 +55,12 @@ export class CourseServices {
         return res ?? null;
       });
   }
+
+  static getAllStudentCourses(userId: string){
+    return axios
+    .get(`${process.env.BASE_URL}/GetAllStudentCourses/${userId}`)
+    .then((res) => {
+      return res ?? null;
+    });
+  }
 }

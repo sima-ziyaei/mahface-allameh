@@ -4,7 +4,6 @@ import { CategoriesServices } from "@/services/Categories";
 import { CourseServices } from "@/services/Course";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import 'react-loading-skeleton/dist/skeleton.css'
 import CourseCard from "./course/CourseCard";
 import { Pagination } from "swiper/modules";
 import CourseCardSkeleton from "./course/CourseCardSkeleton";
