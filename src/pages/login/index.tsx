@@ -37,7 +37,7 @@ const Login = () => {
     mode: "onChange",
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      userNameOrEmailORPhoneNumber: "",
       password: "",
     },
   });
