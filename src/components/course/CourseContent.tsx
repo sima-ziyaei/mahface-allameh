@@ -10,7 +10,7 @@ const CourseContent = ({ course }) => {
     const [open, setOpen] = useState<string>('');
     const [loading, setLoading] = useState<boolean>();
     const [userHasCourse, setUserHasCourse] = useState<boolean>();
-    const userId = JSON.parse(localStorage.getItem("userInfo")).id;
+    const userId = JSON.parse(localStorage.getItem("userInfo")).userId;
 
     const sectionLength = course.seasons.reduce((accumulator, currentValue) => {
         if (currentValue.sections?.length) {

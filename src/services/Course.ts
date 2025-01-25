@@ -74,7 +74,41 @@ export class CourseServices {
   }
 
   static courseExistForUser(userId, courseId){
-    return axios.get(`${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
+    return axios
+    .get(`${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
+    .then((res) => {
+      return res ?? null;
+    });
+  }
+
+  static isUserFavoriteCourse(userId, courseId){
+    return axios
+    .get(`${process.env.BASE_URL}/api/StudentFavoriteCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
+    .then((res) => {
+      return res ?? null;
+    });
+  }
+
+  static addToFavorites(body){
+    return axios
+    .post(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Add`, body)
+    .then((res) => {
+      return res ?? null;
+    });
+  }
+
+
+  static deleteFromFavorites(userId, courseId){
+    return axios
+    .delete(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Delete/${courseId}/${userId}`)
+    .then((res) => {
+      return res ?? null;
+    });
+  }
+
+  static getAllFavoriteCourses(userId){
+    return axios
+    .get(`${process.env.BASE_URL}/GetAllStudentFavoritsCourses/${userId}`)
     .then((res) => {
       return res ?? null;
     });

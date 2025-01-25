@@ -30,11 +30,14 @@ const CourseView = ({ params }) => {
     if (params) {
       CourseServices.getWithCategoryId(params.id).then((res) => {
         res.data.forEach((el) => {
-          ImageServices.getImageByImageId(el.imageId).then((result) => {
+          if(el.imageId){
+            ImageServices.getImageByImageId(el.imageId).then((result) => {
             setImages((prev) => prev.set(el.id, result.data.base64File))
             setCourses(res.data);
             setLoading(false);
           })
+          }
+          
         })
       });
     }

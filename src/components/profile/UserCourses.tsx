@@ -14,10 +14,13 @@ const UserCourses = () => {
   useEffect(() => {
     CourseServices.getAllStudentCourses(userId).then((res) => {
       res.data.forEach((el) => {
-        ImageServices.getImageByImageId(el.imageId).then((result) => {
+        if(el.imageId){
+          ImageServices.getImageByImageId(el.imageId).then((result) => {
           setImages((prev) => prev.set(el.id, result.data.base64File));
           setUserCourses(res.data);
         });
+        }
+        
       });
     });
   }, []);

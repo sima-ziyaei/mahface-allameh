@@ -7,7 +7,7 @@ import { CourseServices } from "@/services/Course";
 const AddToCartButton = ({ course }) => {
     const {setCartItems, cartItems } = useCartContext();
     const router = useRouter();
-    const userId = JSON.parse(localStorage.getItem("userInfo")).id;
+    const userId = JSON.parse(localStorage.getItem("userInfo")).userId;
     const [userHasCourse, setUserHasCourse] = useState<boolean>();
 
     useEffect(()=>{

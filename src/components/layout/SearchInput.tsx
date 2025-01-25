@@ -22,7 +22,7 @@ const SearchInput = () => {
     return (
         <div
             style={{ direction: "rtl" }}
-            className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[50%] mx-8 justify-between focus:[&_input]:border-cyan-700"
+            className="sm:relative rounded-t-3xl rounded-b-3xl border-[1.5px] border-solid border-gray-600 px-4 py-2  bg-white flex w-[40%] mx-8 justify-between focus:[&_input]:border-cyan-700"
         >
             <input
                 value={value ?? ""}

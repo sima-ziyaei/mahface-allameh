@@ -10,6 +10,7 @@ import CourseCardSkeleton from "./course/CourseCardSkeleton";
 import Skeleton from "react-loading-skeleton";
 import { ImageServices } from "@/services/Image";
 import "react-loading-skeleton/dist/skeleton.css";
+import styles from './Categories.module.css';
 
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -33,11 +34,14 @@ const Categories = () => {
     CourseServices.getWithCategoryId(id).then((res) => {
       if(res.data.length){
         res.data.forEach((el)=>{
-        ImageServices.getImageByImageId(el.imageId).then((result)=>{
+          if(el.imageId){
+             ImageServices.getImageByImageId(el.imageId).then((result)=>{
           setImages((prev)=> prev.set(el.id, result.data.base64File))
           setSelectedCategoryCourses(res.data);
           setLoading(false);
         })
+          }
+       
       })
       } else{
         setSelectedCategoryCourses(res.data);
@@ -56,14 +60,17 @@ const Categories = () => {
   return (
     <>
       <div className="container border border-solid flex flex-col mx-auto border-gray-200 bg-white rounded-2xl gap-6 p-6 mt-16 ">
-        <div className="flex w-max h-fit">
-          {categoryLoading
+        <div className={`${styles.container} max-w-[1300px] h-fit overflow-x-scroll py-2 whitespace-nowrap`}>
+          
+          
+          <div className="flex w-full">{categoryLoading
           ?  <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  
           : categories?.map((el) => {
             return (
               <p key={el.id} onClick={() => { setSelectedCategoryId(el.id); getSelectedCategory(el.id); }} className={` ${selectedCategoryId === el.id? 'border-[#009CA7]': ' border-gray-300'} cursor-pointer border-b-2 border-solid p-4`}> {el.title} </p>
             )
           })}
+            </div>
         </div>
         <Swiper spaceBetween={16}
           modules={[Pagination]}

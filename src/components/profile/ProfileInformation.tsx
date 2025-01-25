@@ -21,7 +21,7 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
     email: userInfo?.email,
     phoneNumber: userInfo?.phoneNumber,
     gender: userInfo?.gender,
-    id: userInfo?.id,
+    id: userInfo?.userId,
   });
 
   const editUser = () => {
@@ -40,7 +40,7 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
       email: userInfo?.email,
       phoneNumber: userInfo?.phoneNumber,
       gender: userInfo?.gender,
-      id: userInfo?.id,
+      id: userInfo?.userId,
     });
   }, [userInfo]);
 
