@@ -71,7 +71,7 @@ const Signup = () => {
   const onSubmitSignup = (data: z.infer<typeof signupSchema>) => {
     setLoading(true);
     console.log(data);
-    AccountServices.register({ ...data, birthDate })
+    AccountServices.register({ ...data, birthDate, genderEnum: 1 })
       .then((res) => {
         if (!res.data.isValid) {
           toast.error(res.data.statusMessage);

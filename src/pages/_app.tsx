@@ -1,5 +1,5 @@
 import { CartContextProvider } from "@/contexts/CartContext";
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CacheProvider } from "@emotion/react";

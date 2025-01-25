@@ -33,3 +33,23 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.course-wrapper {
+  input[type="file"] {
+    height: 100%;
+    color: transparent !important;
+    border: 0px !important;
+    outline: 0px !important;
+    cursor: pointer;
+  }
+
+  input[type="file"]::file-selector-button {
+    visibility: hidden;
+    color: transparent;
+  }
+
+  input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+    color: transparent;
+  }
+}

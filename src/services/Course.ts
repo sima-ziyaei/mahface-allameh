@@ -17,6 +17,14 @@ export class CourseServices {
       });
   }
 
+  static getAllTeacherCourses(userId:string) {
+    return axios
+      .get(`${process.env.BASE_URL}/GetAllTeacherCourses/${userId}`)
+      .then((res) => {
+        return res ?? null;
+      });
+  }
+
   static add(body) {
     return axios
       .post(`${process.env.BASE_URL}/AddCourse`, body)
