@@ -9,6 +9,7 @@ import { Pagination } from "swiper/modules";
 import CourseCardSkeleton from "./course/CourseCardSkeleton";
 import Skeleton from "react-loading-skeleton";
 import { ImageServices } from "@/services/Image";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>();

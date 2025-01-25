@@ -4,20 +4,17 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import t from "../../../i18next/locales/fa/translation.json";
-import axios from "axios";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import fa from "react-date-object/locales/persian_fa";
-import Image from "next/image";
 import { AccountServices } from "@/services/Account";
-import ConfirmationCodeDialog from "@/components/ConfirmationCodeDialog";
+import { CircularProgress } from "@mui/material";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [birthDate, setBirthDate] = useState("");
-
+  const [birthDate, setBirthDate] = useState<Date>(undefined);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -46,6 +43,8 @@ const Signup = () => {
         (value) => getValues()?.password === value,
         "password-confirm-not-match"
       ),
+      gender: z
+      .enum(['female, male'], {message: 'choose one'})
   });
 
   const {
@@ -65,6 +64,7 @@ const Signup = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      gender: ""
     },
   });
 
@@ -103,7 +103,7 @@ const Signup = () => {
           />
 
           <span className="text-[12px] text-red-700 ">
-            {t[errors.firstname?.message]}
+            {t[typeof errors.firstname?.message === 'string' ? errors.firstname?.message : null]}
           </span>
         </div>
 
@@ -116,7 +116,7 @@ const Signup = () => {
           />
 
           <span className="text-[12px] text-red-700 ">
-            {t[errors.lastname?.message]}
+            {t[typeof errors.lastname?.message === 'string' ? errors.lastname?.message : null]}
           </span>
         </div>
 
@@ -129,7 +129,7 @@ const Signup = () => {
           />
 
           <span className="text-[12px] text-red-700 ">
-            {t[errors.nationalCode?.message]}
+            {t[typeof errors.nationalCode?.message === 'string' ? errors.nationalCode?.message : null]}
           </span>
         </div>
 
@@ -142,7 +142,7 @@ const Signup = () => {
           />
 
           <span className="text-[12px] text-red-700 ">
-            {t[errors.username?.message]}
+            {t[typeof errors.username?.message === 'string' ? errors.username?.message : null]}
           </span>
         </div>
 
@@ -155,7 +155,7 @@ const Signup = () => {
           />
 
           <span className="text-[12px] text-red-700 ">
-            {t[errors.phoneNumber?.message]}
+            {t[typeof errors.phoneNumber?.message === 'string' ? errors.phoneNumber?.message : null]}
           </span>
         </div>
 
@@ -171,7 +171,7 @@ const Signup = () => {
             locale={fa}
           />
           <span className="text-[12px] text-red-700 ">
-            {birthDate !== "" ? "" : t["birth-date-required"]}
+            {birthDate !== undefined ? "" : t["birth-date-required"]}
           </span>
         </div>
 
@@ -183,7 +183,22 @@ const Signup = () => {
             className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
           />
           <span className="text-[12px] text-red-700 ">
-            {t[errors.email?.message]}
+            {t[typeof errors.email?.message === 'string' ? errors.email?.message : null]}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-1 w-[50%] h-[75px]">
+          <select
+            name="gender"
+            {...register("gender")}
+            className={`px-4 py-2 border border-solid outline-none bg-white border-gray-600 rounded-lg`}
+          >
+            <option value="" disabled selected className="text-[#9CA3AF]"> {t['gender']} </option>
+            <option value={'female'}> {t['female']}</option>
+            <option value={'male'}> {t['male']} </option>
+          </select>
+          <span className="text-[12px] text-red-700 ">
+            {t[typeof errors.gender?.message === 'string' ? errors.gender?.message : null]}
           </span>
         </div>
 
@@ -195,7 +210,7 @@ const Signup = () => {
             className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
           />
           <span className="text-[12px] text-red-700 ">
-            {t[errors.password?.message]}
+            {t[typeof errors.password?.message === 'string' ? errors.password?.message : null]}
           </span>
         </div>
 
@@ -207,15 +222,17 @@ const Signup = () => {
             className="px-4 py-2 border border-solid border-gray-600 rounded-lg "
           />
           <span className="text-[12px] text-red-700 ">
-            {t[errors.confirmPassword?.message]}
+            {t[typeof errors.confirmPassword?.message === 'string' ? errors.confirmPassword?.message : null]}
           </span>
         </div>
 
         <button
+          disabled={loading}
           type="submit"
-          className="border border-solid border-cyan-700 rounded-lg py-2  bg-cyan-700 text-white hover:bg-cyan-800  w-[50%] h-30"
+          className="border border-solid border-cyan-700 rounded-lg py-2 bg-cyan-700 text-white hover:bg-cyan-800 w-1/2 flex items-center gap-3 justify-center"
         >
           {t.signup}
+          {loading ? <CircularProgress color="inherit" size={'24px'} /> : null}
         </button>
 
         <Link href="/login" className="self-start mr-[25%] mt-4">

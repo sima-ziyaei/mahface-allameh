@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import ProfileInformation from "@/components/profile/ProfileInformation";
 import UserCourses from "@/components/profile/UserCourses";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 export enum ProfileState {
   Information = "information",
@@ -14,10 +16,16 @@ export enum ProfileState {
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState();
-
+  const router = useRouter();
   const [profileState, setProfileState] = useState<ProfileState>(
     ProfileState.Information
   );
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    toast(t["loged-out"]);
+    router.push("/login");
+  };
 
   useEffect(() => {
     setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
@@ -37,15 +45,24 @@ const Profile = () => {
           />
           <div
             onClick={() => setProfileState(ProfileState.Information)}
-            className="py-3 px-2 rounded-lg cursor-pointer mt-4 hover:bg-[rgba(0,156,167,0.1)]"
+            className="py-3 px-2 rounded-lg flex gap-2 cursor-pointer mt-4 hover:bg-[rgba(0,156,167,0.1)]"
           >
+            <img src="/assets/icons/user.svg" />
             {t["profile-information"]}
           </div>
           <div
             onClick={() => setProfileState(ProfileState.Orders)}
-            className="py-3 px-2 rounded-lg cursor-pointer mt-4 hover:bg-[rgba(0,156,167,0.1)]"
+            className="py-3 px-2 rounded-lg flex gap-2 cursor-pointer mt-4 hover:bg-[rgba(0,156,167,0.1)]"
           >
+            <img src="/assets/icons/courses.svg" />
             {t["my-courses"]}
+          </div>
+          <div
+            onClick={handleLogOut}
+            className="py-3 px-2 rounded-lg flex gap-2 cursor-pointer mt-4 hover:bg-[rgba(0,156,167,0.1)]"
+          >
+            <img src="/assets/icons/logout.svg" />
+            {t["logout"]}
           </div>
         </div>
         {profileState === ProfileState.Information ? (

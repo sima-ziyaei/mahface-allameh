@@ -29,7 +29,7 @@ function Teacher() {
     if (userInfo?.isTeacher) {
       setTeacherDialogState((prev) => ({ ...prev, open: true }));
     } else {
-      TeacherServices.getByUserId(userInfo?.userId)
+      TeacherServices.getByUserId(userInfo?.id)
         .then((res) => {})
         .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
     }

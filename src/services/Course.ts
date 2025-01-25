@@ -25,7 +25,7 @@ export class CourseServices {
       });
   }
 
-  static delete(id:string) {
+  static delete(id: string) {
     return axios
       .delete(`${process.env.BASE_URL}/DeleteCourse/${id}`)
       .then((res) => {
@@ -42,13 +42,14 @@ export class CourseServices {
   }
 
   static search(query: string) {
-    return axios.get(`${process.env.BASE_URL}/GetAllCoursesWithSearch/${query}`)
-    .then((res)=>{
-      return res ?? null;
-    })
+    return axios
+      .get(`${process.env.BASE_URL}/GetAllCoursesWithSearch/${query}`)
+      .then((res) => {
+        return res ?? null;
+      })
   }
 
-  static getTitleWithCategoryId(id: string){
+  static getTitleWithCategoryId(id: string) {
     return axios
       .get(`${process.env.BASE_URL}/GetAllCoursesTitleWithCategoryId/${id}`)
       .then((res) => {
@@ -56,9 +57,24 @@ export class CourseServices {
       });
   }
 
-  static getAllStudentCourses(userId: string){
+  static getAllStudentCourses(userId: string) {
     return axios
-    .get(`${process.env.BASE_URL}/GetAllStudentCourses/${userId}`)
+      .get(`${process.env.BASE_URL}/GetAllStudentCourses/${userId}`)
+      .then((res) => {
+        return res ?? null;
+      });
+  }
+
+  static addStudentCourse(body) {
+    return axios
+      .post(`${process.env.BASE_URL}/api/StudentCourse/AddMultiple`, body)
+      .then((res) => {
+        return res ?? null;
+      });
+  }
+
+  static courseExistForUser(userId, courseId){
+    return axios.get(`${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
     .then((res) => {
       return res ?? null;
     });

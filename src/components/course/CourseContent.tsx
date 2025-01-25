@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import { SectionServices } from "@/services/Section";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Modal, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Modal, styled, Tooltip, TooltipProps, Typography } from "@mui/material";
 import ReactPlayer from "react-player/file";
+import { CourseServices } from "@/services/Course";
+import AddToCartButton from "../AddToCartButton";
 
 const CourseContent = ({ course }) => {
-    const [open, setOpen] = useState<string>(''); 
+    const [open, setOpen] = useState<string>('');
     const [loading, setLoading] = useState<boolean>();
+    const [userHasCourse, setUserHasCourse] = useState<boolean>();
+    const userId = JSON.parse(localStorage.getItem("userInfo")).id;
 
     const sectionLength = course.seasons.reduce((accumulator, currentValue) => {
         if (currentValue.sections?.length) {
@@ -21,12 +25,18 @@ const CourseContent = ({ course }) => {
     }
 
     useEffect(() => {
+        CourseServices.courseExistForUser(userId, course.id).then((res) => {
+            setUserHasCourse(res.data);
+        })
+    }, [])
+
+    useEffect(() => {
         setLoading(true)
         SectionServices.getAllByCourse(course.id).then((res) => {
             course.seasons = course.seasons.map(season => {
                 const sections = res.data.filter(item => item.seasionId === season.id);
                 return { ...season, sections };
-            }).sort((a,b)=> b.createdDate - a.createdDate );
+            }).sort((a, b) => b.createdDate - a.createdDate);
             setLoading(false)
         })
     }, []);
@@ -42,6 +52,19 @@ const CourseContent = ({ course }) => {
         borderRadius: 4,
         p: 4,
     };
+
+    const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+      ))`
+        & .MuiTooltip-tooltip {
+          background: #fff;
+          color: #000
+        }
+         .MuiTooltip-arrow {
+          background: #fff;
+          }
+      `;
+      
 
     return (
         <div className="px-4 my-12">
@@ -68,20 +91,42 @@ const CourseContent = ({ course }) => {
                                 <AccordionDetails>
                                     {el.sections?.map((section) => {
                                         return (
-                                            <div onClick={() => {setOpen(section.id)}} className="flex gap-2 py-4 cursor-pointer border-t border-solid border-gray-200 ">
-                                                <img className=" invert-[46%] sepia-[9%] saturate-[620%] hue-rotate-[182deg] brightness-[94%] contrast-[88%]" width={16} src="/assets/icons/play-circle.svg" />
-                                                <p className="text-gray-500 text-sm"> {section.episodeTitle}</p>
-                                                <Modal open={open === section.id} onClose={() => {setOpen(null)}} sx={{ zIndex: 100 }}>
-                                                    <Box sx={style}>
-                                                        <div className="flex justify-between mb-6">
-                                                            <p className="text-white"> {section.episodeTitle} </p>
-                                                            <img onClick={(e) => {e.stopPropagation(); setOpen(null);}} className="cursor-pointer brightness-0 invert" src="/assets/icons/close-circle.svg" />
-                                                        </div>
-
-                                                        <ReactPlayer controls={true} height={300} width={600} url={section.url} />
-                                                    </Box>
-                                                </Modal>
-                                            </div>
+                                            !userHasCourse
+                                                ? <Tooltip slotProps={{
+                                                    arrow: {
+                                                        sx: {
+                                                            color: "white"
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        sx: {
+                                                            backgroundColor: "#fff",
+                                                            color: "#333333",
+                                                            fontSize: "14px",
+                                                            padding: "20px",
+                                                            borderRadius: "16px",
+                                                            boxShadow: "4px 4px 8px 4px rgba(0, 0, 0, 0.1)"
+                                                        }
+                                                    }
+                                                }} arrow title={<div className="flex flex-col items-center gap-2"> <p> {t['you-should-buy-course']} </p> <AddToCartButton course={course}/>  </div>}>
+                                                    <div className="flex gap-2 py-4 cursor-pointer border-t border-solid border-gray-200 ">
+                                                        <img className=" invert-[46%] sepia-[9%] saturate-[620%] hue-rotate-[182deg] brightness-[94%] contrast-[88%]" width={16} src="/assets/icons/play-circle.svg" />
+                                                        <p className="text-gray-500 text-sm"> {section.episodeTitle}</p>
+                                                    </div>
+                                                </Tooltip>
+                                                : <div onClick={() => { setOpen(section.id) }} className="flex gap-2 py-4 cursor-pointer border-t border-solid border-gray-200 ">
+                                                    <img className=" invert-[46%] sepia-[9%] saturate-[620%] hue-rotate-[182deg] brightness-[94%] contrast-[88%]" width={16} src="/assets/icons/play-circle.svg" />
+                                                    <p className="text-gray-500 text-sm"> {section.episodeTitle}</p>
+                                                    <Modal open={userHasCourse ? open === section.id : false} onClose={() => { setOpen(null) }} sx={{ zIndex: 100 }}>
+                                                        <Box sx={style}>
+                                                            <div className="flex justify-between mb-6">
+                                                                <p className="text-white"> {section.episodeTitle} </p>
+                                                                <img onClick={(e) => { e.stopPropagation(); setOpen(null); }} className="cursor-pointer brightness-0 invert" src="/assets/icons/close-circle.svg" />
+                                                            </div>
+                                                            <ReactPlayer controls={true} height={300} width={600} url={section.url} />
+                                                        </Box>
+                                                    </Modal>
+                                                </div>
                                         )
                                     })}
                                 </AccordionDetails>

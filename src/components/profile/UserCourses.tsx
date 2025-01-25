@@ -6,7 +6,7 @@ import { ImageServices } from "@/services/Image";
 import { useRouter } from "next/router";
 
 const UserCourses = () => {
-  const userId = JSON.parse(localStorage.getItem("userInfo")).userId;
+  const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const [userCourses, setUserCourses] = useState<Course[]>();
   const [images, setImages] = useState(new Map());
   const router = useRouter()

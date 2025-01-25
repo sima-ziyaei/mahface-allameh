@@ -87,5 +87,9 @@
   "orders": "سفارشات",
   "my-courses": "دوره های من",
   "continue" : "ادامه دوره",
-  "save-changes": "ثبت تغییرات"
+  "save-changes": "ثبت تغییرات",
+  "you-should-buy-course": "برای مشاهده این جلسه باید دوره را خریداری کنید.",
+  "female": "خانم",
+  "male": "آقا",
+  "gender": "جنسیت"
 }

@@ -21,7 +21,7 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
     email: userInfo?.email,
     phoneNumber: userInfo?.phoneNumber,
     gender: userInfo?.gender,
-    id: userInfo?.userId,
+    id: userInfo?.id,
   });
 
   const editUser = () => {
@@ -40,7 +40,7 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
       email: userInfo?.email,
       phoneNumber: userInfo?.phoneNumber,
       gender: userInfo?.gender,
-      id: userInfo?.userId,
+      id: userInfo?.id,
     });
   }, [userInfo]);
 
@@ -83,21 +83,21 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
               label={"نام"}
               disabled={!editeMode}
               onChange={(e) => handleChange("firstname", e.target.value)}
-              value={userData?.firstname}
+              value={userData?.firstname || ''}
             />
             <TextField
               className="w-full"
               label={"نام‌وخانوادگی"}
               disabled={!editeMode}
               onChange={(e) => handleChange("lastName", e.target.value)}
-              value={userData?.lastName}
+              value={userData?.lastName || ''}
             />
             <TextField
               className="w-full"
               label={"کدملی"}
               disabled={!editeMode}
               onChange={(e) => handleChange("nationalCode", e.target.value)}
-              value={userData?.nationalCode}
+              value={userData?.nationalCode || ''}
             />
           </Box>
           <Box
@@ -114,14 +114,14 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
               label={"ایمیل"}
               disabled={!editeMode}
               onChange={(e) => handleChange("email", e.target.value)}
-              value={userData?.email}
+              value={userData?.email || ''}
             />
             <TextField
               className="w-full"
               label={"شماره تلفن"}
               disabled={!editeMode}
               onChange={(e) => handleChange("phoneNumber", e.target.value)}
-              value={userData?.phoneNumber}
+              value={userData?.phoneNumber || ''}
             />
             <TextField
               className="w-full"

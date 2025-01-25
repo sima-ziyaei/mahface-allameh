@@ -84,7 +84,7 @@ const Header: FC = () => {
                   <img width={20} src="/assets/icons/user.svg" />
 
                   </a>
-                <div className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
+                <div onClick={handleLogOut} className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
                   {t["logout"]}
                   <img width={20} src="/assets/icons/logout.svg" />
                 </div>
