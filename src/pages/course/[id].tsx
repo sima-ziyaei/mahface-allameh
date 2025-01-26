@@ -54,7 +54,7 @@ const CourseView = ({ params }) => {
             ? <CourseContent course={course} />
             : navbarState === NavbarState.About
               ? <p className="leading-loose"> {course.description} </p>
-              : <CourseComments />}
+              : <CourseComments courseId={course.id} />}
 
         </div>
         <CourseSideBar course={course} />

@@ -81,5 +81,18 @@
   "phone-number-must-be-11-chars": "شماره تلفن همراه باید ۱۱ رقم باشد!",
   "national-code-must-be-10chart": "کد ملی باید ۱۰ رقم باشد.",
   "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست",
-  "teacher-panel":"پنل استاد"
+  "teacher-panel":"پنل استاد",
+  "input-must-be-a-valid-number": "مقدار وارد شده معتبر نیست",
+  "profile": "پروفایل",
+  "logout": "خروج",
+  "profile-information": "اطلاعات کاربری",
+  "orders": "سفارشات",
+  "my-courses": "دوره های من",
+  "continue" : "ادامه دوره",
+  "save-changes": "ثبت تغییرات",
+  "you-should-buy-course": "برای مشاهده این جلسه باید دوره را خریداری کنید.",
+  "female": "خانم",
+  "male": "آقا",
+  "gender": "جنسیت",
+  "my-favorites": " مورد علاقه های من" 
 }

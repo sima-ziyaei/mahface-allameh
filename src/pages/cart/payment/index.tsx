@@ -2,15 +2,21 @@ import Layout from "@/components/layout/Layout";
 import t from "../../../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 import { useCartContext } from "@/contexts/CartContext";
+import { CourseServices } from "@/services/Course";
 
 const Payment = () => {
     const router = useRouter();
-    const { setSolution, setCartItems } = useCartContext();
+    const { setSolution, setCartItems, cartItems } = useCartContext();
     const sendOrder = () => {
-        setCartItems([]);
-        localStorage.removeItem('cart')
-        setSolution(true);
-        router.push('/cart/paymentsolution')
+        const userId = JSON.parse(localStorage.getItem('userInfo')).userId;
+        const courseIds = cartItems.map((el) => { return el.id })
+        CourseServices.addStudentCourse({ userId: userId, requestIds: courseIds }).then(() => {
+            setCartItems([]);
+            localStorage.removeItem('cart');
+            setSolution(true);
+            router.push('/cart/paymentsolution');
+        })
+
     }
 
     return (<Layout>

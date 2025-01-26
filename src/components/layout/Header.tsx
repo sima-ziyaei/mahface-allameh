@@ -1,17 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import userImage from "../../../public/assets/user.svg";
 import toast from "react-hot-toast";
-import { FaPowerOff } from "react-icons/fa6";
 import { Button } from "@mui/material";
 import SearchInput from "./SearchInput";
 import MegaMenu from "./MegaMenu";
 
 const Header: FC = () => {
+  const [open, setOpen] = useState<boolean>();
   const router = useRouter();
   const handleLogOut = () => {
     localStorage.clear();
@@ -70,14 +69,37 @@ const Header: FC = () => {
         )}
 
         {!["/login", "/signup"].includes(router.pathname) && (
-          <Image src={userImage} alt="user profile" width={50} height={50} />
+          <div className="relative">
+            <Image
+              onClick={() => setOpen(!open)}
+              src={"/assets/user.png"}
+              className="cursor-pointer"
+              alt="user profile"
+              width={70}
+              height={70}
+            />
+
+            {open && (
+              <div className="absolute left-0 shadow-[] w-[150px] bg-white rounded-md">
+                <a href="/profile" className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
+                  {t["profile"]}
+                  <img width={20} src="/assets/icons/user.svg" />
+
+                  </a>
+                <div onClick={handleLogOut} className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
+                  {t["logout"]}
+                  <img width={20} src="/assets/icons/logout.svg" />
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
-        {!["/login", "/signup"].includes(router.pathname) && (
+        {/* {!["/login", "/signup"].includes(router.pathname) && (
           <div onClick={handleLogOut} className=" text-gray-500 cursor-pointer">
             <FaPowerOff />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

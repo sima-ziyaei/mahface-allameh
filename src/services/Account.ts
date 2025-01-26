@@ -5,7 +5,7 @@ export class AccountServices {
     return axios
       .post(process.env.BASE_URL + "/api/Account/Register", body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -13,7 +13,7 @@ export class AccountServices {
     return axios
       .post(process.env.BASE_URL + "/api/Account/EditProfile", body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -29,7 +29,7 @@ export class AccountServices {
     return axios
       .post(process.env.BASE_URL + "/api/Account/Login", body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -37,7 +37,7 @@ export class AccountServices {
     return axios
       .post(process.env.BASE_URL + "/api/Account/GenerateOtp", body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -47,7 +47,7 @@ export class AccountServices {
         `${process.env.BASE_URL}/api/Account/checkOtp?userId=${userId}&otp=${otp}`,{}
       )
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 }

@@ -44,11 +44,14 @@ export default function Home() {
     setLoadingCourses(true);
     CourseServices.getAll().then((res) => {
       res.data.forEach((el) => {
-        ImageServices.getImageByImageId(el.imageId).then((result) => {
+        if(el.imageId){
+           ImageServices.getImageByImageId(el.imageId).then((result) => {
           setImages((prev) => prev.set(el.id, result.data.base64File))
           setAllCourses(res.data);
           setLoadingCourses(false);
         })
+        }
+       
       })
     });
   }, []);
@@ -68,7 +71,7 @@ export default function Home() {
             disableOnInteraction: false,
           }}
           loop
-          speed={800}
+          speed={1200}
           slidesPerView={1}
         >
           <SwiperSlide>

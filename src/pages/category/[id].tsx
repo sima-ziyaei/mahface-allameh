@@ -6,6 +6,8 @@ import { CourseServices } from "@/services/Course";
 import { CategoriesServices } from "@/services/Categories";
 import AddToCartButton from "@/components/AddToCartButton";
 import { ImageServices } from "@/services/Image";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export async function getStaticPaths() {
   let catgegories = [];
@@ -27,12 +29,15 @@ const CourseView = ({ params }) => {
   useEffect(() => {
     if (params) {
       CourseServices.getWithCategoryId(params.id).then((res) => {
-        res.data.forEach((el)=> {
-          ImageServices.getImageByImageId(el.imageId).then((result)=>{
-            setImages((prev)=> prev.set(el.id, result.data.base64File))
+        res.data.forEach((el) => {
+          if(el.imageId){
+            ImageServices.getImageByImageId(el.imageId).then((result) => {
+            setImages((prev) => prev.set(el.id, result.data.base64File))
             setCourses(res.data);
             setLoading(false);
           })
+          }
+          
         })
       });
     }
@@ -42,34 +47,50 @@ const CourseView = ({ params }) => {
     <Layout>
       <div className="p-4">
         <img />
-        {courses?.map((course) => {
-          return (
-            <a href={`/course/${course.id}`}
-              className=" border border-solid border-gray-200 bg-white flex gap-4 rounded-2xl p-4 mb-4"
-              key={course.id}
-            >
-              <img
-                src={`data:image/png;base64,${images.get(course.id)}`}
-                alt="course"
-                className="w-[200px]"
-              />
-
-              <div>
-                <h1 className=" font-bold text-2xl"> {course?.title}</h1>
-                <p className=" mt-6"> {course?.courseDescription} </p>
-
-                <p className=" mt-4">{t["course-teacher"]} : {course.teacherName} </p>
-                <p className=" mt-4">
-                  {t["course-cost"]} : {course?.cost} تومان
-                </p>
+        {loading
+          ? Array.from(Array(5)).map((el, i) => {
+            return (
+              <div key={i} className=" border border-solid border-gray-200 bg-white flex gap-4 rounded-2xl p-4 mb-4">
+                <Skeleton width={200} height={160} />
+                <div>
+                  <Skeleton width={300} height={25} />
+                  <Skeleton className=" mt-6" width={400} height={20} />
+                  <Skeleton className=" mt-6" width={100} height={20} />
+                  <Skeleton className=" mt-6" width={260} height={20} />
+                </div>
+                <Skeleton width={210} height={40} containerClassName="mr-auto mt-auto" />
               </div>
+            )
+          })
+          : courses?.map((course) => {
+            return (
+              <a href={`/course/${course.id}`}
+                className=" border border-solid border-gray-200 bg-white flex gap-4 rounded-2xl p-4 mb-4"
+                key={course.id}
+              >
+                <img
+                  src={`data:image/png;base64,${images.get(course.id)}`}
+                  alt="course"
+                  className="w-[200px]"
+                />
 
-              <div className="mr-auto mt-auto">
-                <AddToCartButton course={course} />
-              </div>
-            </a>
-          );
-        })}
+                <div>
+                  <h1 className=" font-bold text-2xl"> {course?.title}</h1>
+                  <p className=" mt-6"> {course?.courseDescription} </p>
+
+                  <p className=" mt-4">{t["course-teacher"]} : {course.teacherName} </p>
+                  <p className=" mt-4">
+                    {t["course-cost"]} : {course?.cost} تومان
+                  </p>
+                </div>
+
+                <div className="mr-auto mt-auto">
+                  <AddToCartButton course={course} />
+                </div>
+              </a>
+            );
+          })}
+
       </div>
     </Layout>
   );

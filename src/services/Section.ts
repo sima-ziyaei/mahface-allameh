@@ -1,33 +1,39 @@
 import axios from "axios";
 
 export class SectionServices {
-  static getAll() {
-    return axios.get(`${process.env.BASE_URL}/api/Sectio`).then((res) => {
-      return res ? res : [];
+  static getAllByCourse(courseId) {
+    return axios.get(`${process.env.BASE_URL}/api/Section/GetAllCourseSection/${courseId}`).then((res) => {
+      return res ?? null;
+    });
+  }
+
+  static getAllBySeason(seasonId) {
+    return axios.get(`${process.env.BASE_URL}/api/Section/GetAllSeasonSection/${seasonId}`).then((res) => {
+      return res ?? null;
     });
   }
 
   static add(body) {
     return axios
-      .post(`${process.env.BASE_URL}/api/Section`, body)
+      .post(`${process.env.BASE_URL}/api/Section/CreateSection`, body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
-  static update(body) {
+  static update(body, id) {
     return axios
-      .put(`${process.env.BASE_URL}/api/Section`, body)
+      .put(`${process.env.BASE_URL}/api/Section/UpdateSection/${id}`, body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
   static getById(id: string) {
     return axios
-      .get(`${process.env.BASE_URL}/api/Section/${id}`)
+      .get(`${process.env.BASE_URL}/api/Section/GetSectionDetails/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
