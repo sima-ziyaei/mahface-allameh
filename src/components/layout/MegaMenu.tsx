@@ -16,7 +16,7 @@ const MegaMenu = () => {
             res.data.forEach((el) => {
                 CourseServices.getTitleWithCategoryId(el.id).then((result) => {
                     CourseMap[el.title] = result.data;
-                })
+                }).catch((err) => {});
             })
         })
         setCourseMap(CourseMap)

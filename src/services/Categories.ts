@@ -1,13 +1,13 @@
 import axios from "axios";
 
 export class CategoriesServices {
-    
   static getAll() {
     return axios
       .get(process.env.BASE_URL + "/api/Categories/GetAll")
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static addCategory(body) {
@@ -15,7 +15,8 @@ export class CategoriesServices {
       .post(process.env.BASE_URL + "/api/Categories/AddCategory", body)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getById(id: number | string) {
@@ -23,7 +24,8 @@ export class CategoriesServices {
       .get(`${process.env.BASE_URL}/api/Categories/GetById/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static deleteCategory(id: number | string) {
@@ -31,14 +33,16 @@ export class CategoriesServices {
       .delete(`${process.env.BASE_URL}/api/Categories/DeleteCategory/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
-  static getTitles(){
+  static getTitles() {
     return axios
       .get(process.env.BASE_URL + "/api/Categories/GetAllTitleCategoriesAsync")
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 }

@@ -6,7 +6,8 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetById/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getAll() {
@@ -14,15 +15,17 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetAllCourses`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
-  static getAllTeacherCourses(userId:string) {
+  static getAllTeacherCourses(userId: string) {
     return axios
       .get(`${process.env.BASE_URL}/GetAllTeacherCourses/${userId}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static add(body) {
@@ -30,7 +33,8 @@ export class CourseServices {
       .post(`${process.env.BASE_URL}/AddCourse`, body)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static delete(id: string) {
@@ -38,7 +42,8 @@ export class CourseServices {
       .delete(`${process.env.BASE_URL}/DeleteCourse/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getWithCategoryId(id: string) {
@@ -46,7 +51,8 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetAllCoursesWithCategoryId/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static search(query: string) {
@@ -54,7 +60,7 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetAllCoursesWithSearch/${query}`)
       .then((res) => {
         return res ?? null;
-      })
+      });
   }
 
   static getTitleWithCategoryId(id: string) {
@@ -62,7 +68,8 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetAllCoursesTitleWithCategoryId/${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getAllStudentCourses(userId: string) {
@@ -70,7 +77,8 @@ export class CourseServices {
       .get(`${process.env.BASE_URL}/GetAllStudentCourses/${userId}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static addStudentCourse(body) {
@@ -78,47 +86,58 @@ export class CourseServices {
       .post(`${process.env.BASE_URL}/api/StudentCourse/AddMultiple`, body)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
-  static courseExistForUser(userId, courseId){
+  static courseExistForUser(userId, courseId) {
     return axios
-    .get(`${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
-    .then((res) => {
-      return res ?? null;
-    });
+      .get(
+        `${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
+      )
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 
-  static isUserFavoriteCourse(userId, courseId){
+  static isUserFavoriteCourse(userId, courseId) {
     return axios
-    .get(`${process.env.BASE_URL}/api/StudentFavoriteCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`)
-    .then((res) => {
-      return res ?? null;
-    });
+      .get(
+        `${process.env.BASE_URL}/api/StudentFavoriteCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
+      )
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 
-  static addToFavorites(body){
+  static addToFavorites(body) {
     return axios
-    .post(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Add`, body)
-    .then((res) => {
-      return res ?? null;
-    });
+      .post(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Add`, body)
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 
-
-  static deleteFromFavorites(userId, courseId){
+  static deleteFromFavorites(userId, courseId) {
     return axios
-    .delete(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Delete/${courseId}/${userId}`)
-    .then((res) => {
-      return res ?? null;
-    });
+      .delete(
+        `${process.env.BASE_URL}/api/StudentFavoriteCourse/Delete/${courseId}/${userId}`
+      )
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 
-  static getAllFavoriteCourses(userId){
+  static getAllFavoriteCourses(userId) {
     return axios
-    .get(`${process.env.BASE_URL}/GetAllStudentFavoritsCourses/${userId}`)
-    .then((res) => {
-      return res ?? null;
-    });
+      .get(`${process.env.BASE_URL}/GetAllStudentFavoritsCourses/${userId}`)
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 }

@@ -9,18 +9,19 @@ const UserCourses = () => {
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const [userCourses, setUserCourses] = useState<Course[]>();
   const [images, setImages] = useState(new Map());
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     CourseServices.getAllStudentCourses(userId).then((res) => {
       res.data.forEach((el) => {
-        if(el.imageId){
-          ImageServices.getImageByImageId(el.imageId).then((result) => {
-          setImages((prev) => prev.set(el.id, result.data.base64File));
-          setUserCourses(res.data);
-        });
+        if (el.imageId) {
+          ImageServices.getImageByImageId(el.imageId)
+            .then((result) => {
+              setImages((prev) => prev.set(el.id, result.data.base64File));
+              setUserCourses(res.data);
+            })
+            .catch((err) => {});
         }
-        
       });
     });
   }, []);
@@ -52,8 +53,17 @@ const UserCourses = () => {
               </p>
             </div>
             <div className="mr-auto mt-auto">
-        <button onClick={() => router.push(`/course/${course.id}`)} className="bg-[#009CA7] hover:bg-[#1f848b] justify-between w-[210px] py-2 px-5 rounded-lg text-white self-center flex gap-2"> {t['continue']}  <img className="brightness-0 invert" src="/assets/icons/arrow-left copy.svg" /> </button>
-
+              <button
+                onClick={() => router.push(`/course/${course.id}`)}
+                className="bg-[#009CA7] hover:bg-[#1f848b] justify-between w-[210px] py-2 px-5 rounded-lg text-white self-center flex gap-2"
+              >
+                {" "}
+                {t["continue"]}{" "}
+                <img
+                  className="brightness-0 invert"
+                  src="/assets/icons/arrow-left copy.svg"
+                />{" "}
+              </button>
             </div>
           </div>
         );

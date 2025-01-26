@@ -15,7 +15,7 @@ const CourseCard = ({ course, images }) => {
   useEffect(() => {
     CourseServices.isUserFavoriteCourse(userId, course.id).then((res)=>{
       setIsLiked(res.data);
-    })
+    }).catch((err) => {});
   }, []);
 
   const like = (e) => {
@@ -25,12 +25,12 @@ const CourseCard = ({ course, images }) => {
       CourseServices.deleteFromFavorites(userId, course.id).then((res)=>{
         console.log(res,'deleete')
         setIsLiked(false);
-      })
+      }).catch((err) => {});
     } else {
       CourseServices.addToFavorites({userId: userId, courseId: course.id}).then((res)=>{
         console.log(res, 'addddd')
         setIsLiked(true)
-      })
+      }).catch((err) => {});
     }
   };
 

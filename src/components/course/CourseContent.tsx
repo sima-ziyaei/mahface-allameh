@@ -27,7 +27,7 @@ const CourseContent = ({ course }) => {
     useEffect(() => {
         CourseServices.courseExistForUser(userId, course.id).then((res) => {
             setUserHasCourse(res.data);
-        })
+        }).catch((err) => {});
     }, [])
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const CourseContent = ({ course }) => {
                 return { ...season, sections };
             }).sort((a, b) => b.createdDate - a.createdDate);
             setLoading(false)
-        })
+        }).catch((err) => {});
     }, []);
     console.log(course)
 

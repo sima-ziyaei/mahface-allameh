@@ -16,7 +16,7 @@ const SearchInput = () => {
             setShowError(false);
             CourseServices.search(value).then((res) => {
                 setSearchedCourses(res.data);
-            })
+            }).catch((err) => {});
         }
     }
     return (

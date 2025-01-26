@@ -11,7 +11,8 @@ import { CourseServices } from "@/services/Course";
 export async function getStaticPaths() {
   let courses = [];
   CourseServices.getAll()
-    .then((res) => res.data.map((el) => [courses.push(el.id)]));
+    .then((res) => res.data.map((el) => [courses.push(el.id)]))
+    .catch((err) => {});
 
   return { paths: courses, fallback: false };
 }
@@ -21,41 +22,47 @@ export async function getStaticProps({ params }) {
 }
 
 export enum NavbarState {
-  Content = 'content',
-  Comment = 'comment',
-  About = 'about'
+  Content = "content",
+  Comment = "comment",
+  About = "about",
 }
 
 const CourseView = ({ params }) => {
   const [course, setCourse] = useState<Course>();
-  const [navbarState, setNavbarState] = useState<NavbarState>(NavbarState.Content)
+  const [navbarState, setNavbarState] = useState<NavbarState>(
+    NavbarState.Content
+  );
 
-  console.log(course)
+  console.log(course);
 
   useEffect(() => {
     if (params) {
-      CourseServices.getById(params.id).then(res => {
-        setCourse(res.data)
-      })
+      CourseServices.getById(params.id)
+        .then((res) => {
+          setCourse(res.data);
+        })
+        .catch((err) => {});
     }
-    
   }, [params]);
 
-  if (!course)
-    return null;
+  if (!course) return null;
 
   return (
     <Layout>
       <div className="flex mb-16">
         <div className="w-[-webkit-fill-available]">
           <CourseHeader course={course} />
-          <CourseNavbar setNavbarState={setNavbarState} navbarState={navbarState} />
-          {navbarState === NavbarState.Content
-            ? <CourseContent course={course} />
-            : navbarState === NavbarState.About
-              ? <p className="leading-loose"> {course.description} </p>
-              : <CourseComments courseId={course.id} />}
-
+          <CourseNavbar
+            setNavbarState={setNavbarState}
+            navbarState={navbarState}
+          />
+          {navbarState === NavbarState.Content ? (
+            <CourseContent course={course} />
+          ) : navbarState === NavbarState.About ? (
+            <p className="leading-loose"> {course.description} </p>
+          ) : (
+            <CourseComments courseId={course.id} />
+          )}
         </div>
         <CourseSideBar course={course} />
       </div>

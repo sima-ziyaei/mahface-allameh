@@ -6,7 +6,8 @@ export class ImageServices {
       .post(`${process.env.BASE_URL}/api/Image/AddImage`, body)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getImageByImageId(id: string) {
@@ -14,15 +15,17 @@ export class ImageServices {
       .get(`${process.env.BASE_URL}/api/Image/getByImageId?id=${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
-  static deleteImage(id:string) {
+  static deleteImage(id: string) {
     return axios
       .delete(`${process.env.BASE_URL}/api/Image/DeleteImage?id=${id}`)
       .then((res) => {
         return res ?? null;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static uploadByChoosingFile(formData, id) {
@@ -31,8 +34,10 @@ export class ImageServices {
       url: `${process.env.BASE_URL}/api/Image/DeleteImage?id=${id}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {
-      return res ?? null;
-    });
+    })
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
   }
 }
