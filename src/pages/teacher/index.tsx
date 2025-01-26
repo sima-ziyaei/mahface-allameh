@@ -8,6 +8,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -25,15 +26,50 @@ function Teacher() {
       : {};
 
   const [teacherDialogState, setTeacherDialogState] = useState({ open: false });
+  const [requestForTeachingDialog, setRequestForTeachingDilaog] = useState({
+    open: false,
+    value: "",
+  });
 
   function handleTeaching() {
-    // if (userInfo?.isTeacher) {
-    setTeacherDialogState((prev) => ({ ...prev, open: true }));
-    // } else {
-    //   TeacherServices.getByUserId(userInfo?.userId)
-    //     .then((res) => {})
-    //     .catch((err) => toast.error("درخواست شما با خطا مواجه شد."));
-    // }
+    if (userInfo.isTeacher) {
+      setTeacherDialogState((prev) => ({ ...prev, open: true }));
+    } else {
+      TeacherServices.getLastStatusForUser(userInfo?.userId)
+        .then((res) => {
+          if (res.hasActiveRequest) {
+            toast.error(res.userDescription);
+            return;
+          } else {
+            setRequestForTeachingDilaog((prev) => ({ ...prev, open: true }));
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
+    }
+  }
+
+  function handleRequestForTeaching() {
+    TeacherServices.requestForTeaching({
+      userId: userInfo.userId,
+      userDescription: requestForTeachingDialog.value,
+    })
+      .then((res) => {
+        if (res.isValid) {
+          toast.success("درخواست شما با موفقیت ثبت شد");
+          return;
+        } else {
+          toast.error(res.statusMessage);
+          return;
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+      .finally(() => {
+        setRequestForTeachingDilaog({ open: false, value: "" });
+      });
   }
 
   return (
@@ -45,7 +81,7 @@ function Teacher() {
           className="w-full h-full"
         />
 
-        <div className="absolute right-[400px] top-[400px] flex flex-col gap-8">
+        <div className="absolute right-[20%] top-[40%] flex flex-col gap-8">
           <p className=" text-bold text-3xl">{t["time-to-teach"]}</p>
 
           <Button
@@ -56,10 +92,9 @@ function Teacher() {
               fontSize: 20,
               px: 8,
               backgroundColor: "#009CA7",
-              fontWeight: "bold",
             }}
           >
-            {userInfo?.isTeacher?t["teacher-panel"]:t["start-teaching"]}
+            {t["start-teaching"]}
           </Button>
         </div>
       </div>
@@ -241,6 +276,50 @@ function Teacher() {
         setTeacherDialogState={setTeacherDialogState}
         userInfo={userInfo}
       />
+
+      <Dialog
+        maxWidth="xl"
+        open={requestForTeachingDialog.open}
+        onClose={() => setRequestForTeachingDilaog({ open: false, value: "" })}
+      >
+        <DialogTitle sx={{ bgcolor: "#009CA7", mb: 5, color: "white" }}>
+          توضیحات مربوط به درخواست خود و سوابق خود را وارد کنید
+        </DialogTitle>
+
+        <DialogContent>
+          <TextField
+            multiline={true}
+            label="توضیحات"
+            sx={{ width: 1, my: 8 }}
+            onChange={(e) =>
+              setRequestForTeachingDilaog((prev) => ({
+                ...prev,
+                value: e.target.value,
+              }))
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => {
+              setRequestForTeachingDilaog({ open: false, value: "" });
+            }}
+          >
+            بستن
+          </Button>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={() => {
+              handleRequestForTeaching();
+            }}
+          >
+            درخواست
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Layout>
   );
 }

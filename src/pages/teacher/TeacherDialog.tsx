@@ -19,204 +19,107 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PreviousMap from "postcss/lib/previous-map";
-import React, { useState, useId, useEffect } from "react";
+import React, {
+  useState,
+  useId,
+  useEffect,
+  useLayoutEffect,
+  memo,
+} from "react";
 import { toast } from "react-hot-toast";
+import { AccountServices } from "@/services/Account";
+import { SectionServices } from "@/services/Section";
+import { SeasonServices } from "@/services/Season";
+import CourseComponent from "./CourseComponent";
+
+export function uuid() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 function TeacherDialog({
   teacherDialogState,
   setTeacherDialogState,
   userInfo,
 }) {
-  const insitalCourseObj = {
-    id: useId(),
-    title: "",
-    categoryId: "",
-
-    courseLevelId: 1,
-    cost: 0,
-    imageBase64: "",
-    courseDescription: "",
-    description: "",
-    seasons: [
-      {
-        id: useId(),
-        title: "",
-        sections: [
-          {
-            id: useId(),
-            title: "بخش 1",
-            video: "",
-          },
-        ],
-      },
-    ],
-  };
+  // ######## STATES ##############//
 
   const [editeMode, setEditeMode] = useState(false);
-  const [courses, setCourses] = useState([
-    {
-      id: useId(),
-      title: "برنامه نویسی",
-      categoryId: "463044b4-343f-4101-b2a3-73012d059ac9",
-      courseLevelId: 1,
-      cost: 0,
-      imageBase64: "",
-      courseDescription: "",
-      description: "",
-      seasons: [
-        {
-          id: useId(),
-          title: "html",
-          sections: [
-            {
-              id: useId(),
-              title: "بخش 1",
-              video: "https://tekeye.uk/html/images/Joren_Falls_Izu_Jap.mp4",
-            },
-          ],
-        },
-      ],
-    },
-  ]);
-  const [categories, setCategories] = useState([]);
 
-  function handleCourseItemChange(filed, courseId, value) {
-    let selectedCourse = { ...courses.find((el) => el.id === courseId) };
-    selectedCourse[filed] = value;
+  const [editeUserInfo, setEditeUserInfo] = useState(userInfo);
 
-    setCourses((prev) => [
-      ...prev.filter((el) => el.id !== courseId),
-      {
-        ...selectedCourse,
-      },
-    ]);
+  function handleEditeUserInfoChange(field, value) {
+    let temp = { ...userInfo };
+    temp[field] = value;
+    setEditeUserInfo(temp);
   }
 
-  function handleSeasonItemChange(filed, courseId, seasonId, value) {
-    const selectedCourse = courses.find((el) => el.id === courseId);
-    const selectedSeason = selectedCourse.seasons.find(
-      (el) => el.id === seasonId
-    );
+  function submitUserInfoChange() {
+    if (
+      Object.values(editeUserInfo).includes("") ||
+      Object.values(editeUserInfo).includes(null) ||
+      Object.values(editeUserInfo).includes(undefined)
+    ) {
+      toast.error("پرکردن درست تمامی فیلدها ضروری است!");
+      return "";
+    }
 
-    selectedSeason[filed] = value;
-
-    setCourses((prev) => [
-      ...prev.filter((el) => el.id !== courseId),
-      {
-        ...selectedCourse,
-        seasons: [
-          ...selectedCourse.seasons.filter((el) => el.id !== seasonId),
-          selectedSeason,
-        ],
-      },
-    ]);
-  }
-
-  function handleSectionItemChange(
-    filed,
-    courseId,
-    seasonId,
-    sectionId,
-    value
-  ) {
-    const selectedCourse = courses.find((el) => el.id === courseId);
-    const selectedSeason = selectedCourse.seasons.find(
-      (el) => el.id === seasonId
-    );
-    let selectedSection = {
-      ...selectedSeason.sections.find((el) => el.id === sectionId),
-    };
-
-    selectedSection[filed] = value;
-
-    setCourses((prev) => [
-      ...prev.filter((el) => el.id !== courseId),
-      {
-        ...selectedCourse,
-        seasons: [
-          ...selectedCourse.seasons.filter((el) => el.id !== seasonId),
-          {
-            ...selectedSeason,
-            sections: [
-              ...selectedSeason.sections.filter((el) => el.id !== sectionId),
-              selectedSection,
-            ],
-          },
-        ],
-      },
-    ]);
-  }
-
-  function deleteCourse(courseId) {
-    CourseServices.delete(courseId)
+    AccountServices.getEditProfile(userInfo.userId)
       .then((res) => {
-        if (res.data.isValid) {
-          setCourses((prev) => prev.filter((item) => item.id !== courseId));
-          toast.success("با موفقیت حذف شد.");
-        } else {
-          toast.error(res.data.statusMessage);
-        }
+        AccountServices.editProfile({
+          id: editeUserInfo?.userId,
+          firstname: editeUserInfo?.firstname,
+          lastName: editeUserInfo?.lastName,
+          birthDate: res?.data?.birthDate || new Date(),
+          nationalCode: editeUserInfo?.nationalCode,
+          phoneNumber: editeUserInfo?.phonNumber,
+          base64Profile: editeUserInfo?.profileImageBase64,
+          isTeacher: res.data.isTeacher,
+        })
+          .then((res) => {
+            toast.success("اطلاعات کاربری با موفقیت تغییر یافت.");
+            localStorage.set("userInfo", editeUserInfo);
+            setEditeMode(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error(err?.response?.data?.title);
+          });
       })
       .catch((err) => {
-        toast.error(err?.message);
+        toast.error(err.message);
       });
   }
-  function editeCourse() {}
-  function addCourse(courseId) {
-    let body = {};
-  }
 
-  function deleteSeason() {}
-  function editeSeason() {}
-  function addSeson() {}
-
-  function deleteSection() {}
-  function editeSection() {}
-  function addSection() {}
-
-  const handleFileChange = (event, courseId) => {
-    const selectedCorse = courses.find((el) => el.id === courseId);
-
+  const handleUserPhotoChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
 
       reader.onload = () => {
-        setCourses((prev) => [
-          ...prev.filter((el) => el.id !== courseId),
-          {
-            ...selectedCorse,
-            imageBase64: reader.result?.split(",")[1],
-          },
-        ]);
+        setEditeUserInfo((prev) => ({
+          ...prev,
+          profileImageBase64: reader.result?.split(",")[1],
+        }));
       };
 
-      reader.readAsDataURL(file); // Read the file as a Base64 URL
+      reader.readAsDataURL(file);
     }
   };
-
-  useEffect(() => {
-    CategoriesServices.getAll()
-      .then((res) => {
-        console.log(res.data);
-        setCategories(res.data);
-      })
-      .catch((err) => {
-        toast.error("مشکلی در دریافت کتگوری ها پیش آمده است");
-        setTeacherDialogState({ open: false });
-      });
-
-    CourseServices.getAllTeacherCourses(userInfo?.userId).then((res) => {
-      console.log(res.data);
-    });
-  }, []);
 
   return (
     <Dialog
       fullScreen
       open={teacherDialogState.open}
-      onClose={() => setTeacherDialogState({ open: false })}
+      onClose={() => {
+        setEditeMode(false);
+        setTeacherDialogState({ open: false });
+      }}
     >
       <DialogTitle
         sx={{ bgcolor: "#009CA7", color: "white", fontSize: "28px" }}
@@ -229,11 +132,19 @@ function TeacherDialog({
           <Accordion expanded={true}>
             <AccordionSummary>
               <div className="w-full flex justify-between items-center">
-                <div className="flex gap-6">
+                <div className="flex gap-6 relative course-wrapper ">
+                  <input
+                    className="w-full h-full absolute left-0 top-0 z-100"
+                    type="file"
+                    disabled={!editeMode}
+                    onChange={(e) => handleUserPhotoChange(e)}
+                    accept="image/png, image/jpeg"
+                  />
+
                   <Avatar
                     src={
-                      userInfo?.profileImageBase64
-                        ? `data:image/png;base64,${userInfo?.profileImageBase64}`
+                      editeUserInfo?.profileImageBase64
+                        ? `data:image/png;base64,${editeUserInfo?.profileImageBase64}`
                         : "/assets/user.svg"
                     }
                     sx={{ width: 60, height: 60 }}
@@ -264,19 +175,28 @@ function TeacherDialog({
                   className="w-full"
                   label={"نام"}
                   disabled={!editeMode}
-                  value={userInfo?.firstname}
+                  value={editeUserInfo?.firstname}
+                  onChange={(e) => {
+                    handleEditeUserInfoChange("firstname", e.target.value);
+                  }}
                 />
                 <TextField
                   className="w-full"
                   label={"نام‌وخانوادگی"}
                   disabled={!editeMode}
-                  value={userInfo?.lastName}
+                  value={editeUserInfo?.lastName}
+                  onChange={(e) => {
+                    handleEditeUserInfoChange("lastName", e.target.value);
+                  }}
                 />
                 <TextField
                   className="w-full"
                   label={"کدملی"}
                   disabled={!editeMode}
-                  value={userInfo?.nationalCode}
+                  value={editeUserInfo?.nationalCode}
+                  onChange={(e) => {
+                    handleEditeUserInfoChange("nationalCode", e.target.value);
+                  }}
                 />
               </Box>
               <Box
@@ -292,18 +212,24 @@ function TeacherDialog({
                   className="w-full"
                   label={"ایمیل"}
                   disabled={!editeMode}
-                  value={userInfo?.email}
+                  value={editeUserInfo?.email}
+                  onChange={(e) => {
+                    handleEditeUserInfoChange("email", e.target.value);
+                  }}
                 />
                 <TextField
                   className="w-full"
                   label={"شماره تلفن"}
                   disabled={!editeMode}
-                  value={userInfo?.phoneNumber}
+                  value={editeUserInfo?.phoneNumber}
+                  onChange={(e) => {
+                    handleEditeUserInfoChange("phoneNumber", e.target.value);
+                  }}
                 />
                 <Autocomplete
                   disablePortal
                   disabled={!editeMode}
-                  value={userInfo?.genderTypeString}
+                  value={editeUserInfo?.genderTypeString}
                   options={[0, 1, 2]}
                   getOptionLabel={(option) =>
                     option === 1 ? "مرد" : option === 0 ? "انتخاب نشده" : "زن"
@@ -312,221 +238,25 @@ function TeacherDialog({
                   renderInput={(params) => (
                     <TextField {...params} label="جنسیت" />
                   )}
+                  onChange={(e, newValue) => {
+                    handleEditeUserInfoChange("genderTypeString", newValue);
+                  }}
                 />
               </Box>
             </AccordionDetails>
-          </Accordion>
-        </div>
-
-        <div className=" w-full">
-          <Accordion expanded>
-            <AccordionSummary className="">دوره ها</AccordionSummary>
-            <Divider />
-            <AccordionDetails>
-              {courses.map((course) => (
-                <Accordion className="my-20">
-                  <AccordionSummary>
-                    <div className="w-full flex flex-col items-center gap-6">
-                      <div className="w-full flex items-center gap-6 course-wrapper">
-                        <img
-                          className="w-40 h-20"
-                          src={
-                            course?.imageBase64
-                              ? `data:image/png;base64,${course?.imageBase64}`
-                              : "https://media1.maktabkhooneh.org/courses/images/آموزش_CSS_HTML_و_JavaScript_پروژه_محور_1403-09-26-144158971.webp?expire=2049115569&token=564e8b871816b0eb043f4e063ea18e33"
-                          }
-                        />
-                        <TextField
-                          sx={{ width: 1 / 4 }}
-                          value={course?.title}
-                          onChange={(e) =>
-                            handleCourseItemChange(
-                              "title",
-                              course.id,
-                              e.target.value
-                            )
-                          }
-                          variant="outlined"
-                          label="نام دوره"
-                        />
-                        <div className="w-1/4 relative ">
-                          <TextField sx={{ width: 1 }} label="تعویض عکس" />
-
-                          <input
-                            className="w-full h-full absolute left-0 top-0 "
-                            type="file"
-                            onChange={(e) => handleFileChange(e, course.id)}
-                            accept="image/png, image/jpeg"
-                          />
-                        </div>
-                        <Autocomplete
-                          disablePortal
-                          options={categories}
-                          value={categories?.find(
-                            (item) => item.id === course.categoryId
-                          )}
-                          getOptionLabel={(option) => option.title}
-                          onChange={(e, newValue) =>
-                            handleCourseItemChange(
-                              "categoryId",
-                              course.id,
-                              newValue.id
-                            )
-                          }
-                          style={{ width: "25%" }}
-                          renderInput={(params) => (
-                            <TextField {...params} label="دسته" />
-                          )}
-                        />
-                        <TextField
-                          label="مبلغ دوره"
-                          value={course?.cost}
-                          type="number"
-                          InputProps={{ inputProps: { min: 0 } }}
-                          onChange={(e) =>
-                            handleCourseItemChange(
-                              "cost",
-                              course.id,
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
-
-                      <div className="w-full pr-44 flex items-center gap-6 course-wrapper">
-                        <TextField
-                          value={course?.courseDescription}
-                          onChange={(e) =>
-                            handleCourseItemChange(
-                              "courseDescription",
-                              course.id,
-                              e.target.value
-                            )
-                          }
-                          sx={{ width: 1 / 4 }}
-                          label="توضیح مختصر دوره"
-                        />
-                        <TextField
-                          value={course?.description}
-                          sx={{ width: 1 / 3 }}
-                          onChange={(e) =>
-                            handleCourseItemChange(
-                              "description",
-                              course.id,
-                              e.target.value
-                            )
-                          }
-                          label="توضیحات تکمیلی دوره"
-                        />
-                        <Autocomplete
-                          disablePortal
-                          value={course?.courseLevelId}
-                          options={[3, 1, 2]}
-                          getOptionLabel={(option) =>
-                            option === 1
-                              ? "ابتدایی"
-                              : option === 2
-                              ? "متوسط"
-                              : "پیشرفته"
-                          }
-                          onChange={(event, newValue) =>
-                            handleCourseItemChange(
-                              "courseLevelId",
-                              course.id,
-                              newValue
-                            )
-                          }
-                          style={{ width: "25%" }}
-                          renderInput={(params) => (
-                            <TextField {...params} label="سطح دوره" />
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {course?.seasons?.map((season) => (
-                      <Accordion>
-                        <AccordionSummary>
-                          <TextField
-                            sx={{ width: 1 / 2 }}
-                            value={season.title}
-                            variant="outlined"
-                            label="نام فصل"
-                          />
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          {season?.sections.map((section) => (
-                            <Accordion>
-                              <AccordionSummary>
-                                <TextField
-                                  sx={{ width: 1 / 2 }}
-                                  value={section.title}
-                                  variant="outlined"
-                                  label="نام بخش"
-                                />
-                              </AccordionSummary>
-                              <AccordionDetails className="flex items-center justify-around">
-                                <video
-                                  src={section.video}
-                                  width="250"
-                                  height="250"
-                                  controls
-                                  muted
-                                />
-                                <TextField
-                                  sx={{ width: 1 / 2 }}
-                                  value={section?.video}
-                                  variant="outlined"
-                                  label="لینک ویدیو"
-                                />
-                              </AccordionDetails>
-                              <AccordionActions>
-                                <Button variant="contained" color="error">
-                                  حذف بخش
-                                </Button>
-                                <Button variant="contained">ویرایش بخش</Button>
-                              </AccordionActions>
-                            </Accordion>
-                          ))}
-                        </AccordionDetails>
-                        <AccordionActions>
-                          <Button variant="contained" color="error">
-                            حذف فصل
-                          </Button>
-                          <Button variant="contained">افزودن بخش</Button>
-                        </AccordionActions>
-                      </Accordion>
-                    ))}
-                  </AccordionDetails>
-                  <AccordionActions>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={deleteCourse.bind(null, course.id)}
-                    >
-                      حذف دوره
-                    </Button>
-                    <Button variant="contained">افزودن فصل</Button>
-                  </AccordionActions>
-                </Accordion>
-              ))}
-            </AccordionDetails>
             <AccordionActions>
-              <Button variant="contained" sx={{ backgroundColor: "gray" }}>
-                ویرایش تغییرات
-              </Button>
               <Button
+                color="secondary"
+                disabled={!editeMode}
                 variant="contained"
-                onClick={() =>
-                  setCourses((prev) => [...prev, insitalCourseObj])
-                }
+                onClick={() => submitUserInfoChange()}
               >
-                افزودن دوره
+                ثبت تغییرات پروفایل استاد
               </Button>
             </AccordionActions>
           </Accordion>
         </div>
+        <CourseComponent />
       </DialogContent>
 
       <DialogActions className="bg-blue-200">
@@ -534,13 +264,11 @@ function TeacherDialog({
           variant="contained"
           color="warning"
           onClick={() => {
+            setEditeMode(false);
             setTeacherDialogState({ open: false });
           }}
         >
           بستن
-        </Button>
-        <Button variant="contained" color="secondary" onClick={() => {}}>
-          ثبت تغییرات
         </Button>
       </DialogActions>
     </Dialog>

@@ -15,11 +15,37 @@ export class TeacherServices {
       });
   }
 
+  static getLastStatusForUser(id: number | string) {
+    return axios
+      .get(
+        `${process.env.BASE_URL}/api/TeacherRequest/GetLastStatusForUser/${id}`
+      )
+      .then((res) => {
+        return res.data;
+      });
+  }
+
+  static getLastStatusForusers(id: number | string) {
+    return axios
+      .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
+      .then((res) => {
+        return res?.data;
+      });
+  }
+
   static getByUserId(id: number | string) {
     return axios
       .get(`${process.env.BASE_URL}/api/Users/getByUserId/${id}`)
       .then((res) => {
         return res ? res : [];
+      });
+  }
+
+  static requestForTeaching(body) {
+    return axios
+      .post(`${process.env.BASE_URL}/api/TeacherRequest/CreateRequest`, body)
+      .then((res) => {
+        return res.data;
       });
   }
 
@@ -41,7 +67,7 @@ export class TeacherServices {
 
   static approveRequest(requestId: string, adminId: srting) {
     return axios
-      .delete(
+      .post(
         `${process.env.BASE_URL}/api/TeacherRequest/ApproveRequest/${requestId}?adminId=${adminId}`
       )
       .then((res) => {
@@ -51,7 +77,7 @@ export class TeacherServices {
 
   static getAllRequests() {
     return axios
-      .delete(`${process.env.BASE_URL}/api/TeacherRequest/GetAllRequests`)
+      .get(`${process.env.BASE_URL}/api/TeacherRequest/GetAllRequests`)
       .then((res) => {
         return res ? res : [];
       });
@@ -66,6 +92,4 @@ export class TeacherServices {
         return res ? res : [];
       });
   }
-
-  
 }

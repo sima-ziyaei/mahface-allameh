@@ -33,9 +33,9 @@ export class SectionServices {
 
   static delete(id: string) {
     return axios
-      .delete(`${process.env.BASE_URL}/api/Section/${id}`)
+      .delete(`${process.env.BASE_URL}/api/Section/DeleteSection/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res?.data;
       });
   }
 }

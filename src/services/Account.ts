@@ -17,6 +17,14 @@ export class AccountServices {
       });
   }
 
+  static getEditProfile(id) {
+    return axios
+      .get(`${process.env.BASE_URL}/api/Account/EditProfile?userId=${id}`)
+      .then((res) => {
+        return res ? res : [];
+      });
+  }
+
   static login(body) {
     return axios
       .post(process.env.BASE_URL + "/api/Account/Login", body)
