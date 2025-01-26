@@ -5,7 +5,7 @@ export class ImageServices {
     return axios
       .post(`${process.env.BASE_URL}/api/Image/AddImage`, body)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -13,15 +13,15 @@ export class ImageServices {
     return axios
       .get(`${process.env.BASE_URL}/api/Image/getByImageId/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
-  static deleteImage() {
+  static deleteImage(id:string) {
     return axios
       .delete(`${process.env.BASE_URL}/api/Image/DeleteImage/${id}`)
       .then((res) => {
-        return res ? res : [];
+        return res ?? null;
       });
   }
 
@@ -32,7 +32,7 @@ export class ImageServices {
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
-      return res ? res : [];
+      return res ?? null;
     });
   }
 }

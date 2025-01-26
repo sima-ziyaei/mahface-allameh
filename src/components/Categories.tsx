@@ -1,49 +1,102 @@
 import { Category } from "@/models/category.model";
 import { Course } from "@/models/course.model";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { CategoriesServices } from "@/services/Categories";
+import { CourseServices } from "@/services/Course";
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import CourseCard from "./course/CourseCard";
+import { Pagination } from "swiper/modules";
+import CourseCardSkeleton from "./course/CourseCardSkeleton";
+import Skeleton from "react-loading-skeleton";
+import { ImageServices } from "@/services/Image";
+import "react-loading-skeleton/dist/skeleton.css";
+import styles from './Categories.module.css';
 
 const Categories = () => {
-  const BASE_URL = process.env.BASE_URL;
-  const [courses, setCourses] = useState<Course[]>();
-  const router = useRouter();
-
   const [categories, setCategories] = useState<Category[]>();
+  const [loading, setLoading] = useState<boolean>();
+  const [categoryLoading, setCategoryLoading] = useState<boolean>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
+  const [selectedCategoryCourses, setSelectedCategoryCourses] = useState<Course[]>();
+  const [images, setImages] = useState(new Map());
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/api/Categories/GetAll`).then((res) => {
+    setCategoryLoading(true);
+    CategoriesServices.getAll().then((res) => {
       setCategories(res.data);
+      setSelectedCategoryId(res.data[0].id);
+      setCategoryLoading(false);
     });
   }, []);
+  
+  const getSelectedCategory = (id) => {
+    setLoading(true);
+    CourseServices.getWithCategoryId(id).then((res) => {
+      if(res.data.length){
+        res.data.forEach((el)=>{
+          if(el.imageId){
+             ImageServices.getImageByImageId(el.imageId).then((result)=>{
+          setImages((prev)=> prev.set(el.id, result.data.base64File))
+          setSelectedCategoryCourses(res.data);
+          setLoading(false);
+        })
+          }
+       
+      })
+      } else{
+        setSelectedCategoryCourses(res.data);
+          setLoading(false);
+      }
+      
+    })
+  }
 
-  const getCourses = (id) => {
-    axios.get(`${BASE_URL}/api/Courses/GetAllCourses`).then((res) => {
-      const course = res.data.filter((el) => el.categoryId === id);
-      setCourses(course);
-    });
-  };
+  useEffect(()=>{
+    if(selectedCategoryId)
+      getSelectedCategory(selectedCategoryId);
+  }, [selectedCategoryId]);
+
 
   return (
     <>
-      <div className="flex gap-6 mt-6">
-        {categories?.map((el) => {
-          return (
-            <p onClick={() => getCourses(el.id)} key={el.id} className="cursor-pointer hover:text-cyan-700">
-              {el.title}
-            </p>
-          );
-        })}
-      </div>
-
-      {courses?.length ? (
-        <div className="flex gap-8 mt-6 bg-cyan-700 text-white p-4 justify-center">
-          {" "}
-          {courses?.map((el) => {
-            return <p onClick={()=>router.push(`/course/${el.id}`)} className="cursor-pointer" key={el.id}>{el.title}</p>;
+      <div className="container border border-solid flex flex-col mx-auto border-gray-200 bg-white rounded-2xl gap-6 p-6 mt-16 ">
+        <div className={`${styles.container} max-w-[1300px] h-fit overflow-x-scroll py-2 whitespace-nowrap`}>
+          
+          
+          <div className="flex w-full">{categoryLoading
+          ?  <Skeleton count={9} width={90} height={25} containerClassName="flex gap-4" className="block" />  
+          : categories?.map((el) => {
+            return (
+              <p key={el.id} onClick={() => { setSelectedCategoryId(el.id); getSelectedCategory(el.id); }} className={` ${selectedCategoryId === el.id? 'border-[#009CA7]': ' border-gray-300'} cursor-pointer border-b-2 border-solid p-4`}> {el.title} </p>
+            )
           })}
+            </div>
         </div>
-      ) : null}
+        <Swiper spaceBetween={16}
+          modules={[Pagination]}
+          pagination
+          slidesPerView={'auto'}
+          className="w-full !pb-10" >
+          {loading || categoryLoading
+            ? Array.from(Array(10)).map((el, i) => {
+                return (
+                    <SwiperSlide key={i} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                        <CourseCardSkeleton />
+                    </SwiperSlide>
+                )
+            })
+            : !selectedCategoryCourses?.length && !categoryLoading  
+            ? <img src="/assets/Course-not-Found.jpg" className="mx-auto h-[400px]" /> 
+          : selectedCategoryCourses?.map((el) => {
+            return (
+              <SwiperSlide key={el.id} className="!w-[350px] p-4 border border-solid rounded-2xl !h-auto">
+                <CourseCard course={el} images={images} />
+              </SwiperSlide>
+            )
+          })}
+
+        </Swiper>
+      </div>
     </>
   );
 };

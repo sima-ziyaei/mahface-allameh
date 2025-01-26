@@ -17,6 +17,14 @@ export class SeasonServices {
       });
   }
 
+  static delete(id: string) {
+    return axios
+      .delete(`${process.env.BASE_URL}/api/Season/DeleteSeason/${id}`)
+      .then((res) => {
+        return res?.data;
+      });
+  }
+
   static getAllByCourseId(courseId: string) {
     return axios
       .get(`${process.env.BASE_URL}/api/Season/getAllByCourseId/${courseId}`)

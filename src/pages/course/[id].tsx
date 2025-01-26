@@ -1,28 +1,63 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Course } from "@/models/course.model";
-import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import CourseContent from "@/components/course/CourseContent";
+import CourseHeader from "@/components/course/CourseHeader";
+import CourseSideBar from "@/components/course/CourseSideBar";
+import CourseNavbar from "@/components/course/CourseNavbar";
+import CourseComments from "@/components/course/CourseComments";
+import { CourseServices } from "@/services/Course";
 
-const CourseView = () => {
-  const router = useRouter();
+export async function getStaticPaths() {
+  let courses = [];
+  CourseServices.getAll()
+    .then((res) => res.data.map((el) => [courses.push(el.id)]));
+
+  return { paths: courses, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  return { props: { params } };
+}
+
+export enum NavbarState {
+  Content = 'content',
+  Comment = 'comment',
+  About = 'about'
+}
+
+const CourseView = ({ params }) => {
   const [course, setCourse] = useState<Course>();
-  const id = router.query.id;
-  const BASE_URL = process.env.BASE_URL;
+  const [navbarState, setNavbarState] = useState<NavbarState>(NavbarState.Content)
+
+  console.log(course)
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/Courses/GetById?id=${id}`)
-      .then((res) =>{ setCourse(res.data)
-        console.log(res.data);
-      });
-  }, [id]);
+    if (params) {
+      CourseServices.getById(params.id).then(res => {
+        setCourse(res.data)
+      })
+    }
+    
+  }, [params]);
+
+  if (!course)
+    return null;
 
   return (
     <Layout>
-      <div className="p-4">
-       <h1 className="text-cyan-700 font-bold text-center text-2xl"> {course?.title}</h1>
-        <p className="text-cyan-600 text-center mt-6"> {course?.courseDescription} </p>
+      <div className="flex mb-16">
+        <div className="w-[-webkit-fill-available]">
+          <CourseHeader course={course} />
+          <CourseNavbar setNavbarState={setNavbarState} navbarState={navbarState} />
+          {navbarState === NavbarState.Content
+            ? <CourseContent course={course} />
+            : navbarState === NavbarState.About
+              ? <p className="leading-loose"> {course.description} </p>
+              : <CourseComments courseId={course.id} />}
+
+        </div>
+        <CourseSideBar course={course} />
       </div>
     </Layout>
   );
