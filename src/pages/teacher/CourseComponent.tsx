@@ -130,7 +130,7 @@ function CourseCompotent() {
             setCourses((prev) => prev.filter((item) => item.id !== courseId));
             toast.success("با موفقیت حذف شد.");
           } else {
-            toast.error(res.data.statusMessage);
+            toast.error(res?.data?.statusMessage);
           }
         })
         .catch((err) => {
@@ -139,7 +139,19 @@ function CourseCompotent() {
     }
   }
 
-  function editeCourse() {}
+  function editeCourse(courseId) {
+    const selectedCourse = courses.find((el) => el.id === courseId);
+    if (selectedCourse.now) {
+      CourseServices.add({
+        userId: userInfo?.userId,
+        title: selectedCourse.title,
+        courseDescription: selectedCourse.courseDescription,
+        cost:selectedCourse.course,
+        courseLevelId:selectedCourse.courseLevelId,
+      });
+    } else {
+    }
+  }
 
   function addCourse() {
     setCourses((prev) => [
@@ -220,7 +232,68 @@ function CourseCompotent() {
     }
   }
 
-  function editeSeason(courseId) {}
+  function editeSeason(courseId, seasonId) {
+    const selectedCourse = courses.find((el) => el.id === courseId);
+    const selectedSeason = selectedCourse.seasons.find(
+      (el) => el.id === seasonId
+    );
+
+    if (
+      selectedSeason.title.trim() === "" ||
+      selectedSeason.seasonsDescription.trim() === ""
+    ) {
+      toast.error("ابتدا تمامی مشخصات فصل را درست پر کنید.");
+      return;
+    }
+
+    if (selectedSeason.now) {
+      SeasonServices.add({
+        title: selectedSeason.title,
+        courseId: selectedCourse.id,
+        seasonsDescription: selectedSeason.seasonsDescription,
+      })
+        .then((res) => {
+          if (res.data.isValid) {
+            toast.success("فصل با موفقیت اضافه شد.");
+            setCourses((prev) => [
+              ...prev.filter((c) => c.id !== courseId),
+              {
+                ...selectedCourse,
+                seasons: [
+                  ...selectedCourse.seasons.filter(
+                    (item) => item.id !== seasonId
+                  ),
+                  {
+                    ...selectedSeason,
+                    now: false,
+                  },
+                ],
+              },
+            ]);
+          } else {
+            toast.error(res?.data?.statusMessage);
+            return;
+          }
+        })
+        .catch((err) => {});
+    } else {
+      SeasonServices.update({
+        id: selectedSeason.id,
+        title: selectedSeason.title,
+        courseId: selectedCourse.id,
+        seasonsDescription: selectedSeason.seasonsDescription,
+      })
+        .then((res) => {
+          if (res.data.isValid) {
+            toast.success("فصل با موفقیت آپدیت شد.");
+          } else {
+            toast.error(res?.data?.statusMessage);
+            return;
+          }
+        })
+        .catch((err) => {});
+    }
+  }
 
   function addSeson(courseId) {
     const selectedCourse = courses.find((el) => el.id === courseId);
@@ -311,7 +384,76 @@ function CourseCompotent() {
       });
   }
 
-  function editeSection(courseId, seasonId) {}
+  function editeSection(courseId, seasonId, sectionId) {
+    const selectedCourse = courses.find((el) => el.id === courseId);
+    const selectedSeason = selectedCourse.seasons.find(
+      (el) => el.id === seasonId
+    );
+    const selectedSection = selectedSeason.find((el) => el.id === sectionId);
+
+    if (
+      selectedSection.url.trim() === "" ||
+      selectedSection.title.trim() === ""
+    ) {
+      toast.error("ابتدا نیاز است تمام اطلاعات بخش را کامل وارد کنید");
+      return;
+    }
+
+    if (selectedSection.now) {
+      SectionServices.add({
+        url: selectedSection.url,
+        seasonId: selectedSeason.id,
+        createdUserId: userInfo?.userId,
+        title: selectedSection.title,
+      })
+        .then((res) => {
+          if (res.data.isValid) {
+            toast.success("این بخش باموفقیت اضافه شد.");
+            setCourses((prev) => [
+              ...prev.filter((el) => el.id !== courseId),
+              {
+                ...selectedCourse,
+                seasons: [
+                  ...selectedCourse.seasons.filter(
+                    (item) => item.id !== seasonId
+                  ),
+                  {
+                    ...selectedSeason,
+                    sections: [
+                      ...selectedSeason.sections,
+                      {
+                        new: true,
+                        id: uuid(),
+                        title: "",
+                        url: "",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]);
+          } else {
+            toast.error(res?.data?.statusMessage);
+            return;
+          }
+        })
+        .catch();
+    } else {
+      SectionServices.update(
+        { title: selectedSection.title, url: selectedSection.url },
+        selectedSection.id
+      )
+        .then((res) => {
+          if (res.data.isValid) {
+            toast.success("این بخش باموفقیت آپدیت شد.");
+          } else {
+            toast.error(res?.data?.statusMessage);
+            return;
+          }
+        })
+        .catch(() => {});
+    }
+  }
 
   function addSection(courseId, seasonId) {
     const selectedCourse = courses.find((el) => el.id === courseId);
