@@ -6,7 +6,8 @@ export class SeasonServices {
       .get(`${process.env.BASE_URL}/api/Season/getAllSeasons`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getById(id: string) {
@@ -14,7 +15,8 @@ export class SeasonServices {
       .get(`${process.env.BASE_URL}/api/Season/getById/${id}`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static delete(id: string) {
@@ -22,7 +24,8 @@ export class SeasonServices {
       .delete(`${process.env.BASE_URL}/api/Season/DeleteSeason/${id}`)
       .then((res) => {
         return res?.data;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getAllByCourseId(courseId: string) {
@@ -30,7 +33,8 @@ export class SeasonServices {
       .get(`${process.env.BASE_URL}/api/Season/getAllByCourseId/${courseId}`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static add(body) {
@@ -38,7 +42,8 @@ export class SeasonServices {
       .post(`${process.env.BASE_URL}/api/Season/addSeason`, body)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static update(body) {
@@ -46,6 +51,7 @@ export class SeasonServices {
       .put(`${process.env.BASE_URL}/api/Season/update`, body)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 }

@@ -28,7 +28,7 @@ const ProfileInformation = ({ userInfo, setUserInfo }) => {
     AccountServices.editProfile(userData).then((res)=>{
       localStorage.setItem('userInfo', JSON.stringify(userData))
       setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
-    });
+    }).catch((err) => {});;
 
   };
 

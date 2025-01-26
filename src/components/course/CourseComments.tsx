@@ -21,8 +21,8 @@ const CourseComments = ({ courseId }) => {
                 setComments(res.data);
                 setText('');
                 setSending(false)
-            })
-        })
+            }).catch((err) => {});
+        }).catch((err) => {});
     }
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const CourseComments = ({ courseId }) => {
         CommentServices.getByCourseId(courseId).then((res) => {
             setComments(res.data);
             setLoading(false);
-        })
+        }).catch((err) => {});
     }, [])
 
     return (

@@ -2,9 +2,12 @@ import axios from "axios";
 
 export class TeacherServices {
   static getAll() {
-    return axios.get(process.env.BASE_URL + "/api/Users/getAll").then((res) => {
-      return res ? res : [];
-    });
+    return axios
+      .get(process.env.BASE_URL + "/api/Users/getAll")
+      .then((res) => {
+        return res ? res : [];
+      })
+      .catch((err) => console.error(err));
   }
 
   static getById(id: number | string) {
@@ -12,7 +15,8 @@ export class TeacherServices {
       .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getLastStatusForUser(id: number | string) {
@@ -22,7 +26,8 @@ export class TeacherServices {
       )
       .then((res) => {
         return res.data;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getLastStatusForusers(id: number | string) {
@@ -30,7 +35,8 @@ export class TeacherServices {
       .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res?.data;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getByUserId(id: number | string) {
@@ -38,7 +44,8 @@ export class TeacherServices {
       .get(`${process.env.BASE_URL}/api/Users/getByUserId/${id}`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static requestForTeaching(body) {
@@ -46,7 +53,8 @@ export class TeacherServices {
       .post(`${process.env.BASE_URL}/api/TeacherRequest/CreateRequest`, body)
       .then((res) => {
         return res.data;
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static deleteUsers(id: number | string) {
@@ -54,7 +62,8 @@ export class TeacherServices {
       .delete(`${process.env.BASE_URL}/api/Users/delete/${id}`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static createRequest(body: { userId: string; userDescription: string }) {
@@ -62,7 +71,8 @@ export class TeacherServices {
       .delete(`${process.env.BASE_URL}/api/TeacherRequest/CreateRequest`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static approveRequest(requestId: string, adminId: srting) {
@@ -72,7 +82,8 @@ export class TeacherServices {
       )
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static getAllRequests() {
@@ -80,7 +91,8 @@ export class TeacherServices {
       .get(`${process.env.BASE_URL}/api/TeacherRequest/GetAllRequests`)
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   static rejectRequest(requestId: number | string) {
@@ -90,6 +102,7 @@ export class TeacherServices {
       )
       .then((res) => {
         return res ? res : [];
-      });
+      })
+      .catch((err) => console.error(err));
   }
 }

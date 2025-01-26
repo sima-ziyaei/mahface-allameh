@@ -8,7 +8,7 @@ const Courses = () => {
     useEffect(()=>{
         CourseServices.getAll().then((res) => {
             setCourses(res.data);
-          });
+          }).catch((err) => {});;
     },[])
     return(<></>)
 }

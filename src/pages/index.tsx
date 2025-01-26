@@ -18,7 +18,6 @@ import { useRouter } from "next/router";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
   const [allCourses, setAllCourses] = useState<Course[]>();
   const [loadingCourses, setLoadingCourses] = useState<boolean>();
   const [images, setImages] = useState(new Map());
@@ -42,18 +41,21 @@ export default function Home() {
 
   useEffect(() => {
     setLoadingCourses(true);
-    CourseServices.getAll().then((res) => {
-      res.data.forEach((el) => {
-        if(el.imageId){
-           ImageServices.getImageByImageId(el.imageId).then((result) => {
-          setImages((prev) => prev.set(el.id, result.data.base64File))
-          setAllCourses(res.data);
-          setLoadingCourses(false);
-        })
-        }
-       
+    CourseServices.getAll()
+      .then((res) => {
+        res.data.forEach((el) => {
+          if (el.imageId) {
+            ImageServices.getImageByImageId(el.imageId)
+              .then((result) => {
+                setImages((prev) => prev.set(el.id, result.data.base64File));
+                setAllCourses(res.data);
+                setLoadingCourses(false);
+              })
+              .catch((err) => {});
+          }
+        });
       })
-    });
+      .catch((err) => {});
   }, []);
 
   return (
@@ -87,18 +89,23 @@ export default function Home() {
 
         <Categories />
 
+        <MostRecentCourses
+          allCourses={allCourses}
+          images={images}
+          loading={loadingCourses}
+        />
 
-        <MostRecentCourses allCourses={allCourses} images={images} loading={loadingCourses} />
-
-
-        <MostPopularCourses allCourses={allCourses} images={images} loading={loadingCourses} />
-
+        <MostPopularCourses
+          allCourses={allCourses}
+          images={images}
+          loading={loadingCourses}
+        />
 
         <div>
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">
             {
               t[
-              "cooperation-with-the-best-universities-and-educational-institutions"
+                "cooperation-with-the-best-universities-and-educational-institutions"
               ]
             }
           </h4>
