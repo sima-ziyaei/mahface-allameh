@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class SeasonServices {
   static getAll() {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Season/getAllSeasons`)
+      .get(`${BASE_URL}/api/Season/getAllSeasons`)
       .then((res) => {
         return res ? res : [];
       })
@@ -12,7 +12,7 @@ export class SeasonServices {
 
   static getById(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Season/getById/${id}`)
+      .get(`${BASE_URL}/api/Season/getById/${id}`)
       .then((res) => {
         return res ? res : [];
       })
@@ -21,7 +21,7 @@ export class SeasonServices {
 
   static update(body) {
     return axiosInstance
-      .put(`${process.env.BASE_URL}api/season/update`, body)
+      .put(`${BASE_URL}api/season/update`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -30,7 +30,7 @@ export class SeasonServices {
 
   static delete(id: string) {
     return axiosInstance
-      .delete(`${process.env.BASE_URL}/api/Season/DeleteSeason/${id}`)
+      .delete(`${BASE_URL}/api/Season/DeleteSeason/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -39,7 +39,7 @@ export class SeasonServices {
 
   static getAllByCourseId(courseId: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Season/getAllByCourseId/${courseId}`)
+      .get(`${BASE_URL}/api/Season/getAllByCourseId/${courseId}`)
       .then((res) => {
         return res ? res : [];
       })
@@ -48,7 +48,7 @@ export class SeasonServices {
 
   static add(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/api/Season/addSeason`, body)
+      .post(`${BASE_URL}/api/Season/addSeason`, body)
       .then((res) => {
         return res ? res : [];
       })

@@ -1,10 +1,10 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 import axios from "axios";
 
 export class CategoriesServices {
   static getAll() {
     return axiosInstance
-      .get(process.env.BASE_URL + "/api/Categories/GetAll")
+      .get(BASE_URL + "/api/Categories/GetAll")
       .then((res) => {
         return res ?? null;
       })
@@ -13,7 +13,7 @@ export class CategoriesServices {
 
   static addCategory(body) {
     return axiosInstance
-      .post(process.env.BASE_URL + "/api/Categories/AddCategory", body)
+      .post(BASE_URL + "/api/Categories/AddCategory", body)
       .then((res) => {
         return res ?? null;
       })
@@ -22,7 +22,7 @@ export class CategoriesServices {
 
   static getById(id: number | string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Categories/GetById/${id}`)
+      .get(`${BASE_URL}/api/Categories/GetById/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -31,7 +31,7 @@ export class CategoriesServices {
 
   static deleteCategory(id: number | string) {
     return axiosInstance
-      .delete(`${process.env.BASE_URL}/api/Categories/DeleteCategory/${id}`)
+      .delete(`${BASE_URL}/api/Categories/DeleteCategory/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -40,7 +40,7 @@ export class CategoriesServices {
 
   static getTitles() {
     return axiosInstance
-      .get(process.env.BASE_URL + "/api/Categories/GetAllTitleCategoriesAsync")
+      .get(BASE_URL + "/api/Categories/GetAllTitleCategoriesAsync")
       .then((res) => {
         return res ?? null;
       })

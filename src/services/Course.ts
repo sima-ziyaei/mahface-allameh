@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class CourseServices {
   static getById(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetById/${id}`)
+      .get(`${BASE_URL}/GetById/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -12,7 +12,7 @@ export class CourseServices {
 
   static getAll() {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllCourses`)
+      .get(`${BASE_URL}/GetAllCourses`)
       .then((res) => {
         return res ?? null;
       })
@@ -21,7 +21,7 @@ export class CourseServices {
 
   static update(body, id) {
     return axiosInstance
-      .put(`${process.env.BASE_URL}/updateCourse/${id}`, body)
+      .put(`${BASE_URL}/updateCourse/${id}`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -30,7 +30,7 @@ export class CourseServices {
 
   static getAllTeacherCourses(userId: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllTeacherCourses/${userId}`)
+      .get(`${BASE_URL}/GetAllTeacherCourses/${userId}`)
       .then((res) => {
         return res ?? null;
       })
@@ -39,7 +39,7 @@ export class CourseServices {
 
   static add(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/AddCourse`, body)
+      .post(`${BASE_URL}/AddCourse`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -48,7 +48,7 @@ export class CourseServices {
 
   static delete(id: string) {
     return axiosInstance
-      .delete(`${process.env.BASE_URL}/DeleteCourse/${id}`)
+      .delete(`${BASE_URL}/DeleteCourse/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -57,7 +57,7 @@ export class CourseServices {
 
   static getWithCategoryId(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllCoursesWithCategoryId/${id}`)
+      .get(`${BASE_URL}/GetAllCoursesWithCategoryId/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -66,7 +66,7 @@ export class CourseServices {
 
   static search(query: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllCoursesWithSearch/${query}`)
+      .get(`${BASE_URL}/GetAllCoursesWithSearch/${query}`)
       .then((res) => {
         return res ?? null;
       });
@@ -74,7 +74,7 @@ export class CourseServices {
 
   static getTitleWithCategoryId(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllCoursesTitleWithCategoryId/${id}`)
+      .get(`${BASE_URL}/GetAllCoursesTitleWithCategoryId/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -83,7 +83,7 @@ export class CourseServices {
 
   static getAllStudentCourses(userId: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllStudentCourses/${userId}`)
+      .get(`${BASE_URL}/GetAllStudentCourses/${userId}`)
       .then((res) => {
         return res ?? null;
       })
@@ -92,7 +92,7 @@ export class CourseServices {
 
   static addStudentCourse(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/api/StudentCourse/AddMultiple`, body)
+      .post(`${BASE_URL}/api/StudentCourse/AddMultiple`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -102,7 +102,7 @@ export class CourseServices {
   static courseExistForUser(userId, courseId) {
     return axiosInstance
       .get(
-        `${process.env.BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
+        `${BASE_URL}/api/StudentCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
       )
       .then((res) => {
         return res ?? null;
@@ -113,7 +113,7 @@ export class CourseServices {
   static isUserFavoriteCourse(userId, courseId) {
     return axiosInstance
       .get(
-        `${process.env.BASE_URL}/api/StudentFavoriteCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
+        `${BASE_URL}/api/StudentFavoriteCourse/HasExistForUser?courseId=${courseId}&userId=${userId}`
       )
       .then((res) => {
         return res ?? null;
@@ -123,7 +123,7 @@ export class CourseServices {
 
   static addToFavorites(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/api/StudentFavoriteCourse/Add`, body)
+      .post(`${BASE_URL}/api/StudentFavoriteCourse/Add`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -133,7 +133,7 @@ export class CourseServices {
   static deleteFromFavorites(userId, courseId) {
     return axiosInstance
       .delete(
-        `${process.env.BASE_URL}/api/StudentFavoriteCourse/Delete/${courseId}/${userId}`
+        `${BASE_URL}/api/StudentFavoriteCourse/Delete/${courseId}/${userId}`
       )
       .then((res) => {
         return res ?? null;
@@ -143,7 +143,7 @@ export class CourseServices {
 
   static getAllFavoriteCourses(userId) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/GetAllStudentFavoritsCourses/${userId}`)
+      .get(`${BASE_URL}/GetAllStudentFavoritsCourses/${userId}`)
       .then((res) => {
         return res ?? null;
       })

@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class UsersServices {
   static getAll() {
     return axiosInstance
-      .get(process.env.BASE_URL + "/api/Users/getAll")
+      .get(BASE_URL + "/api/Users/getAll")
       .then((res) => {
         return res ? res : [];
       })
@@ -12,7 +12,7 @@ export class UsersServices {
 
   static getById(id: number | string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
+      .get(`${BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res ? res : [];
       })
@@ -21,7 +21,7 @@ export class UsersServices {
 
   static deleteUsers(id: number | string) {
     return axiosInstance
-      .delete(`${process.env.BASE_URL}/api/Users/delete/${id}`)
+      .delete(`${BASE_URL}/api/Users/delete/${id}`)
       .then((res) => {
         return res ? res : [];
       })

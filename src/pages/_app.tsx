@@ -18,8 +18,10 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
+export const BASE_URL="https://ashkanrazavi.ir";
+
 export const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: BASE_URL,
   timeout: 10000,
   httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 });

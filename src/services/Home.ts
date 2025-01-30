@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class HomeServices {
   static getUrls() {
     return axiosInstance
-      .get(process.env.BASE_URL + "/api/Home/getUrls")
+      .get(BASE_URL + "/api/Home/getUrls")
       .then((res) => {
         return res ? res : [];
       })
@@ -12,7 +12,7 @@ export class HomeServices {
 
   static getUserInfo(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Home/getUserInfo?id=${id}`)
+      .get(`${BASE_URL}/api/Home/getUserInfo?id=${id}`)
       .then((res) => {
         return res ? res : [];
       })

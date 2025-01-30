@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class CommentServices {
   static getByCourseId(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Comment/course/${id}`)
+      .get(`${BASE_URL}/api/Comment/course/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -12,7 +12,7 @@ export class CommentServices {
 
   static add(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/api/Comment`, body)
+      .post(`${BASE_URL}/api/Comment`, body)
       .then((res) => {
         return res ?? null;
       })

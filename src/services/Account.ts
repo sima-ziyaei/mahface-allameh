@@ -1,9 +1,9 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class AccountServices {
   static register(body) {
     return axiosInstance
-      .post(process.env.BASE_URL + "/api/Account/Register", body)
+      .post(BASE_URL + "/api/Account/Register", body)
       .then((res) => {
         return res ?? null;
       })
@@ -12,7 +12,7 @@ export class AccountServices {
 
   static editProfile(body) {
     return axiosInstance
-      .post(process.env.BASE_URL + "/api/Account/EditProfile", body)
+      .post(BASE_URL + "/api/Account/EditProfile", body)
       .then((res) => {
         return res ?? null;
       })
@@ -21,7 +21,7 @@ export class AccountServices {
 
   static getEditProfile(id) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Account/EditProfile?userId=${id}`)
+      .get(`${BASE_URL}/api/Account/EditProfile?userId=${id}`)
       .then((res) => {
         return res ? res : [];
       })
@@ -30,7 +30,7 @@ export class AccountServices {
 
   static login(body) {
     return axiosInstance
-      .post(process.env.BASE_URL + "/api/Account/Login", body)
+      .post(BASE_URL + "/api/Account/Login", body)
       .then((res) => {
         return res ?? null;
       })
@@ -39,7 +39,7 @@ export class AccountServices {
 
   static generateOtp(body) {
     return axiosInstance
-      .post(process.env.BASE_URL + "/api/Account/GenerateOtp", body)
+      .post(BASE_URL + "/api/Account/GenerateOtp", body)
       .then((res) => {
         return res ?? null;
       })
@@ -49,7 +49,7 @@ export class AccountServices {
   static checkOtp(userId, otp) {
     return axiosInstance
       .post(
-        `${process.env.BASE_URL}/api/Account/checkOtp?userId=${userId}&otp=${otp}`,
+        `${BASE_URL}/api/Account/checkOtp?userId=${userId}&otp=${otp}`,
         {}
       )
       .then((res) => {

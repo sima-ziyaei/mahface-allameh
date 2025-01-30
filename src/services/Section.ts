@@ -1,10 +1,10 @@
-import { axiosInstance } from "@/pages/_app";
+import { axiosInstance, BASE_URL } from "@/pages/_app";
 
 export class SectionServices {
   static getAllByCourse(courseId) {
     return axiosInstance
       .get(
-        `${process.env.BASE_URL}/api/Section/GetAllCourseSection/${courseId}`
+        `${BASE_URL}/api/Section/GetAllCourseSection/${courseId}`
       )
       .then((res) => {
         return res ?? null;
@@ -15,7 +15,7 @@ export class SectionServices {
   static getAllBySeason(seasonId) {
     return axiosInstance
       .get(
-        `${process.env.BASE_URL}/api/Section/GetAllSeasonSection/${seasonId}`
+        `${BASE_URL}/api/Section/GetAllSeasonSection/${seasonId}`
       )
       .then((res) => {
         return res ?? null;
@@ -25,7 +25,7 @@ export class SectionServices {
 
   static add(body) {
     return axiosInstance
-      .post(`${process.env.BASE_URL}/api/Section/CreateSection`, body)
+      .post(`${BASE_URL}/api/Section/CreateSection`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -34,7 +34,7 @@ export class SectionServices {
 
   static update(body, id) {
     return axiosInstance
-      .put(`${process.env.BASE_URL}/api/Section/UpdateSection/${id}`, body)
+      .put(`${BASE_URL}/api/Section/UpdateSection/${id}`, body)
       .then((res) => {
         return res ?? null;
       })
@@ -43,7 +43,7 @@ export class SectionServices {
 
   static getById(id: string) {
     return axiosInstance
-      .get(`${process.env.BASE_URL}/api/Section/GetSectionDetails/${id}`)
+      .get(`${BASE_URL}/api/Section/GetSectionDetails/${id}`)
       .then((res) => {
         return res ?? null;
       })
@@ -52,7 +52,7 @@ export class SectionServices {
 
   static delete(id: string) {
     return axiosInstance
-      .delete(`${process.env.BASE_URL}/api/Section/DeleteSection/${id}`)
+      .delete(`${BASE_URL}/api/Section/DeleteSection/${id}`)
       .then((res) => {
         return res ?? null;
       })
