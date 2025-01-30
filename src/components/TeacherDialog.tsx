@@ -60,39 +60,48 @@ function TeacherDialog({
   }
 
   function submitUserInfoChange() {
-    if (
-      Object.values(editeUserInfo).includes("") ||
-      Object.values(editeUserInfo).includes(null) ||
-      Object.values(editeUserInfo).includes(undefined)
-    ) {
-      toast.error("پرکردن درست تمامی فیلدها ضروری است!");
-      return "";
-    }
+    // if (
+    //   Object.values(editeUserInfo).includes("") ||
+    //   Object.values(editeUserInfo).includes(null) ||
+    //   Object.values(editeUserInfo).includes(undefined)
+    // ) {
+    //   toast.error("پرکردن درست تمامی فیلدها ضروری است!");
+    //   return "";
+    // }
 
     AccountServices.getEditProfile(userInfo.userId)
       .then((res) => {
-        AccountServices.editProfile({
+        if (!res?.data) {
+          throw new Error("User data is missing.");
+        }
+
+        return AccountServices.editProfile({
           id: editeUserInfo?.userId,
           firstname: editeUserInfo?.firstname,
           lastName: editeUserInfo?.lastName,
-          birthDate: res?.data?.birthDate || new Date(),
+          birthDate: res.data.birthDate || new Date(),
           nationalCode: editeUserInfo?.nationalCode,
-          phoneNumber: editeUserInfo?.phonNumber,
+          phoneNumber: editeUserInfo?.phoneNumber, // Fixed typo
           base64Profile: editeUserInfo?.profileImageBase64,
           isTeacher: res.data.isTeacher,
-        })
-          .then((res) => {
-            toast.success("اطلاعات کاربری با موفقیت تغییر یافت.");
-            localStorage.set("userInfo", editeUserInfo);
-            setEditeMode(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error(err?.response?.data?.title);
-          });
+        });
+      })
+      .then((res) => {
+        console.log(res);
+        if (res?.data?.isValid) {
+          setEditeMode(false);
+          toast.success("اطلاعات کاربری با موفقیت تغییر یافت.");
+
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({ ...userInfo, ...editeUserInfo })
+          );
+        } else {
+          toast.error(res?.data?.statusMessage);
+        }
       })
       .catch((err) => {
-        toast.error(err.message);
+        console.error("Error updating profile:", err);
       });
   }
 
@@ -256,7 +265,7 @@ function TeacherDialog({
             </AccordionActions>
           </Accordion>
         </div>
-        <CourseComponent  userInfo={userInfo}/>
+        <CourseComponent userInfo={userInfo} />
       </DialogContent>
 
       <DialogActions className="bg-blue-200">

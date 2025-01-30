@@ -60,7 +60,7 @@ const Login = () => {
             return;
           }
         } else if (!res.data.isValid) {
-          toast.error(res.data.statusMessage);
+          toast.error(res?.data?.statusMessage);
           return;
         }
       })
