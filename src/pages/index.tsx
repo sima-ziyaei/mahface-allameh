@@ -43,12 +43,12 @@ export default function Home() {
     setLoadingCourses(true);
     CourseServices.getAll()
       .then((res) => {
-        res.data.forEach((el) => {
+        res?.data.forEach((el) => {
           if (el.imageId) {
             ImageServices.getImageByImageId(el.imageId)
               .then((result) => {
-                setImages((prev) => prev.set(el.id, result.data.base64File));
-                setAllCourses(res.data);
+                setImages((prev) => prev.set(el.id, result?.data.base64File));
+                setAllCourses(res?.data);
                 setLoadingCourses(false);
               })
               .catch((err) => {});

@@ -34,24 +34,25 @@ const Categories = () => {
     setLoading(true);
     CourseServices.getWithCategoryId(id)
       .then((res) => {
-        if (res.data.length) {
-          res.data.forEach((el) => {
+        if (res?.data.length) {
+          res?.data.forEach((el) => {
             if (el.imageId) {
               ImageServices.getImageByImageId(el.imageId)
                 .then((result) => {
-                  setImages((prev) => prev.set(el.id, result.data.base64File));
+                  setImages((prev) => prev.set(el.id, result?.data.base64File));
                   setSelectedCategoryCourses(res.data);
-                  setLoading(false);
+
                 })
-                .catch((err) => {});
+                .catch((err) => { });
             }
           });
+          setLoading(false);
         } else {
-          setSelectedCategoryCourses(res.data);
+          setSelectedCategoryCourses(res?.data);
           setLoading(false);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -62,7 +63,7 @@ const Categories = () => {
     <>
       <div className="container border border-solid flex flex-col mx-auto border-gray-200 bg-white rounded-2xl gap-6 p-6 mt-16 ">
         <div
-          className={`${styles.container} max-w-[1300px] h-fit overflow-x-scroll py-2 whitespace-nowrap`}
+          className={`${styles.container} max-w-[1900px] h-fit overflow-x-scroll py-2 whitespace-nowrap`}
         >
           <div className="flex w-full">
             {categoryLoading ? (
@@ -82,11 +83,10 @@ const Categories = () => {
                       setSelectedCategoryId(el.id);
                       getSelectedCategory(el.id);
                     }}
-                    className={` ${
-                      selectedCategoryId === el.id
+                    className={` ${selectedCategoryId === el.id
                         ? "border-[#009CA7]"
                         : " border-gray-300"
-                    } cursor-pointer border-b-2 border-solid p-4`}
+                      } cursor-pointer border-b-2 border-solid p-4`}
                   >
                     {" "}
                     {el.title}{" "}
