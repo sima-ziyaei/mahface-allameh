@@ -12,7 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 export async function getStaticPaths() {
   let catgegories = [];
   CategoriesServices.getAll()
-    .then((res) => res.data.map((el) => [catgegories.push(el.id)]))
+    .then((res) => res?.data.map((el) => [catgegories.push(el.id)]))
     .catch((err) => {});
 
   return { paths: catgegories, fallback: false };

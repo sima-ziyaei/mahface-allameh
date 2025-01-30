@@ -17,7 +17,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import { TeacherServices } from "@/services/Teacher";
 import toast from "react-hot-toast";
-import TeacherDialog from "./TeacherDialog";
+import TeacherDialog from "../../components/TeacherDialog";
 
 function Teacher() {
   const userInfo =

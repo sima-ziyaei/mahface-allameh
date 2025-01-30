@@ -54,7 +54,7 @@ export class SectionServices {
     return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Section/DeleteSection/${id}`)
       .then((res) => {
-        return res?.data;
+        return res ?? null;
       })
       .catch((err) => console.error(err));
   }

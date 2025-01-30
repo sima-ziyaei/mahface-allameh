@@ -19,6 +19,15 @@ export class CourseServices {
       .catch((err) => console.error(err));
   }
 
+  static update(body, id) {
+    return axiosInstance
+      .put(`${process.env.BASE_URL}/updateCourse/${id}`, body)
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
+  }
+
   static getAllTeacherCourses(userId: string) {
     return axiosInstance
       .get(`${process.env.BASE_URL}/GetAllTeacherCourses/${userId}`)

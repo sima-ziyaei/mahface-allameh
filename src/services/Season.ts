@@ -19,11 +19,20 @@ export class SeasonServices {
       .catch((err) => console.error(err));
   }
 
+  static update(body) {
+    return axiosInstance
+      .put(`${process.env.BASE_URL}api/season/update`, body)
+      .then((res) => {
+        return res ?? null;
+      })
+      .catch((err) => console.error(err));
+  }
+
   static delete(id: string) {
     return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Season/DeleteSeason/${id}`)
       .then((res) => {
-        return res?.data;
+        return res ?? null;
       })
       .catch((err) => console.error(err));
   }
@@ -40,15 +49,6 @@ export class SeasonServices {
   static add(body) {
     return axiosInstance
       .post(`${process.env.BASE_URL}/api/Season/addSeason`, body)
-      .then((res) => {
-        return res ? res : [];
-      })
-      .catch((err) => console.error(err));
-  }
-
-  static update(body) {
-    return axiosInstance
-      .put(`${process.env.BASE_URL}/api/Season/update`, body)
       .then((res) => {
         return res ? res : [];
       })

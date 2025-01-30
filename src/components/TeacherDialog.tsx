@@ -256,7 +256,7 @@ function TeacherDialog({
             </AccordionActions>
           </Accordion>
         </div>
-        <CourseComponent />
+        <CourseComponent  userInfo={userInfo}/>
       </DialogContent>
 
       <DialogActions className="bg-blue-200">
