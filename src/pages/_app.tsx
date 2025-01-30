@@ -7,6 +7,7 @@ import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import createCache from "@emotion/cache";
 import axios from "axios";
+import https from "https";
 
 const theme = createTheme({
   direction: "rtl",
@@ -17,9 +18,10 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
   timeout: 10000,
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 });
 
 axiosInstance.interceptors.response.use(
@@ -29,6 +31,11 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+axiosInstance.interceptors.request.use((config) => {
+  config.httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  return config;
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

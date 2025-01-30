@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class SeasonServices {
   static getAll() {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Season/getAllSeasons`)
       .then((res) => {
         return res ? res : [];
@@ -11,7 +11,7 @@ export class SeasonServices {
   }
 
   static getById(id: string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Season/getById/${id}`)
       .then((res) => {
         return res ? res : [];
@@ -20,7 +20,7 @@ export class SeasonServices {
   }
 
   static delete(id: string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Season/DeleteSeason/${id}`)
       .then((res) => {
         return res?.data;
@@ -29,7 +29,7 @@ export class SeasonServices {
   }
 
   static getAllByCourseId(courseId: string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Season/getAllByCourseId/${courseId}`)
       .then((res) => {
         return res ? res : [];
@@ -38,7 +38,7 @@ export class SeasonServices {
   }
 
   static add(body) {
-    return axios
+    return axiosInstance
       .post(`${process.env.BASE_URL}/api/Season/addSeason`, body)
       .then((res) => {
         return res ? res : [];
@@ -47,7 +47,7 @@ export class SeasonServices {
   }
 
   static update(body) {
-    return axios
+    return axiosInstance
       .put(`${process.env.BASE_URL}/api/Season/update`, body)
       .then((res) => {
         return res ? res : [];

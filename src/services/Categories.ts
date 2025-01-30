@@ -1,8 +1,9 @@
+import { axiosInstance } from "@/pages/_app";
 import axios from "axios";
 
 export class CategoriesServices {
   static getAll() {
-    return axios
+    return axiosInstance
       .get(process.env.BASE_URL + "/api/Categories/GetAll")
       .then((res) => {
         return res ?? null;
@@ -11,7 +12,7 @@ export class CategoriesServices {
   }
 
   static addCategory(body) {
-    return axios
+    return axiosInstance
       .post(process.env.BASE_URL + "/api/Categories/AddCategory", body)
       .then((res) => {
         return res ?? null;
@@ -20,7 +21,7 @@ export class CategoriesServices {
   }
 
   static getById(id: number | string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Categories/GetById/${id}`)
       .then((res) => {
         return res ?? null;
@@ -29,7 +30,7 @@ export class CategoriesServices {
   }
 
   static deleteCategory(id: number | string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Categories/DeleteCategory/${id}`)
       .then((res) => {
         return res ?? null;
@@ -38,7 +39,7 @@ export class CategoriesServices {
   }
 
   static getTitles() {
-    return axios
+    return axiosInstance
       .get(process.env.BASE_URL + "/api/Categories/GetAllTitleCategoriesAsync")
       .then((res) => {
         return res ?? null;

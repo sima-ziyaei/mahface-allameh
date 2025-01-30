@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class UsersServices {
   static getAll() {
-    return axios
+    return axiosInstance
       .get(process.env.BASE_URL + "/api/Users/getAll")
       .then((res) => {
         return res ? res : [];
@@ -11,7 +11,7 @@ export class UsersServices {
   }
 
   static getById(id: number | string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res ? res : [];
@@ -20,7 +20,7 @@ export class UsersServices {
   }
 
   static deleteUsers(id: number | string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Users/delete/${id}`)
       .then((res) => {
         return res ? res : [];

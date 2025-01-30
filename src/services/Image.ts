@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class ImageServices {
   static addImage(body) {
-    return axios
+    return axiosInstance
       .post(`${process.env.BASE_URL}/api/Image/AddImage`, body)
       .then((res) => {
         return res ?? null;
@@ -11,7 +11,7 @@ export class ImageServices {
   }
 
   static getImageByImageId(id: string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Image/getByImageId/${id}`)
       .then((res) => {
         return res ?? null;
@@ -20,7 +20,7 @@ export class ImageServices {
   }
 
   static deleteImage(id: string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Image/DeleteImage/${id}`)
       .then((res) => {
         return res ?? null;
@@ -29,7 +29,7 @@ export class ImageServices {
   }
 
   static uploadByChoosingFile(formData, id) {
-    return axios({
+    return axiosInstance({
       method: "post",
       url: `${process.env.BASE_URL}/api/Image/DeleteImage/{id}`,
       data: formData,

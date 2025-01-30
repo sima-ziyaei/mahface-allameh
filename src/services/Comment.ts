@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class CommentServices {
   static getByCourseId(id: string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Comment/course/${id}`)
       .then((res) => {
         return res ?? null;
@@ -11,7 +11,7 @@ export class CommentServices {
   }
 
   static add(body) {
-    return axios
+    return axiosInstance
       .post(`${process.env.BASE_URL}/api/Comment`, body)
       .then((res) => {
         return res ?? null;

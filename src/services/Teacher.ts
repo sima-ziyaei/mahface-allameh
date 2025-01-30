@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class TeacherServices {
   static getAll() {
-    return axios
+    return axiosInstance
       .get(process.env.BASE_URL + "/api/Users/getAll")
       .then((res) => {
         return res ? res : [];
@@ -11,7 +11,7 @@ export class TeacherServices {
   }
 
   static getById(id: number | string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res ? res : [];
@@ -20,7 +20,7 @@ export class TeacherServices {
   }
 
   static getLastStatusForUser(id: number | string) {
-    return axios
+    return axiosInstance
       .get(
         `${process.env.BASE_URL}/api/TeacherRequest/GetLastStatusForUser/${id}`
       )
@@ -31,7 +31,7 @@ export class TeacherServices {
   }
 
   static getLastStatusForusers(id: number | string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Users/getById/${id}`)
       .then((res) => {
         return res?.data;
@@ -40,7 +40,7 @@ export class TeacherServices {
   }
 
   static getByUserId(id: number | string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Users/getByUserId/${id}`)
       .then((res) => {
         return res ? res : [];
@@ -49,7 +49,7 @@ export class TeacherServices {
   }
 
   static requestForTeaching(body) {
-    return axios
+    return axiosInstance
       .post(`${process.env.BASE_URL}/api/TeacherRequest/CreateRequest`, body)
       .then((res) => {
         return res.data;
@@ -58,7 +58,7 @@ export class TeacherServices {
   }
 
   static deleteUsers(id: number | string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Users/delete/${id}`)
       .then((res) => {
         return res ? res : [];
@@ -67,7 +67,7 @@ export class TeacherServices {
   }
 
   static createRequest(body: { userId: string; userDescription: string }) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/TeacherRequest/CreateRequest`)
       .then((res) => {
         return res ? res : [];
@@ -76,7 +76,7 @@ export class TeacherServices {
   }
 
   static approveRequest(requestId: string, adminId: srting) {
-    return axios
+    return axiosInstance
       .post(
         `${process.env.BASE_URL}/api/TeacherRequest/ApproveRequest/${requestId}?adminId=${adminId}`
       )
@@ -87,7 +87,7 @@ export class TeacherServices {
   }
 
   static getAllRequests() {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/TeacherRequest/GetAllRequests`)
       .then((res) => {
         return res ? res : [];
@@ -96,7 +96,7 @@ export class TeacherServices {
   }
 
   static rejectRequest(requestId: number | string) {
-    return axios
+    return axiosInstance
       .delete(
         `${process.env.BASE_URL}/api/TeacherRequest/RejectRequest/${requestId}`
       )

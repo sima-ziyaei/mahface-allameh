@@ -115,7 +115,7 @@ function TeacherDialog({
   return (
     <Dialog
       fullScreen
-      open={teacherDialogState.open}
+      open={teacherDialogState?.open}
       onClose={() => {
         setEditeMode(false);
         setTeacherDialogState({ open: false });

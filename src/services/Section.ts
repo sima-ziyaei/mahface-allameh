@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from "@/pages/_app";
 
 export class SectionServices {
   static getAllByCourse(courseId) {
-    return axios
+    return axiosInstance
       .get(
         `${process.env.BASE_URL}/api/Section/GetAllCourseSection/${courseId}`
       )
@@ -13,7 +13,7 @@ export class SectionServices {
   }
 
   static getAllBySeason(seasonId) {
-    return axios
+    return axiosInstance
       .get(
         `${process.env.BASE_URL}/api/Section/GetAllSeasonSection/${seasonId}`
       )
@@ -24,7 +24,7 @@ export class SectionServices {
   }
 
   static add(body) {
-    return axios
+    return axiosInstance
       .post(`${process.env.BASE_URL}/api/Section/CreateSection`, body)
       .then((res) => {
         return res ?? null;
@@ -33,7 +33,7 @@ export class SectionServices {
   }
 
   static update(body, id) {
-    return axios
+    return axiosInstance
       .put(`${process.env.BASE_URL}/api/Section/UpdateSection/${id}`, body)
       .then((res) => {
         return res ?? null;
@@ -42,7 +42,7 @@ export class SectionServices {
   }
 
   static getById(id: string) {
-    return axios
+    return axiosInstance
       .get(`${process.env.BASE_URL}/api/Section/GetSectionDetails/${id}`)
       .then((res) => {
         return res ?? null;
@@ -51,7 +51,7 @@ export class SectionServices {
   }
 
   static delete(id: string) {
-    return axios
+    return axiosInstance
       .delete(`${process.env.BASE_URL}/api/Section/DeleteSection/${id}`)
       .then((res) => {
         return res?.data;

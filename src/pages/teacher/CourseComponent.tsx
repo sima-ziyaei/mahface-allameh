@@ -16,10 +16,15 @@ import {
 import { memo, useEffect, useState } from "react";
 import { CategoriesServices } from "@/services/Categories";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import PreviousMap from "postcss/lib/previous-map";
 
 function CourseCompotent() {
-  const userInfo = JSON.parse(localStorage?.getItem("userInfo"));
+  let userInfo;
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      userInfo = JSON.parse(localStorage?.getItem("userInfo"));
+    }
+  }, [])
   const [courses, setCourses] = useState([
     // {
     //   id: uuid(),
@@ -146,8 +151,8 @@ function CourseCompotent() {
         userId: userInfo?.userId,
         title: selectedCourse.title,
         courseDescription: selectedCourse.courseDescription,
-        cost:selectedCourse.course,
-        courseLevelId:selectedCourse.courseLevelId,
+        cost: selectedCourse.course,
+        courseLevelId: selectedCourse.courseLevelId,
       });
     } else {
     }
@@ -275,7 +280,7 @@ function CourseCompotent() {
             return;
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       SeasonServices.update({
         id: selectedSeason.id,
@@ -291,7 +296,7 @@ function CourseCompotent() {
             return;
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   }
 
@@ -451,7 +456,7 @@ function CourseCompotent() {
             return;
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }
 
@@ -520,10 +525,10 @@ function CourseCompotent() {
                 new: false,
                 seasons: response?.data?.seasons
                   ? response?.data?.seasons.map((season) => ({
-                      ...season,
-                      new: false,
-                      sections: season?.sections ? season.sections : [],
-                    }))
+                    ...season,
+                    new: false,
+                    sections: season?.sections ? season.sections : [],
+                  }))
                   : [],
               }))
               .catch((err) => {
@@ -669,8 +674,8 @@ function CourseCompotent() {
                         option === 1
                           ? "ابتدایی"
                           : option === 2
-                          ? "متوسط"
-                          : "پیشرفته"
+                            ? "متوسط"
+                            : "پیشرفته"
                       }
                       onChange={(event, newValue) =>
                         handleCourseItemChange(
@@ -818,7 +823,7 @@ function CourseCompotent() {
                       <Button
                         variant="contained"
                         color="secondary"
-                        onClick={() => {}}
+                        onClick={() => { }}
                       >
                         ثبت تغییرات فصل
                       </Button>
@@ -845,7 +850,7 @@ function CourseCompotent() {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   ثبت تغییرات دوره
                 </Button>
