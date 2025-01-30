@@ -75,7 +75,7 @@ export class TeacherServices {
       .catch((err) => console.error(err));
   }
 
-  static approveRequest(requestId: string, adminId: srting) {
+  static approveRequest(requestId: string, adminId: string) {
     return axiosInstance
       .post(
         `${process.env.BASE_URL}/api/TeacherRequest/ApproveRequest/${requestId}?adminId=${adminId}`

@@ -81,12 +81,12 @@ const Header: FC = () => {
 
             {open && (
               <div className="absolute left-0 shadow-[] w-[150px] bg-white rounded-md">
-                <a href="/profile" className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
+                <a href="/profile" className="p-4 flex justify-between cursor-pointer hover:bg-[rgba(0,156,167,0.1)]">
                   {t["profile"]}
                   <img width={20} src="/assets/icons/user.svg" />
 
                   </a>
-                <div onClick={handleLogOut} className="p-4 flex justify-between hover:bg-[rgba(0,156,167,0.1)]">
+                <div onClick={handleLogOut} className="p-4 flex justify-between cursor-pointer hover:bg-[rgba(0,156,167,0.1)]">
                   {t["logout"]}
                   <img width={20} src="/assets/icons/logout.svg" />
                 </div>
