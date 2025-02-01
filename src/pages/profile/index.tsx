@@ -1,7 +1,5 @@
 import Layout from "@/components/layout/Layout";
-import {
-  Avatar,
-} from "@mui/material";
+import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import t from "../../../i18next/locales/fa/translation.json";
 import ProfileInformation from "@/components/profile/ProfileInformation";
@@ -13,7 +11,7 @@ import Favorites from "@/components/profile/Favorites";
 export enum ProfileState {
   Information = "information",
   Orders = "orders",
-  Favorites = 'favorites'
+  Favorites = "favorites",
 }
 
 const Profile = () => {
@@ -38,12 +36,12 @@ const Profile = () => {
       <div className="flex ">
         <div className="px-6 py-4 min-h-[calc(100vh-102px)] bg-white w-[300px] border-l border-solid border-gray-200">
           <Avatar
-            sx={{ width: "70px", height: "70px", margin: "0 auto" }}
             src={
-              userInfo?.base64Profile
-                ? `data:image/png;base64,${userInfo?.base64Profile}`
+              userInfo?.profileImageBase64
+                ? `data:image/png;base64,${userInfo?.profileImageBase64}`
                 : "/assets/user.svg"
             }
+            sx={{ width: 60, height: 60 }}
           />
           <div
             onClick={() => setProfileState(ProfileState.Information)}
@@ -76,9 +74,11 @@ const Profile = () => {
         </div>
         {profileState === ProfileState.Information ? (
           <ProfileInformation userInfo={userInfo} setUserInfo={setUserInfo} />
-        ) : profileState === ProfileState.Orders?  (
+        ) : profileState === ProfileState.Orders ? (
           <UserCourses />
-        ) : <Favorites  />}
+        ) : (
+          <Favorites />
+        )}
       </div>
     </Layout>
   );

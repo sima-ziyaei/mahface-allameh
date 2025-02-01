@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import TeacherDialog from "../../components/TeacherDialog";
 
 function Teacher() {
+  const router = useRouter();
   const userInfo =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("userInfo"))
@@ -38,10 +39,18 @@ function Teacher() {
       TeacherServices.getLastStatusForUser(userInfo?.userId)
         .then((res) => {
           if (res.hasActiveRequest) {
-            toast.error(res.userDescription);
+            toast.error(res.statusDescripton);
             return;
           } else {
-            setRequestForTeachingDilaog((prev) => ({ ...prev, open: true }));
+            if (res.status === 2) {
+              toast.success(res.statusDescripton);
+              router.push("/login");
+              localStorage.clear();
+              toast.error("نیاز است که دوباره وارد سیستم شوید");
+              return;
+            } else {
+              setRequestForTeachingDilaog((prev) => ({ ...prev, open: true }));
+            }
           }
         })
         .catch((err) => {
@@ -94,7 +103,7 @@ function Teacher() {
               backgroundColor: "#009CA7",
             }}
           >
-            {t["start-teaching"]}
+            {userInfo.isTeacher ? "پنل استاد" : t["start-teaching"]}
           </Button>
         </div>
       </div>

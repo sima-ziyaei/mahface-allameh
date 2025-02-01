@@ -54,3 +54,10 @@ input[type="number"] {
     color: transparent;
   }
 }
+
+.gender-box {
+  .MuiOutlinedInput-root {
+    padding: 2px 0px !important;
+
+  }
+}
