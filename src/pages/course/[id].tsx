@@ -9,17 +9,21 @@ import CourseComments from "@/components/course/CourseComments";
 import { CourseServices } from "@/services/Course";
 
 export async function getStaticPaths() {
-  let courses = [];
-  CourseServices.getAll()
-    .then((res) => res.data.map((el) => [courses.push(el.id)]))
-    .catch((err) => {});
+  try {
+    const res = await CourseServices.getAll();
+    const courses = res.data.map((el) => ({ params: { id: el.id.toString() } }));
 
-  return { paths: courses, fallback: false };
+    return { paths: courses, fallback: false };
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return { paths: [], fallback: false };
+  }
 }
 
 export async function getStaticProps({ params }) {
   return { props: { params } };
 }
+
 
 export enum NavbarState {
   Content = "content",
@@ -41,7 +45,7 @@ const CourseView = ({ params }) => {
         .then((res) => {
           setCourse(res.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   }, [params]);
 

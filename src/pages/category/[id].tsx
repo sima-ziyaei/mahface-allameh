@@ -10,12 +10,17 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export async function getStaticPaths() {
-  let catgegories = [];
-  CategoriesServices.getAll()
-    .then((res) => res?.data.map((el) => [catgegories.push(el.id)]))
-    .catch((err) => {});
+  try {
+    const res = await CategoriesServices.getAll();
+    const paths = res?.data.map((el) => ({
+      params: { id: el.id },
+    }));
 
-  return { paths: catgegories, fallback: false };
+    return { paths, fallback: false };
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return { paths: [], fallback: false };
+  }
 }
 
 export async function getStaticProps({ params }) {
