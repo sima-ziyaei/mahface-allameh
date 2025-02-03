@@ -13,7 +13,6 @@ import { Course } from "@/models/course.model";
 import { CourseServices } from "@/services/Course";
 import { ImageServices } from "@/services/Image";
 import Head from "next/head";
-import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,19 +42,30 @@ export default function Home() {
     setLoadingCourses(true);
     CourseServices.getAll()
       .then((res) => {
-        res?.data.forEach((el) => {
+        const imageRequests = res.data.map((el) => {
           if (el.imageId) {
-            ImageServices.getImageByImageId(el.imageId)
-              .then((result) => {
-                setImages((prev) => prev.set(el.id, result?.data.base64File));
-                setAllCourses(res?.data);
-                setLoadingCourses(false);
-              })
-              .catch((err) => {});
+            return ImageServices.getImageByImageId(el.imageId)
+              .then((result) => ({ courseId: el.id, image: result.data.base64File }))
+              .catch(() => null);
           }
+          return null;
         });
+
+        Promise.all(imageRequests).then((imageResults) => {
+          const newImages = new Map();
+          imageResults.forEach((item) => {
+            if (item) {
+              newImages.set(item.courseId, item.image);
+            }
+          });
+
+          setImages(newImages);
+        });
+
+        setAllCourses(res.data);
+        setLoadingCourses(false);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   return (
@@ -105,7 +115,7 @@ export default function Home() {
           <h4 className="mx-auto w-fit mt-16 mb-8 text-2xl">
             {
               t[
-                "cooperation-with-the-best-universities-and-educational-institutions"
+              "cooperation-with-the-best-universities-and-educational-institutions"
               ]
             }
           </h4>
@@ -137,9 +147,9 @@ export default function Home() {
             spaceBetween={16}
             slidesPerView={1}
           >
-            {comments.map((el) => {
+            {comments.map((el, i) => {
               return (
-                <SwiperSlide className="bg-white border border-solid border-gray-200 rounded-2xl  p-6">
+                <SwiperSlide key={i} className="bg-white border border-solid border-gray-200 rounded-2xl  p-6">
                   <p className="mb-4 text-lg"> {el.name} </p>
                   <p className="mr-4 text-zinc-800"> {el.comment} </p>
                 </SwiperSlide>

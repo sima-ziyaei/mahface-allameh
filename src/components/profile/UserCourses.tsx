@@ -13,16 +13,29 @@ const UserCourses = () => {
 
   useEffect(() => {
     CourseServices.getAllStudentCourses(userId).then((res) => {
-      res.data.forEach((el) => {
+
+      const imageRequests = res.data.map((el) => {
         if (el.imageId) {
-          ImageServices.getImageByImageId(el.imageId)
-            .then((result) => {
-              setImages((prev) => prev.set(el.id, result.data.base64File));
-              setUserCourses(res.data);
-            })
-            .catch((err) => {});
+          return ImageServices.getImageByImageId(el.imageId)
+            .then((result) => ({ courseId: el.id, image: result.data.base64File }))
+            .catch(() => null);
         }
+        return null;
       });
+      Promise.all(imageRequests).then((imageResults) => {
+        const newImages = new Map();
+        imageResults.forEach((item) => {
+          if (item) {
+            newImages.set(item.courseId, item.image);
+          }
+        });
+
+        setImages(newImages);
+      });
+
+
+      setUserCourses(res.data);
+
     });
   }, []);
 

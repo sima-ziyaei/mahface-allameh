@@ -12,7 +12,7 @@ export class ImageServices {
 
   static getImageByImageId(id: string) {
     return axiosInstance
-      .get(`${BASE_URL}/api/Image/getByImageId/${id}`)
+      .get(`${BASE_URL}/api/Image/getByImageId?id=${id}`)
       .then((res) => {
         return res ?? null;
       })

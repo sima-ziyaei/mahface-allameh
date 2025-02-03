@@ -7,23 +7,7 @@ import CourseSideBar from "@/components/course/CourseSideBar";
 import CourseNavbar from "@/components/course/CourseNavbar";
 import CourseComments from "@/components/course/CourseComments";
 import { CourseServices } from "@/services/Course";
-
-export async function getStaticPaths() {
-  try {
-    const res = await CourseServices.getAll();
-    const courses = res.data.map((el) => ({ params: { id: el.id.toString() } }));
-
-    return { paths: courses, fallback: false };
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    return { paths: [], fallback: false };
-  }
-}
-
-export async function getStaticProps({ params }) {
-  return { props: { params } };
-}
-
+import { useRouter } from "next/router";
 
 export enum NavbarState {
   Content = "content",
@@ -36,18 +20,18 @@ const CourseView = ({ params }) => {
   const [navbarState, setNavbarState] = useState<NavbarState>(
     NavbarState.Content
   );
-
-  console.log(course);
+  const router = useRouter();
+  const { id }: { id?: string } = router.query;
 
   useEffect(() => {
-    if (params) {
-      CourseServices.getById(params.id)
+    if (id) {
+      CourseServices.getById(id)
         .then((res) => {
           setCourse(res.data);
         })
         .catch((err) => { });
     }
-  }, [params]);
+  }, [id]);
 
   if (!course) return null;
 
